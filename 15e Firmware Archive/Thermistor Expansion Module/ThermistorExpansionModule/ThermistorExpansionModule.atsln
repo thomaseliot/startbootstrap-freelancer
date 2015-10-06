@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ThermistorExpansionModule", "ThermistorExpansionModule.cproj", "{C3FCDD82-9E0C-4259-B3A8-84AF1BF99088}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3FCDD82-9E0C-4259-B3A8-84AF1BF99088}.Debug|AVR.ActiveCfg = Debug|AVR
+		{C3FCDD82-9E0C-4259-B3A8-84AF1BF99088}.Debug|AVR.Build.0 = Debug|AVR
+		{C3FCDD82-9E0C-4259-B3A8-84AF1BF99088}.Release|AVR.ActiveCfg = Release|AVR
+		{C3FCDD82-9E0C-4259-B3A8-84AF1BF99088}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

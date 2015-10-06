@@ -1,0 +1,114 @@
+FormatVersion=5.0 // Do not edit this line!
+Title="CMR 15e Symbols"
+
+{ENUMS}
+enum State(0="GLV_ON", 1="HV_EN", 2="RTD", 3="ERROR")
+
+{SENDRECEIVE}
+
+[State]
+ID=100h
+DLC=8
+CycleTime=10
+Timeout=20
+Color=00FFFFh
+Var=Current_State State 0,8
+
+[FSN_Heartbeat]
+ID=201h
+DLC=4
+Color=FF0000h
+Var=State State 0,8
+Var=TPS unsigned 8,8
+Var=BPS unsigned 16,8
+Var=Error unsigned 24,8
+
+[Dash_Heartbeat]
+ID=205h
+DLC=2
+Color=FF0000h
+Var=State State 0,8
+Var=hv_en bit 8,1
+Var=clr_err bit 9,1
+Var=rtd bit 10,1
+Var=daq_en bit 11,1
+
+[UM6_Heartbeat]
+ID=203h
+DLC=1
+Color=FF0000h
+Var=State State 0,8
+
+[RSN_Heartbeat]
+ID=202h
+DLC=1
+Color=FF0000h
+Var=State State 0,8
+
+[DAQ_Heartbeat]
+ID=204h
+DLC=1
+Color=FF0000h
+Var=State State 0,8
+
+[Main_Heartbeat]
+ID=200h
+DLC=1
+Color=FF0000h
+Var=State State 0,8
+
+[Front_Left_Damper_Position]
+ID=300h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[Front_Right_Damper_Position]
+ID=301h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[HV_Current]
+ID=302h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[Steering_Wheel_Angle]
+ID=303h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[Brake_Pressure]
+ID=304h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[Throttle_Position_1]
+ID=305h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[Throttle_Position_2]
+ID=306h	// Source: Front Sensor Node
+DLC=1
+Color=008000h
+
+[Temp_Left]
+ID=307h	// Source: Rear Sensor Node
+DLC=1
+
+[Temp_Right]
+ID=308h	// Source: Rear Sensor Node
+DLC=1
+
+[Rear_Left_Damper_Position]
+ID=309h
+DLC=1
+
+[Symbol1]
+ID=000h
+DLC=1
+
+[Rear_Right_Damper_Position]
+ID=30Ah
+DLC=1
+

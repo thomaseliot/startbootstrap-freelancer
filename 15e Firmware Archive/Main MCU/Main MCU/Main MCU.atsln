@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Main MCU", "Main MCU.cproj", "{171DF923-4A40-4F60-B245-8F70B0434ACD}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "cmr_library_64c1", "..\..\Library\cmr_library_64c1\cmr_library_64c1.cproj", "{149DF3AE-C7F6-484F-97D0-1B28A178D937}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{171DF923-4A40-4F60-B245-8F70B0434ACD}.Debug|AVR.ActiveCfg = Debug|AVR
+		{171DF923-4A40-4F60-B245-8F70B0434ACD}.Debug|AVR.Build.0 = Debug|AVR
+		{171DF923-4A40-4F60-B245-8F70B0434ACD}.Release|AVR.ActiveCfg = Release|AVR
+		{171DF923-4A40-4F60-B245-8F70B0434ACD}.Release|AVR.Build.0 = Release|AVR
+		{149DF3AE-C7F6-484F-97D0-1B28A178D937}.Debug|AVR.ActiveCfg = Debug|AVR
+		{149DF3AE-C7F6-484F-97D0-1B28A178D937}.Debug|AVR.Build.0 = Debug|AVR
+		{149DF3AE-C7F6-484F-97D0-1B28A178D937}.Release|AVR.ActiveCfg = Release|AVR
+		{149DF3AE-C7F6-484F-97D0-1B28A178D937}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

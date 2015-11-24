@@ -20,8 +20,8 @@
 
 // DEFINITIONS
 // Digital Port Configuration
-#define MCU_STATUS_PORT			IO_PORT_D	// MCU Status is port D pin 7
-#define MCU_STATUS_PIN			7	
+#define MCU_STATUS_PORT			IO_PORT_C	// MCU Status is port D pin 7
+#define MCU_STATUS_PIN			0
 
 // Sensor Configuration
 // 15e_todo: If you have sensors, change the #define names and the channels they correspond to

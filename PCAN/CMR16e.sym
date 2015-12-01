@@ -1,0 +1,18 @@
+FormatVersion=5.0 // Do not edit this line!
+Title="CMR16e"
+
+{ENUMS}
+enum State(0="GLV_ON", // GLV On
+  1="HV_EN", // HV Enable
+  2="RTD", // Ready To Drive
+  3="ERROR")// Error
+
+{SENDRECEIVE}
+
+["FSM Heartbeat"]
+ID=204h	// Front Sensor Module Heartbeat
+CycleTime=100
+Timeout=500
+Color=0000FFh
+Var=State State 0,2	// Current Module State
+

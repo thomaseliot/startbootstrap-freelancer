@@ -12,11 +12,13 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  .././node_tasks.h ../Source/include/FreeRTOS.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h \
- ../FreeRTOSConfig.h ../Source/include/projdefs.h \
+ ../Config/FreeRTOSConfig.h ../Source/include/projdefs.h \
  ../Source/include/portable.h ../Source/include/deprecated_definitions.h \
- ../Source/portable/GCC/ATMega323/portmacro.h \
+ ../Source/portable/GCC/ATmega64c1/portmacro.h \
  ../Source/include/mpu_wrappers.h ../Source/include/task.h \
- ../Source/include/list.h ../Source/include/croutine.h
+ ../Source/include/list.h ../Drivers/CAN/can_lib.h \
+ ../Drivers/CAN/can_drv.h ../Config/can_config.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -46,7 +48,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h:
 
-../FreeRTOSConfig.h:
+../Config/FreeRTOSConfig.h:
 
 ../Source/include/projdefs.h:
 
@@ -54,7 +56,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../Source/include/deprecated_definitions.h:
 
-../Source/portable/GCC/ATMega323/portmacro.h:
+../Source/portable/GCC/ATmega64c1/portmacro.h:
 
 ../Source/include/mpu_wrappers.h:
 
@@ -62,4 +64,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../Source/include/list.h:
 
-../Source/include/croutine.h:
+../Drivers/CAN/can_lib.h:
+
+../Drivers/CAN/can_drv.h:
+
+../Config/can_config.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:

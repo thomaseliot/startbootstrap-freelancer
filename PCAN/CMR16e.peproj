@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PCANExplorerProject Version="5.0" Name="CMR16e">
-    <Connections AutoReset="0" IgnoreRTRLength="0" ProcessRTR="1"/>
+    <Connections AutoReset="0" IgnoreRTRLength="0" ProcessRTR="1">
+        <Connection Bus="1" Enabled="1" Protocol="0" SymbolsFileName="CMR16e.sym" BitRate="28" Connection="PCAN Dongle@pcan_usb" Name="Connection1"/>
+    </Connections>
     <MessageFilters/>
-    <Files/>
+    <Files>
+        <File RelativePath="CMR16e.sym"/>
+    </Files>
 </PCANExplorerProject>

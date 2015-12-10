@@ -45,7 +45,7 @@
     <com_atmel_avrdbg_tool_jtagice3plus>
       <ToolOptions>
         <InterfaceProperties>
-          <IspClock>100000</IspClock>
+          <IspClock>1000000</IspClock>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
@@ -54,7 +54,7 @@
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
     <avrtoolinterface>ISP</avrtoolinterface>
-    <avrtoolinterfaceclock>100000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>1000000</avrtoolinterfaceclock>
     <PercepioTrace>
       <TargetOS>FreeRTOS</TargetOS>
       <Frequency>16000000</Frequency>
@@ -205,13 +205,28 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="cmr_64c1_lib.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cmr_64c1_lib.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cmr_constants.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Config\can_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\can_ids.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Config\can_structs.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Config\FreeRTOSConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\node_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Drivers\CAN\can_drv.c">
@@ -224,6 +239,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Drivers\CAN\can_lib.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\CAN\rtos_can_lib.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\CAN\rtos_can_lib.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">

@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+cmr_64c1_lib.c
+
 Drivers\CAN\can_drv.c
 
 Drivers\CAN\can_lib.c

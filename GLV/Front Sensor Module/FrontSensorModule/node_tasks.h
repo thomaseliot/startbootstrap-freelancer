@@ -23,10 +23,7 @@
 #ifndef TASKS_H_
 #define TASKS_H_
 
-void vLEDFlashTask(void *pvParameters);
-void config_io_pin(uint8_t port, uint8_t port_ch, uint8_t dir);
-void setup_can_send(st_cmd_t *can_send_msg, uint8_t *can_send_buffer, uint8_t buffer_len, uint16_t msg_id);
-void can_tx(uint16_t id, uint8_t *buffer, uint8_t buf_size);
+void vMCUStatusTask(void *pvParameters);
 void vHeartbeatTask(void *pvParameters);
 
 #endif /* TASKS_H_ */

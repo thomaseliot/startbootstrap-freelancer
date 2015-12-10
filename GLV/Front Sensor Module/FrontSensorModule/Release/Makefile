@@ -46,6 +46,7 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../cmr_64c1_lib.c \
 ../Drivers/CAN/can_drv.c \
 ../Drivers/CAN/can_lib.c \
 ../main.c \
@@ -64,6 +65,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+cmr_64c1_lib.o \
 Drivers/CAN/can_drv.o \
 Drivers/CAN/can_lib.o \
 main.o \
@@ -75,6 +77,7 @@ Source/tasks.o \
 node_tasks.o
 
 OBJS_AS_ARGS +=  \
+cmr_64c1_lib.o \
 Drivers/CAN/can_drv.o \
 Drivers/CAN/can_lib.o \
 main.o \
@@ -86,6 +89,7 @@ Source/tasks.o \
 node_tasks.o
 
 C_DEPS +=  \
+cmr_64c1_lib.d \
 Drivers/CAN/can_drv.d \
 Drivers/CAN/can_lib.d \
 main.d \
@@ -97,6 +101,7 @@ Source/tasks.d \
 node_tasks.d
 
 C_DEPS_AS_ARGS +=  \
+cmr_64c1_lib.d \
 Drivers/CAN/can_drv.d \
 Drivers/CAN/can_lib.d \
 main.d \
@@ -140,14 +145,16 @@ LINKER_SCRIPT_DEP+=
 
 
 
-Drivers/CAN/%.o: ../Drivers/CAN/%.c
+
+
+./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-./%.o: .././%.c
+Drivers/CAN/%.o: ../Drivers/CAN/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

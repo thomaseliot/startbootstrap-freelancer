@@ -14,5 +14,6 @@ ID=204h	// Front Sensor Module Heartbeat
 CycleTime=100
 Timeout=500
 Color=0000FFh
-Var=State State 0,2	// Current Module State
+Var=State State 0,8	// Current Module State
+Var=Value unsigned 8,8
 

@@ -12,23 +12,28 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#define mainLED_TASK_PRIORITY           1
+#define mainMCU_STATUS_TASK_PRIORITY	1
 #define mainHEARTBEAT_TASK_PRIORITY		2
 
 int main(void)
 {	
-	can_init(1);	// Fixed baud rate
+	// Initialize CAN with fixed baud rate, as defined in can_config.h
+	can_init(1);
 	
-	config_io_pin(IO_PORT_C, 0, IO_DIR_OUTPUT);
-	
-    xTaskCreate(vLEDFlashTask, "LED", configMINIMAL_STACK_SIZE, 
-		NULL, mainLED_TASK_PRIORITY, NULL);
+	// Create the MCU status task, to blink the LED
+	// Rate: 4Hz
+    xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
+		NULL, mainMCU_STATUS_TASK_PRIORITY, NULL);
 		
-	xTaskCreate(vHeartbeatTask, "CAN", configMINIMAL_STACK_SIZE,
+	// Create the heartbeat task, to transmit over CAN
+	// Rate: 10Hz
+	xTaskCreate(vHeartbeatTask, "HEART", configMINIMAL_STACK_SIZE,
 	NULL, mainHEARTBEAT_TASK_PRIORITY, NULL);
 	
+	// Start the scheduler
 	vTaskStartScheduler();
 	
+	// Return, the scheduler handles the rest
 	return 0;
 }
 

@@ -33,27 +33,37 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
-../Drivers \
+../Config/ \
+../Drivers/ \
+../Drivers/CAN/ \
+../Drivers/xbee \
 ../Source \
 ../Source/include \
 ../Source/portable \
 ../Source/portable/GCC \
-../Source/portable/GCC/ATMega323 \
+../Source/portable/GCC/ATmega64c1/ \
 ../Source/portable/MemMang
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Drivers/CAN/can_drv.c \
+../Drivers/CAN/can_lib.c \
+../Drivers/CAN/rtos_can_lib.c \
+../Drivers/xbee/xbee_atcmd.c \
+../Drivers/xbee/xbee_device.c \
+../Drivers/xbee/xbee_hexdump.c \
+../Drivers/xbee/xbee_platform_avr.c \
+../Drivers/xbee/xbee_serial_avr.c \
+../Drivers/xbee/xbee_wpan.c \
+../Drivers/xbee/xbee_xmodem.c \
 ../main.c \
-../Source/croutine.c \
-../Source/event_groups.c \
 ../Source/list.c \
-../Source/portable/GCC/ATMega323/port.c \
+../Source/portable/GCC/ATmega64c1/port.c \
 ../Source/portable/MemMang/heap_1.c \
 ../Source/queue.c \
 ../Source/tasks.c \
-../Source/timers.c \
-../tasks.c
+../node_tasks.c
 
 
 PREPROCESSING_SRCS += 
@@ -63,52 +73,80 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Drivers/CAN/can_drv.o \
+Drivers/CAN/can_lib.o \
+Drivers/CAN/rtos_can_lib.o \
+Drivers/xbee/xbee_atcmd.o \
+Drivers/xbee/xbee_device.o \
+Drivers/xbee/xbee_hexdump.o \
+Drivers/xbee/xbee_platform_avr.o \
+Drivers/xbee/xbee_serial_avr.o \
+Drivers/xbee/xbee_wpan.o \
+Drivers/xbee/xbee_xmodem.o \
 main.o \
-Source/croutine.o \
-Source/event_groups.o \
 Source/list.o \
-Source/portable/GCC/ATMega323/port.o \
+Source/portable/GCC/ATmega64c1/port.o \
 Source/portable/MemMang/heap_1.o \
 Source/queue.o \
 Source/tasks.o \
-Source/timers.o \
-tasks.o
+node_tasks.o
 
 OBJS_AS_ARGS +=  \
+Drivers/CAN/can_drv.o \
+Drivers/CAN/can_lib.o \
+Drivers/CAN/rtos_can_lib.o \
+Drivers/xbee/xbee_atcmd.o \
+Drivers/xbee/xbee_device.o \
+Drivers/xbee/xbee_hexdump.o \
+Drivers/xbee/xbee_platform_avr.o \
+Drivers/xbee/xbee_serial_avr.o \
+Drivers/xbee/xbee_wpan.o \
+Drivers/xbee/xbee_xmodem.o \
 main.o \
-Source/croutine.o \
-Source/event_groups.o \
 Source/list.o \
-Source/portable/GCC/ATMega323/port.o \
+Source/portable/GCC/ATmega64c1/port.o \
 Source/portable/MemMang/heap_1.o \
 Source/queue.o \
 Source/tasks.o \
-Source/timers.o \
-tasks.o
+node_tasks.o
 
 C_DEPS +=  \
+Drivers/CAN/can_drv.d \
+Drivers/CAN/can_lib.d \
+Drivers/CAN/rtos_can_lib.d \
+Drivers/xbee/xbee_atcmd.d \
+Drivers/xbee/xbee_device.d \
+Drivers/xbee/xbee_hexdump.d \
+Drivers/xbee/xbee_platform_avr.d \
+Drivers/xbee/xbee_serial_avr.d \
+Drivers/xbee/xbee_wpan.d \
+Drivers/xbee/xbee_xmodem.d \
 main.d \
-Source/croutine.d \
-Source/event_groups.d \
 Source/list.d \
-Source/portable/GCC/ATMega323/port.d \
+Source/portable/GCC/ATmega64c1/port.d \
 Source/portable/MemMang/heap_1.d \
 Source/queue.d \
 Source/tasks.d \
-Source/timers.d \
-tasks.d
+node_tasks.d
 
 C_DEPS_AS_ARGS +=  \
+Drivers/CAN/can_drv.d \
+Drivers/CAN/can_lib.d \
+Drivers/CAN/rtos_can_lib.d \
+Drivers/xbee/xbee_atcmd.d \
+Drivers/xbee/xbee_device.d \
+Drivers/xbee/xbee_hexdump.d \
+Drivers/xbee/xbee_platform_avr.d \
+Drivers/xbee/xbee_serial_avr.d \
+Drivers/xbee/xbee_wpan.d \
+Drivers/xbee/xbee_xmodem.d \
 main.d \
-Source/croutine.d \
-Source/event_groups.d \
 Source/list.d \
-Source/portable/GCC/ATMega323/port.d \
+Source/portable/GCC/ATmega64c1/port.d \
 Source/portable/MemMang/heap_1.d \
 Source/queue.d \
 Source/tasks.d \
-Source/timers.d \
-tasks.d
+node_tasks.d
 
 OUTPUT_FILE_PATH +=FrontSensorModule.elf
 
@@ -145,31 +183,59 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Drivers/CAN/%.o: ../Drivers/CAN/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.9.2
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".." -I"../../../Library/Library"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Drivers/xbee/%.o: ../Drivers/xbee/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.9.2
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".." -I"../../../Library/Library"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".."  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".." -I"../../../Library/Library"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Source/%.o: ../Source/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".."  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".." -I"../../../Library/Library"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-Source/portable/GCC/ATMega323/%.o: ../Source/portable/GCC/ATMega323/%.c
+Source/portable/GCC/ATmega64c1/%.o: ../Source/portable/GCC/ATmega64c1/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".."  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".." -I"../../../Library/Library"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Source/portable/MemMang/%.o: ../Source/portable/MemMang/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".."  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable/GCC/ATMega323" -I"../Source/portable/MemMang" -I".." -I"../../../Library/Library"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

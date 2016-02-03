@@ -7,6 +7,7 @@
 
 #include <avr/io.h>
 #include "node_tasks.h"
+#include "cmr_64c1_lib.h"
 
 /* Scheduler include files. */
 #include "FreeRTOS.h"
@@ -19,7 +20,7 @@ int main(void)
 {	
 	// Initialize CAN with fixed baud rate, as defined in can_config.h
 	can_init(1);
-	
+		
 	// Create the MCU status task, to blink the LED
 	// Rate: 4Hz
     xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 

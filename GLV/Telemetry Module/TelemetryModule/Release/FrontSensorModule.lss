@@ -3,33 +3,33 @@ FrontSensorModule.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000012  00800100  000050da  0000516e  2**0
+  0 .data         00000012  00800100  000050f8  0000518c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000050da  00000000  00000000  00000094  2**1
+  1 .text         000050f8  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000045b  00800112  00800112  00005180  2**0
+  2 .bss          0000045b  00800112  00800112  0000519e  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00005180  2**0
+  3 .comment      00000030  00000000  00000000  0000519e  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000051b0  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000051d0  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000138  00000000  00000000  000051f0  2**0
+  5 .debug_aranges 00000138  00000000  00000000  00005210  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000029d2  00000000  00000000  00005328  2**0
+  6 .debug_info   000029d2  00000000  00000000  00005348  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000a34  00000000  00000000  00007cfa  2**0
+  7 .debug_abbrev 00000a34  00000000  00000000  00007d1a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00002561  00000000  00000000  0000872e  2**0
+  8 .debug_line   0000258c  00000000  00000000  0000874e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000bf0  00000000  00000000  0000ac90  2**2
+  9 .debug_frame  00000bf0  00000000  00000000  0000acdc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00010102  00000000  00000000  0000b880  2**0
+ 10 .debug_str    0001011c  00000000  00000000  0000b8cc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00001883  00000000  00000000  0001b982  2**0
+ 11 .debug_loc    00001883  00000000  00000000  0001b9e8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000018  00000000  00000000  0001d205  2**0
+ 12 .debug_ranges 00000018  00000000  00000000  0001d26b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  0000534b  00000000  00000000  0001d21d  2**0
+ 13 .debug_macro  00005354  00000000  00000000  0001d283  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -90,7 +90,7 @@ Disassembly of section .text:
       9e:	11 e0       	ldi	r17, 0x01	; 1
       a0:	a0 e0       	ldi	r26, 0x00	; 0
       a2:	b1 e0       	ldi	r27, 0x01	; 1
-      a4:	ea ed       	ldi	r30, 0xDA	; 218
+      a4:	e8 ef       	ldi	r30, 0xF8	; 248
       a6:	f0 e5       	ldi	r31, 0x50	; 80
       a8:	02 c0       	rjmp	.+4      	; 0xae <__do_copy_data+0x10>
       aa:	05 90       	lpm	r0, Z+
@@ -113,7 +113,7 @@ Disassembly of section .text:
       c0:	b2 07       	cpc	r27, r18
       c2:	e1 f7       	brne	.-8      	; 0xbc <.do_clear_bss_loop>
       c4:	0e 94 04 10 	call	0x2008	; 0x2008 <main>
-      c8:	0c 94 6b 28 	jmp	0x50d6	; 0x50d6 <_exit>
+      c8:	0c 94 7a 28 	jmp	0x50f4	; 0x50f4 <_exit>
 
 000000cc <__bad_interrupt>:
       cc:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -1522,7 +1522,7 @@ uint8_t can_cmd(st_cmd_t* cmd)
      8a4:	82 5c       	subi	r24, 0xC2	; 194
      8a6:	9f 4f       	sbci	r25, 0xFF	; 255
      8a8:	fc 01       	movw	r30, r24
-     8aa:	0c 94 5c 28 	jmp	0x50b8	; 0x50b8 <__tablejump2__>
+     8aa:	0c 94 6b 28 	jmp	0x50d6	; 0x50d6 <__tablejump2__>
       {
         //------------      
         case CMD_TX:    
@@ -4766,7 +4766,7 @@ int main(void)
 	can_init(1);
     201e:	81 e0       	ldi	r24, 0x01	; 1
     2020:	0e 94 bb 03 	call	0x776	; 0x776 <can_init>
-	
+		
 	// Create the MCU status task, to blink the LED
 	// Rate: 4Hz
     xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
@@ -4804,7 +4804,7 @@ int main(void)
     205a:	50 e0       	ldi	r21, 0x00	; 0
     205c:	67 e0       	ldi	r22, 0x07	; 7
     205e:	71 e0       	ldi	r23, 0x01	; 1
-    2060:	84 e9       	ldi	r24, 0x94	; 148
+    2060:	83 ea       	ldi	r24, 0xA3	; 163
     2062:	97 e2       	ldi	r25, 0x27	; 39
     2064:	0e 94 4c 1b 	call	0x3698	; 0x3698 <xTaskGenericCreate>
 		NULL, mainHEARTBEAT_TASK_PRIORITY, NULL);
@@ -8236,7 +8236,7 @@ BaseType_t xReturn = pdFALSE;
     3308:	2c 81       	ldd	r18, Y+4	; 0x04
     330a:	3d 81       	ldd	r19, Y+5	; 0x05
     330c:	b9 01       	movw	r22, r18
-    330e:	0e 94 62 28 	call	0x50c4	; 0x50c4 <memcpy>
+    330e:	0e 94 71 28 	call	0x50e2	; 0x50e2 <memcpy>
 		pxQueue->pcWriteTo += pxQueue->uxItemSize;
     3312:	8a 81       	ldd	r24, Y+2	; 0x02
     3314:	9b 81       	ldd	r25, Y+3	; 0x03
@@ -8304,7 +8304,7 @@ BaseType_t xReturn = pdFALSE;
     337e:	2c 81       	ldd	r18, Y+4	; 0x04
     3380:	3d 81       	ldd	r19, Y+5	; 0x05
     3382:	b9 01       	movw	r22, r18
-    3384:	0e 94 62 28 	call	0x50c4	; 0x50c4 <memcpy>
+    3384:	0e 94 71 28 	call	0x50e2	; 0x50e2 <memcpy>
 		pxQueue->u.pcReadFrom -= pxQueue->uxItemSize;
     3388:	8a 81       	ldd	r24, Y+2	; 0x02
     338a:	9b 81       	ldd	r25, Y+3	; 0x03
@@ -8515,7 +8515,7 @@ static void prvCopyDataFromQueue( Queue_t * const pxQueue, void * const pvBuffer
     34cc:	8b 81       	ldd	r24, Y+3	; 0x03
     34ce:	9c 81       	ldd	r25, Y+4	; 0x04
     34d0:	b9 01       	movw	r22, r18
-    34d2:	0e 94 62 28 	call	0x50c4	; 0x50c4 <memcpy>
+    34d2:	0e 94 71 28 	call	0x50e2	; 0x50e2 <memcpy>
 	}
 }
     34d6:	0f 90       	pop	r0
@@ -13377,291 +13377,311 @@ void vMCUStatusTask(void *pvParameters) {
     4efe:	41 e0       	ldi	r20, 0x01	; 1
     4f00:	60 e0       	ldi	r22, 0x00	; 0
     4f02:	81 e0       	ldi	r24, 0x01	; 1
-    4f04:	0e 94 de 27 	call	0x4fbc	; 0x4fbc <config_io_pin>
+    4f04:	0e 94 ed 27 	call	0x4fda	; 0x4fda <config_io_pin>
 	
+	//set_io_pin(IO_PORT_D, 5, 1);
+	
+	config_io_pin(IO_PORT_D, 5, IO_DIR_INPUT);
+    4f08:	40 e0       	ldi	r20, 0x00	; 0
+    4f0a:	65 e0       	ldi	r22, 0x05	; 5
+    4f0c:	82 e0       	ldi	r24, 0x02	; 2
+    4f0e:	0e 94 ed 27 	call	0x4fda	; 0x4fda <config_io_pin>
+	config_io_pin(IO_PORT_D, 6, IO_DIR_OUTPUT);
+    4f12:	41 e0       	ldi	r20, 0x01	; 1
+    4f14:	66 e0       	ldi	r22, 0x06	; 6
+    4f16:	82 e0       	ldi	r24, 0x02	; 2
+    4f18:	0e 94 ed 27 	call	0x4fda	; 0x4fda <config_io_pin>
+	
+	set_io_pin(IO_PORT_D, 6, LOW);
+    4f1c:	40 e0       	ldi	r20, 0x00	; 0
+    4f1e:	66 e0       	ldi	r22, 0x06	; 6
+    4f20:	82 e0       	ldi	r24, 0x02	; 2
+    4f22:	0e 94 2c 28 	call	0x5058	; 0x5058 <set_io_pin>
+		
 	for(;;) {
 		// Flip value
 		currentValue = !currentValue;
-    4f08:	81 e0       	ldi	r24, 0x01	; 1
-    4f0a:	99 81       	ldd	r25, Y+1	; 0x01
-    4f0c:	99 23       	and	r25, r25
-    4f0e:	09 f0       	breq	.+2      	; 0x4f12 <vMCUStatusTask+0x26>
-    4f10:	80 e0       	ldi	r24, 0x00	; 0
-    4f12:	89 83       	std	Y+1, r24	; 0x01
+    4f26:	81 e0       	ldi	r24, 0x01	; 1
+    4f28:	99 81       	ldd	r25, Y+1	; 0x01
+    4f2a:	99 23       	and	r25, r25
+    4f2c:	09 f0       	breq	.+2      	; 0x4f30 <vMCUStatusTask+0x44>
+    4f2e:	80 e0       	ldi	r24, 0x00	; 0
+    4f30:	89 83       	std	Y+1, r24	; 0x01
+						
 		// Write out value
 		set_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, currentValue);
-    4f14:	49 81       	ldd	r20, Y+1	; 0x01
-    4f16:	60 e0       	ldi	r22, 0x00	; 0
-    4f18:	81 e0       	ldi	r24, 0x01	; 1
-    4f1a:	0e 94 1d 28 	call	0x503a	; 0x503a <set_io_pin>
+    4f32:	49 81       	ldd	r20, Y+1	; 0x01
+    4f34:	60 e0       	ldi	r22, 0x00	; 0
+    4f36:	81 e0       	ldi	r24, 0x01	; 1
+    4f38:	0e 94 2c 28 	call	0x5058	; 0x5058 <set_io_pin>
 		// Delay 250ms for 4Hz
-		vTaskDelay((TickType_t)250); 
-    4f1e:	8a ef       	ldi	r24, 0xFA	; 250
-    4f20:	90 e0       	ldi	r25, 0x00	; 0
-    4f22:	0e 94 06 1d 	call	0x3a0c	; 0x3a0c <vTaskDelay>
+		vTaskDelay((TickType_t)1000); 
+    4f3c:	88 ee       	ldi	r24, 0xE8	; 232
+    4f3e:	93 e0       	ldi	r25, 0x03	; 3
+    4f40:	0e 94 06 1d 	call	0x3a0c	; 0x3a0c <vTaskDelay>
 	}
-    4f26:	f0 cf       	rjmp	.-32     	; 0x4f08 <vMCUStatusTask+0x1c>
+    4f44:	f0 cf       	rjmp	.-32     	; 0x4f26 <vMCUStatusTask+0x3a>
 
-00004f28 <vHeartbeatTask>:
+00004f46 <vHeartbeatTask>:
 /* Heartbeat task
  * Sends a node heartbeat out on the CANBus
  * Rate: 10Hz
  * Priority: 3
  */
 void vHeartbeatTask(void *pvParameters) {
-    4f28:	cf 93       	push	r28
-    4f2a:	df 93       	push	r29
-    4f2c:	00 d0       	rcall	.+0      	; 0x4f2e <vHeartbeatTask+0x6>
-    4f2e:	00 d0       	rcall	.+0      	; 0x4f30 <vHeartbeatTask+0x8>
-    4f30:	cd b7       	in	r28, 0x3d	; 61
-    4f32:	de b7       	in	r29, 0x3e	; 62
-    4f34:	9c 83       	std	Y+4, r25	; 0x04
-    4f36:	8b 83       	std	Y+3, r24	; 0x03
+    4f46:	cf 93       	push	r28
+    4f48:	df 93       	push	r29
+    4f4a:	00 d0       	rcall	.+0      	; 0x4f4c <vHeartbeatTask+0x6>
+    4f4c:	00 d0       	rcall	.+0      	; 0x4f4e <vHeartbeatTask+0x8>
+    4f4e:	cd b7       	in	r28, 0x3d	; 61
+    4f50:	de b7       	in	r29, 0x3e	; 62
+    4f52:	9c 83       	std	Y+4, r25	; 0x04
+    4f54:	8b 83       	std	Y+3, r24	; 0x03
 	(void) pvParameters;
 	// Data to send
 	HeartbeatFSM data;
 	
 	// Setup values
 	data.currentState = RTD;
-    4f38:	82 e0       	ldi	r24, 0x02	; 2
-    4f3a:	89 83       	std	Y+1, r24	; 0x01
+    4f56:	82 e0       	ldi	r24, 0x02	; 2
+    4f58:	89 83       	std	Y+1, r24	; 0x01
 	data.someData = 10;
-    4f3c:	8a e0       	ldi	r24, 0x0A	; 10
-    4f3e:	8a 83       	std	Y+2, r24	; 0x02
+    4f5a:	8a e0       	ldi	r24, 0x0A	; 10
+    4f5c:	8a 83       	std	Y+2, r24	; 0x02
 	
 	for(;;) {
 		// Transmit the data
 		can_tx(FSM_HEARTBEAT_ID, (uint8_t *)&data, sizeof(HeartbeatFSM));
-    4f40:	42 e0       	ldi	r20, 0x02	; 2
-    4f42:	ce 01       	movw	r24, r28
-    4f44:	01 96       	adiw	r24, 0x01	; 1
-    4f46:	bc 01       	movw	r22, r24
-    4f48:	84 e0       	ldi	r24, 0x04	; 4
-    4f4a:	92 e0       	ldi	r25, 0x02	; 2
-    4f4c:	0e 94 9e 0f 	call	0x1f3c	; 0x1f3c <can_tx>
+    4f5e:	42 e0       	ldi	r20, 0x02	; 2
+    4f60:	ce 01       	movw	r24, r28
+    4f62:	01 96       	adiw	r24, 0x01	; 1
+    4f64:	bc 01       	movw	r22, r24
+    4f66:	84 e0       	ldi	r24, 0x04	; 4
+    4f68:	92 e0       	ldi	r25, 0x02	; 2
+    4f6a:	0e 94 9e 0f 	call	0x1f3c	; 0x1f3c <can_tx>
 		// Delay 100ms
 		vTaskDelay((TickType_t)100); 
-    4f50:	84 e6       	ldi	r24, 0x64	; 100
-    4f52:	90 e0       	ldi	r25, 0x00	; 0
-    4f54:	0e 94 06 1d 	call	0x3a0c	; 0x3a0c <vTaskDelay>
+    4f6e:	84 e6       	ldi	r24, 0x64	; 100
+    4f70:	90 e0       	ldi	r25, 0x00	; 0
+    4f72:	0e 94 06 1d 	call	0x3a0c	; 0x3a0c <vTaskDelay>
 	}
-    4f58:	f3 cf       	rjmp	.-26     	; 0x4f40 <vHeartbeatTask+0x18>
+    4f76:	f3 cf       	rjmp	.-26     	; 0x4f5e <vHeartbeatTask+0x18>
 
-00004f5a <vCANSendTask>:
+00004f78 <vCANSendTask>:
 /* Send over CAN
  * 
  * 
  * 
  */
 void vCANSendTask(void *pvParameters) {
-    4f5a:	cf 93       	push	r28
-    4f5c:	df 93       	push	r29
-    4f5e:	00 d0       	rcall	.+0      	; 0x4f60 <vCANSendTask+0x6>
-    4f60:	cd b7       	in	r28, 0x3d	; 61
-    4f62:	de b7       	in	r29, 0x3e	; 62
-    4f64:	9a 83       	std	Y+2, r25	; 0x02
-    4f66:	89 83       	std	Y+1, r24	; 0x01
+    4f78:	cf 93       	push	r28
+    4f7a:	df 93       	push	r29
+    4f7c:	00 d0       	rcall	.+0      	; 0x4f7e <vCANSendTask+0x6>
+    4f7e:	cd b7       	in	r28, 0x3d	; 61
+    4f80:	de b7       	in	r29, 0x3e	; 62
+    4f82:	9a 83       	std	Y+2, r25	; 0x02
+    4f84:	89 83       	std	Y+1, r24	; 0x01
 	// Make compiler happy
 	(void) pvParameters;
 }
-    4f68:	0f 90       	pop	r0
-    4f6a:	0f 90       	pop	r0
-    4f6c:	df 91       	pop	r29
-    4f6e:	cf 91       	pop	r28
-    4f70:	08 95       	ret
+    4f86:	0f 90       	pop	r0
+    4f88:	0f 90       	pop	r0
+    4f8a:	df 91       	pop	r29
+    4f8c:	cf 91       	pop	r28
+    4f8e:	08 95       	ret
 
-00004f72 <vCANReceiveTask>:
+00004f90 <vCANReceiveTask>:
 /* Receive from CAN
  * 
  * 
  * 
  */
 void vCANReceiveTask(void *pvParameters) {
-    4f72:	cf 93       	push	r28
-    4f74:	df 93       	push	r29
-    4f76:	00 d0       	rcall	.+0      	; 0x4f78 <vCANReceiveTask+0x6>
-    4f78:	cd b7       	in	r28, 0x3d	; 61
-    4f7a:	de b7       	in	r29, 0x3e	; 62
-    4f7c:	9a 83       	std	Y+2, r25	; 0x02
-    4f7e:	89 83       	std	Y+1, r24	; 0x01
+    4f90:	cf 93       	push	r28
+    4f92:	df 93       	push	r29
+    4f94:	00 d0       	rcall	.+0      	; 0x4f96 <vCANReceiveTask+0x6>
+    4f96:	cd b7       	in	r28, 0x3d	; 61
+    4f98:	de b7       	in	r29, 0x3e	; 62
+    4f9a:	9a 83       	std	Y+2, r25	; 0x02
+    4f9c:	89 83       	std	Y+1, r24	; 0x01
 	// Make compiler happy
 	(void) pvParameters;
-    4f80:	0f 90       	pop	r0
-    4f82:	0f 90       	pop	r0
-    4f84:	df 91       	pop	r29
-    4f86:	cf 91       	pop	r28
-    4f88:	08 95       	ret
+    4f9e:	0f 90       	pop	r0
+    4fa0:	0f 90       	pop	r0
+    4fa2:	df 91       	pop	r29
+    4fa4:	cf 91       	pop	r28
+    4fa6:	08 95       	ret
 
-00004f8a <adc_read>:
-    4f8a:	90 91 7c 00 	lds	r25, 0x007C
-    4f8e:	90 7e       	andi	r25, 0xE0	; 224
-    4f90:	90 93 7c 00 	sts	0x007C, r25
-    4f94:	8d 30       	cpi	r24, 0x0D	; 13
-    4f96:	08 f0       	brcs	.+2      	; 0x4f9a <adc_read+0x10>
-    4f98:	82 e1       	ldi	r24, 0x12	; 18
-    4f9a:	90 91 7c 00 	lds	r25, 0x007C
-    4f9e:	89 2b       	or	r24, r25
-    4fa0:	80 93 7c 00 	sts	0x007C, r24
-    4fa4:	80 91 7a 00 	lds	r24, 0x007A
-    4fa8:	80 64       	ori	r24, 0x40	; 64
-    4faa:	80 93 7a 00 	sts	0x007A, r24
-    4fae:	80 91 7a 00 	lds	r24, 0x007A
-    4fb2:	86 fd       	sbrc	r24, 6
-    4fb4:	fc cf       	rjmp	.-8      	; 0x4fae <adc_read+0x24>
-    4fb6:	80 91 79 00 	lds	r24, 0x0079
-    4fba:	08 95       	ret
+00004fa8 <adc_read>:
+    4fa8:	90 91 7c 00 	lds	r25, 0x007C
+    4fac:	90 7e       	andi	r25, 0xE0	; 224
+    4fae:	90 93 7c 00 	sts	0x007C, r25
+    4fb2:	8d 30       	cpi	r24, 0x0D	; 13
+    4fb4:	08 f0       	brcs	.+2      	; 0x4fb8 <adc_read+0x10>
+    4fb6:	82 e1       	ldi	r24, 0x12	; 18
+    4fb8:	90 91 7c 00 	lds	r25, 0x007C
+    4fbc:	89 2b       	or	r24, r25
+    4fbe:	80 93 7c 00 	sts	0x007C, r24
+    4fc2:	80 91 7a 00 	lds	r24, 0x007A
+    4fc6:	80 64       	ori	r24, 0x40	; 64
+    4fc8:	80 93 7a 00 	sts	0x007A, r24
+    4fcc:	80 91 7a 00 	lds	r24, 0x007A
+    4fd0:	86 fd       	sbrc	r24, 6
+    4fd2:	fc cf       	rjmp	.-8      	; 0x4fcc <adc_read+0x24>
+    4fd4:	80 91 79 00 	lds	r24, 0x0079
+    4fd8:	08 95       	ret
 
-00004fbc <config_io_pin>:
-    4fbc:	81 30       	cpi	r24, 0x01	; 1
-    4fbe:	b9 f0       	breq	.+46     	; 0x4fee <config_io_pin+0x32>
-    4fc0:	18 f0       	brcs	.+6      	; 0x4fc8 <config_io_pin+0xc>
-    4fc2:	82 30       	cpi	r24, 0x02	; 2
-    4fc4:	39 f1       	breq	.+78     	; 0x5014 <config_io_pin+0x58>
-    4fc6:	08 95       	ret
-    4fc8:	84 b1       	in	r24, 0x04	; 4
-    4fca:	24 b1       	in	r18, 0x04	; 4
-    4fcc:	50 e0       	ldi	r21, 0x00	; 0
-    4fce:	51 95       	neg	r21
-    4fd0:	41 95       	neg	r20
-    4fd2:	51 09       	sbc	r21, r1
-    4fd4:	48 27       	eor	r20, r24
-    4fd6:	81 e0       	ldi	r24, 0x01	; 1
-    4fd8:	90 e0       	ldi	r25, 0x00	; 0
-    4fda:	02 c0       	rjmp	.+4      	; 0x4fe0 <config_io_pin+0x24>
-    4fdc:	88 0f       	add	r24, r24
-    4fde:	99 1f       	adc	r25, r25
-    4fe0:	6a 95       	dec	r22
-    4fe2:	e2 f7       	brpl	.-8      	; 0x4fdc <config_io_pin+0x20>
-    4fe4:	48 23       	and	r20, r24
-    4fe6:	59 23       	and	r21, r25
-    4fe8:	42 27       	eor	r20, r18
-    4fea:	44 b9       	out	0x04, r20	; 4
-    4fec:	08 95       	ret
-    4fee:	87 b1       	in	r24, 0x07	; 7
-    4ff0:	27 b1       	in	r18, 0x07	; 7
-    4ff2:	50 e0       	ldi	r21, 0x00	; 0
-    4ff4:	51 95       	neg	r21
-    4ff6:	41 95       	neg	r20
-    4ff8:	51 09       	sbc	r21, r1
-    4ffa:	48 27       	eor	r20, r24
-    4ffc:	81 e0       	ldi	r24, 0x01	; 1
-    4ffe:	90 e0       	ldi	r25, 0x00	; 0
-    5000:	02 c0       	rjmp	.+4      	; 0x5006 <config_io_pin+0x4a>
-    5002:	88 0f       	add	r24, r24
-    5004:	99 1f       	adc	r25, r25
-    5006:	6a 95       	dec	r22
-    5008:	e2 f7       	brpl	.-8      	; 0x5002 <config_io_pin+0x46>
-    500a:	48 23       	and	r20, r24
-    500c:	59 23       	and	r21, r25
-    500e:	42 27       	eor	r20, r18
-    5010:	47 b9       	out	0x07, r20	; 7
-    5012:	08 95       	ret
-    5014:	8a b1       	in	r24, 0x0a	; 10
-    5016:	2a b1       	in	r18, 0x0a	; 10
-    5018:	50 e0       	ldi	r21, 0x00	; 0
-    501a:	51 95       	neg	r21
-    501c:	41 95       	neg	r20
-    501e:	51 09       	sbc	r21, r1
-    5020:	48 27       	eor	r20, r24
-    5022:	81 e0       	ldi	r24, 0x01	; 1
-    5024:	90 e0       	ldi	r25, 0x00	; 0
-    5026:	02 c0       	rjmp	.+4      	; 0x502c <config_io_pin+0x70>
-    5028:	88 0f       	add	r24, r24
-    502a:	99 1f       	adc	r25, r25
-    502c:	6a 95       	dec	r22
-    502e:	e2 f7       	brpl	.-8      	; 0x5028 <config_io_pin+0x6c>
-    5030:	48 23       	and	r20, r24
-    5032:	59 23       	and	r21, r25
-    5034:	42 27       	eor	r20, r18
-    5036:	4a b9       	out	0x0a, r20	; 10
-    5038:	08 95       	ret
+00004fda <config_io_pin>:
+    4fda:	81 30       	cpi	r24, 0x01	; 1
+    4fdc:	b9 f0       	breq	.+46     	; 0x500c <config_io_pin+0x32>
+    4fde:	18 f0       	brcs	.+6      	; 0x4fe6 <config_io_pin+0xc>
+    4fe0:	82 30       	cpi	r24, 0x02	; 2
+    4fe2:	39 f1       	breq	.+78     	; 0x5032 <config_io_pin+0x58>
+    4fe4:	08 95       	ret
+    4fe6:	84 b1       	in	r24, 0x04	; 4
+    4fe8:	24 b1       	in	r18, 0x04	; 4
+    4fea:	50 e0       	ldi	r21, 0x00	; 0
+    4fec:	51 95       	neg	r21
+    4fee:	41 95       	neg	r20
+    4ff0:	51 09       	sbc	r21, r1
+    4ff2:	48 27       	eor	r20, r24
+    4ff4:	81 e0       	ldi	r24, 0x01	; 1
+    4ff6:	90 e0       	ldi	r25, 0x00	; 0
+    4ff8:	02 c0       	rjmp	.+4      	; 0x4ffe <config_io_pin+0x24>
+    4ffa:	88 0f       	add	r24, r24
+    4ffc:	99 1f       	adc	r25, r25
+    4ffe:	6a 95       	dec	r22
+    5000:	e2 f7       	brpl	.-8      	; 0x4ffa <config_io_pin+0x20>
+    5002:	48 23       	and	r20, r24
+    5004:	59 23       	and	r21, r25
+    5006:	42 27       	eor	r20, r18
+    5008:	44 b9       	out	0x04, r20	; 4
+    500a:	08 95       	ret
+    500c:	87 b1       	in	r24, 0x07	; 7
+    500e:	27 b1       	in	r18, 0x07	; 7
+    5010:	50 e0       	ldi	r21, 0x00	; 0
+    5012:	51 95       	neg	r21
+    5014:	41 95       	neg	r20
+    5016:	51 09       	sbc	r21, r1
+    5018:	48 27       	eor	r20, r24
+    501a:	81 e0       	ldi	r24, 0x01	; 1
+    501c:	90 e0       	ldi	r25, 0x00	; 0
+    501e:	02 c0       	rjmp	.+4      	; 0x5024 <config_io_pin+0x4a>
+    5020:	88 0f       	add	r24, r24
+    5022:	99 1f       	adc	r25, r25
+    5024:	6a 95       	dec	r22
+    5026:	e2 f7       	brpl	.-8      	; 0x5020 <config_io_pin+0x46>
+    5028:	48 23       	and	r20, r24
+    502a:	59 23       	and	r21, r25
+    502c:	42 27       	eor	r20, r18
+    502e:	47 b9       	out	0x07, r20	; 7
+    5030:	08 95       	ret
+    5032:	8a b1       	in	r24, 0x0a	; 10
+    5034:	2a b1       	in	r18, 0x0a	; 10
+    5036:	50 e0       	ldi	r21, 0x00	; 0
+    5038:	51 95       	neg	r21
+    503a:	41 95       	neg	r20
+    503c:	51 09       	sbc	r21, r1
+    503e:	48 27       	eor	r20, r24
+    5040:	81 e0       	ldi	r24, 0x01	; 1
+    5042:	90 e0       	ldi	r25, 0x00	; 0
+    5044:	02 c0       	rjmp	.+4      	; 0x504a <config_io_pin+0x70>
+    5046:	88 0f       	add	r24, r24
+    5048:	99 1f       	adc	r25, r25
+    504a:	6a 95       	dec	r22
+    504c:	e2 f7       	brpl	.-8      	; 0x5046 <config_io_pin+0x6c>
+    504e:	48 23       	and	r20, r24
+    5050:	59 23       	and	r21, r25
+    5052:	42 27       	eor	r20, r18
+    5054:	4a b9       	out	0x0a, r20	; 10
+    5056:	08 95       	ret
 
-0000503a <set_io_pin>:
-    503a:	81 30       	cpi	r24, 0x01	; 1
-    503c:	b9 f0       	breq	.+46     	; 0x506c <set_io_pin+0x32>
-    503e:	18 f0       	brcs	.+6      	; 0x5046 <set_io_pin+0xc>
-    5040:	82 30       	cpi	r24, 0x02	; 2
-    5042:	39 f1       	breq	.+78     	; 0x5092 <set_io_pin+0x58>
-    5044:	08 95       	ret
-    5046:	85 b1       	in	r24, 0x05	; 5
-    5048:	25 b1       	in	r18, 0x05	; 5
-    504a:	50 e0       	ldi	r21, 0x00	; 0
-    504c:	51 95       	neg	r21
-    504e:	41 95       	neg	r20
-    5050:	51 09       	sbc	r21, r1
-    5052:	48 27       	eor	r20, r24
-    5054:	81 e0       	ldi	r24, 0x01	; 1
-    5056:	90 e0       	ldi	r25, 0x00	; 0
-    5058:	02 c0       	rjmp	.+4      	; 0x505e <set_io_pin+0x24>
-    505a:	88 0f       	add	r24, r24
-    505c:	99 1f       	adc	r25, r25
-    505e:	6a 95       	dec	r22
-    5060:	e2 f7       	brpl	.-8      	; 0x505a <set_io_pin+0x20>
-    5062:	48 23       	and	r20, r24
-    5064:	59 23       	and	r21, r25
-    5066:	42 27       	eor	r20, r18
-    5068:	45 b9       	out	0x05, r20	; 5
-    506a:	08 95       	ret
-    506c:	88 b1       	in	r24, 0x08	; 8
-    506e:	28 b1       	in	r18, 0x08	; 8
-    5070:	50 e0       	ldi	r21, 0x00	; 0
-    5072:	51 95       	neg	r21
-    5074:	41 95       	neg	r20
-    5076:	51 09       	sbc	r21, r1
-    5078:	48 27       	eor	r20, r24
-    507a:	81 e0       	ldi	r24, 0x01	; 1
-    507c:	90 e0       	ldi	r25, 0x00	; 0
-    507e:	02 c0       	rjmp	.+4      	; 0x5084 <set_io_pin+0x4a>
-    5080:	88 0f       	add	r24, r24
-    5082:	99 1f       	adc	r25, r25
-    5084:	6a 95       	dec	r22
-    5086:	e2 f7       	brpl	.-8      	; 0x5080 <set_io_pin+0x46>
-    5088:	48 23       	and	r20, r24
-    508a:	59 23       	and	r21, r25
-    508c:	42 27       	eor	r20, r18
-    508e:	48 b9       	out	0x08, r20	; 8
-    5090:	08 95       	ret
-    5092:	8b b1       	in	r24, 0x0b	; 11
-    5094:	2b b1       	in	r18, 0x0b	; 11
-    5096:	50 e0       	ldi	r21, 0x00	; 0
-    5098:	51 95       	neg	r21
-    509a:	41 95       	neg	r20
-    509c:	51 09       	sbc	r21, r1
-    509e:	48 27       	eor	r20, r24
-    50a0:	81 e0       	ldi	r24, 0x01	; 1
-    50a2:	90 e0       	ldi	r25, 0x00	; 0
-    50a4:	02 c0       	rjmp	.+4      	; 0x50aa <set_io_pin+0x70>
-    50a6:	88 0f       	add	r24, r24
-    50a8:	99 1f       	adc	r25, r25
-    50aa:	6a 95       	dec	r22
-    50ac:	e2 f7       	brpl	.-8      	; 0x50a6 <set_io_pin+0x6c>
-    50ae:	48 23       	and	r20, r24
-    50b0:	59 23       	and	r21, r25
-    50b2:	42 27       	eor	r20, r18
-    50b4:	4b b9       	out	0x0b, r20	; 11
-    50b6:	08 95       	ret
-
-000050b8 <__tablejump2__>:
-    50b8:	ee 0f       	add	r30, r30
-    50ba:	ff 1f       	adc	r31, r31
-    50bc:	05 90       	lpm	r0, Z+
-    50be:	f4 91       	lpm	r31, Z
-    50c0:	e0 2d       	mov	r30, r0
-    50c2:	09 94       	ijmp
-
-000050c4 <memcpy>:
-    50c4:	fb 01       	movw	r30, r22
-    50c6:	dc 01       	movw	r26, r24
-    50c8:	02 c0       	rjmp	.+4      	; 0x50ce <memcpy+0xa>
-    50ca:	01 90       	ld	r0, Z+
-    50cc:	0d 92       	st	X+, r0
-    50ce:	41 50       	subi	r20, 0x01	; 1
-    50d0:	50 40       	sbci	r21, 0x00	; 0
-    50d2:	d8 f7       	brcc	.-10     	; 0x50ca <memcpy+0x6>
+00005058 <set_io_pin>:
+    5058:	81 30       	cpi	r24, 0x01	; 1
+    505a:	b9 f0       	breq	.+46     	; 0x508a <set_io_pin+0x32>
+    505c:	18 f0       	brcs	.+6      	; 0x5064 <set_io_pin+0xc>
+    505e:	82 30       	cpi	r24, 0x02	; 2
+    5060:	39 f1       	breq	.+78     	; 0x50b0 <set_io_pin+0x58>
+    5062:	08 95       	ret
+    5064:	85 b1       	in	r24, 0x05	; 5
+    5066:	25 b1       	in	r18, 0x05	; 5
+    5068:	50 e0       	ldi	r21, 0x00	; 0
+    506a:	51 95       	neg	r21
+    506c:	41 95       	neg	r20
+    506e:	51 09       	sbc	r21, r1
+    5070:	48 27       	eor	r20, r24
+    5072:	81 e0       	ldi	r24, 0x01	; 1
+    5074:	90 e0       	ldi	r25, 0x00	; 0
+    5076:	02 c0       	rjmp	.+4      	; 0x507c <set_io_pin+0x24>
+    5078:	88 0f       	add	r24, r24
+    507a:	99 1f       	adc	r25, r25
+    507c:	6a 95       	dec	r22
+    507e:	e2 f7       	brpl	.-8      	; 0x5078 <set_io_pin+0x20>
+    5080:	48 23       	and	r20, r24
+    5082:	59 23       	and	r21, r25
+    5084:	42 27       	eor	r20, r18
+    5086:	45 b9       	out	0x05, r20	; 5
+    5088:	08 95       	ret
+    508a:	88 b1       	in	r24, 0x08	; 8
+    508c:	28 b1       	in	r18, 0x08	; 8
+    508e:	50 e0       	ldi	r21, 0x00	; 0
+    5090:	51 95       	neg	r21
+    5092:	41 95       	neg	r20
+    5094:	51 09       	sbc	r21, r1
+    5096:	48 27       	eor	r20, r24
+    5098:	81 e0       	ldi	r24, 0x01	; 1
+    509a:	90 e0       	ldi	r25, 0x00	; 0
+    509c:	02 c0       	rjmp	.+4      	; 0x50a2 <set_io_pin+0x4a>
+    509e:	88 0f       	add	r24, r24
+    50a0:	99 1f       	adc	r25, r25
+    50a2:	6a 95       	dec	r22
+    50a4:	e2 f7       	brpl	.-8      	; 0x509e <set_io_pin+0x46>
+    50a6:	48 23       	and	r20, r24
+    50a8:	59 23       	and	r21, r25
+    50aa:	42 27       	eor	r20, r18
+    50ac:	48 b9       	out	0x08, r20	; 8
+    50ae:	08 95       	ret
+    50b0:	8b b1       	in	r24, 0x0b	; 11
+    50b2:	2b b1       	in	r18, 0x0b	; 11
+    50b4:	50 e0       	ldi	r21, 0x00	; 0
+    50b6:	51 95       	neg	r21
+    50b8:	41 95       	neg	r20
+    50ba:	51 09       	sbc	r21, r1
+    50bc:	48 27       	eor	r20, r24
+    50be:	81 e0       	ldi	r24, 0x01	; 1
+    50c0:	90 e0       	ldi	r25, 0x00	; 0
+    50c2:	02 c0       	rjmp	.+4      	; 0x50c8 <set_io_pin+0x70>
+    50c4:	88 0f       	add	r24, r24
+    50c6:	99 1f       	adc	r25, r25
+    50c8:	6a 95       	dec	r22
+    50ca:	e2 f7       	brpl	.-8      	; 0x50c4 <set_io_pin+0x6c>
+    50cc:	48 23       	and	r20, r24
+    50ce:	59 23       	and	r21, r25
+    50d0:	42 27       	eor	r20, r18
+    50d2:	4b b9       	out	0x0b, r20	; 11
     50d4:	08 95       	ret
 
-000050d6 <_exit>:
-    50d6:	f8 94       	cli
+000050d6 <__tablejump2__>:
+    50d6:	ee 0f       	add	r30, r30
+    50d8:	ff 1f       	adc	r31, r31
+    50da:	05 90       	lpm	r0, Z+
+    50dc:	f4 91       	lpm	r31, Z
+    50de:	e0 2d       	mov	r30, r0
+    50e0:	09 94       	ijmp
 
-000050d8 <__stop_program>:
-    50d8:	ff cf       	rjmp	.-2      	; 0x50d8 <__stop_program>
+000050e2 <memcpy>:
+    50e2:	fb 01       	movw	r30, r22
+    50e4:	dc 01       	movw	r26, r24
+    50e6:	02 c0       	rjmp	.+4      	; 0x50ec <memcpy+0xa>
+    50e8:	01 90       	ld	r0, Z+
+    50ea:	0d 92       	st	X+, r0
+    50ec:	41 50       	subi	r20, 0x01	; 1
+    50ee:	50 40       	sbci	r21, 0x00	; 0
+    50f0:	d8 f7       	brcc	.-10     	; 0x50e8 <memcpy+0x6>
+    50f2:	08 95       	ret
+
+000050f4 <_exit>:
+    50f4:	f8 94       	cli
+
+000050f6 <__stop_program>:
+    50f6:	ff cf       	rjmp	.-2      	; 0x50f6 <__stop_program>

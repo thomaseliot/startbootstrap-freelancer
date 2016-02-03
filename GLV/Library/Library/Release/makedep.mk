@@ -2,5 +2,7 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+cmr_can.c
+
 cmr_64c1_lib.c
 

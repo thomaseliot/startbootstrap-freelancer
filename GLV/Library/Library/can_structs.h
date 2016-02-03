@@ -7,6 +7,7 @@
 #define CAN_STRUCTS_H_
 
 #include "cmr_constants.h"
+#include "stdint.h"
 
 typedef struct HeartbeatFSM_t {
 	NodeState currentState;

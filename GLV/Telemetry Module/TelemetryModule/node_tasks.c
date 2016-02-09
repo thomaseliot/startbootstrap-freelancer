@@ -9,10 +9,10 @@
 #include <stdbool.h>
 #include "node_tasks.h"
 #include "task.h"
-#include "can_ids.h"
 #include "cmr_64c1_lib.h"
-#include "node_config.h"
+#include "can_ids.h"
 #include "can_structs.h"
+#include "node_config.h"
 
 // Globals, to be removed later
 st_cmd_t heartbeat_cmd_st; // Receive command for 1 reserved heartbeat mailbox
@@ -31,13 +31,21 @@ void vMCUStatusTask(void *pvParameters) {
 	// Setup MCU status pin as output
 	config_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, IO_DIR_OUTPUT);
 	
+	//set_io_pin(IO_PORT_D, 5, 1);
+	
+	config_io_pin(IO_PORT_D, 5, IO_DIR_INPUT);
+	config_io_pin(IO_PORT_D, 6, IO_DIR_OUTPUT);
+	
+	set_io_pin(IO_PORT_D, 6, LOW);
+		
 	for(;;) {
 		// Flip value
 		currentValue = !currentValue;
+						
 		// Write out value
 		set_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, currentValue);
 		// Delay 250ms for 4Hz
-		vTaskDelay((TickType_t)250); 
+		vTaskDelay((TickType_t)1000); 
 	}
 }
 

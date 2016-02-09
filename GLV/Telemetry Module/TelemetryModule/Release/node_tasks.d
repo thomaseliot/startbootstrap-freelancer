@@ -20,8 +20,10 @@ node_tasks.d node_tasks.o: .././node_tasks.c \
  ../Source/include/list.h ../Drivers/CAN/can_lib.h \
  ../Drivers/CAN/can_drv.h ../Config/can_config.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../Config/can_ids.h .././cmr_64c1_lib.h ../Config/node_config.h \
- ../cmr_64c1_lib.h ../Config/can_structs.h ../cmr_constants.h
+ .././cmr_64c1_lib.h ../../../Library/Library/can_ids.h \
+ ../../../Library/Library/can_structs.h \
+ ../../../Library/Library/cmr_constants.h ../Config/node_config.h \
+ ../cmr_64c1_lib.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -77,14 +79,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
-../Config/can_ids.h:
-
 .././cmr_64c1_lib.h:
+
+../../../Library/Library/can_ids.h:
+
+../../../Library/Library/can_structs.h:
+
+../../../Library/Library/cmr_constants.h:
 
 ../Config/node_config.h:
 
 ../cmr_64c1_lib.h:
-
-../Config/can_structs.h:
-
-../cmr_constants.h:

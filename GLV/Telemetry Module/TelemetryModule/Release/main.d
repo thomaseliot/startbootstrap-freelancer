@@ -18,7 +18,8 @@ main.d main.o: .././main.c \
  ../Source/include/mpu_wrappers.h ../Source/include/task.h \
  ../Source/include/list.h ../Drivers/CAN/can_lib.h \
  ../Drivers/CAN/can_drv.h ../Config/can_config.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
+ .././cmr_64c1_lib.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -71,3 +72,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../Config/can_config.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
+
+.././cmr_64c1_lib.h:

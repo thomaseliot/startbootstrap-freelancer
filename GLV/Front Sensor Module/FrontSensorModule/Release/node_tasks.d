@@ -17,11 +17,9 @@ node_tasks.d node_tasks.o: .././node_tasks.c \
  ../Source/include/portable.h ../Source/include/deprecated_definitions.h \
  ../Source/portable/GCC/ATmega64c1/portmacro.h \
  ../Source/include/mpu_wrappers.h ../Source/include/task.h \
- ../Source/include/list.h ../Drivers/CAN/can_lib.h \
- ../Drivers/CAN/can_drv.h ../Config/can_config.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../Config/can_ids.h .././cmr_64c1_lib.h ../Config/node_config.h \
- ../cmr_64c1_lib.h ../Config/can_structs.h ../cmr_constants.h
+ ../Source/include/list.h ../Drivers/CAN/can.h ../Config/can_ids.h \
+ ../../../Library/Library/cmr_64c1_lib.h ../Config/node_config.h \
+ ../Config/can_structs.h ../cmr_constants.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -69,21 +67,13 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../Source/include/list.h:
 
-../Drivers/CAN/can_lib.h:
-
-../Drivers/CAN/can_drv.h:
-
-../Config/can_config.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
+../Drivers/CAN/can.h:
 
 ../Config/can_ids.h:
 
-.././cmr_64c1_lib.h:
+../../../Library/Library/cmr_64c1_lib.h:
 
 ../Config/node_config.h:
-
-../cmr_64c1_lib.h:
 
 ../Config/can_structs.h:
 

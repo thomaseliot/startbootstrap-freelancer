@@ -25,7 +25,7 @@
     <preserveEEPROM>false</preserveEEPROM>
     <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
     <ExternalProgrammingToolCommand />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
@@ -40,20 +40,20 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
-    <avrtoolserialnumber>J30200027839</avrtoolserialnumber>
+    <avrtoolserialnumber>J30200029093</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9686</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_jtagice3plus>
       <ToolOptions>
         <InterfaceProperties>
           <IspClock>1000000</IspClock>
         </InterfaceProperties>
-        <InterfaceName>ISP</InterfaceName>
+        <InterfaceName>debugWIRE</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
-      <ToolNumber>J30200027839</ToolNumber>
+      <ToolNumber>J30200029093</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
-    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtoolinterface>debugWIRE</avrtoolinterface>
     <avrtoolinterfaceclock>1000000</avrtoolinterfaceclock>
     <PercepioTrace>
       <TargetOS>FreeRTOS</TargetOS>
@@ -137,6 +137,7 @@
             <Value>../Source/portable/GCC/ATmega64c1</Value>
             <Value>../Config</Value>
             <Value>../Drivers/CAN</Value>
+            <Value>../../../Library/Library</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>False</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
@@ -146,6 +147,7 @@
         <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
         <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
         <avrgcc.compiler.warnings.ExtraWarnings>True</avrgcc.compiler.warnings.ExtraWarnings>
+        <avrgcc.linker.general.NoSharedLibraries>True</avrgcc.linker.general.NoSharedLibraries>
         <avrgcc.linker.libraries.Libraries>
           <ListValues>
             <Value>m</Value>
@@ -201,11 +203,6 @@
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
         <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
         <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-        <avrgcc.linker.libraries.Libraries>
-          <ListValues>
-            <Value>libm</Value>
-          </ListValues>
-        </avrgcc.linker.libraries.Libraries>
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
       </AvrGcc>
     </ToolchainSettings>
@@ -226,22 +223,16 @@
     <Compile Include="Config\node_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\CAN\can_drv.c">
+    <Compile Include="Drivers\CAN\can.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\CAN\can_drv.h">
+    <Compile Include="Drivers\CAN\can.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\CAN\can_lib.c">
+    <Compile Include="Drivers\CAN\frtos_can.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\CAN\can_lib.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\CAN\rtos_can_lib.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\CAN\rtos_can_lib.h">
+    <Compile Include="Drivers\CAN\frtos_can.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -334,9 +325,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Library\Library\CMRLibrary.cproj">
+    <ProjectReference Include="..\..\..\Library\Library\CMRLibrary.cproj">
       <Name>CMRLibrary</Name>
-      <Project>{dce6c7e3-ee26-4d79-826b-08594b9ad897}</Project>
+      <Project>{bcb76e93-e8cb-4024-a06d-960cbe6074ae}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

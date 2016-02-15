@@ -11,7 +11,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "can_lib.h"
+#include "can.h"
 
 //IO pin configuration macros, to choose ports and directions
 #define IO_PORT_B		0

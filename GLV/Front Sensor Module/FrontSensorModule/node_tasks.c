@@ -1,8 +1,10 @@
 /*
  * tasks.c
+ * 
+ * Contains code for all tasks.
  *
  * Created: 11/23/2015 6:19:47 PM
- *  Author: skir0
+ * Author: semerson
  */ 
 
 #include <avr/io.h>
@@ -14,9 +16,6 @@
 #include "node_config.h"
 #include "can_structs.h"
 
-// Globals, to be removed later
-st_cmd_t heartbeat_cmd_st; // Receive command for 1 reserved heartbeat mailbox
-uint64_t can_send_buffer;	
 
 /* MCU Status task
  * Toggles the MCU status LED, to blink at 2Hz
@@ -26,20 +25,31 @@ uint64_t can_send_buffer;
 void vMCUStatusTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
+	
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	
+	// Period
+	const TickType_t xPeriod = 250;		// In ticks (ms)
+	
 	// Task variables
-	Bool currentValue = 0;	// false
+	bool currentValue = 0;	// false
+	
 	// Setup MCU status pin as output
 	config_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, IO_DIR_OUTPUT);
 	
+	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
 		// Flip value
 		currentValue = !currentValue;
 		// Write out value
 		set_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, currentValue);
-		// Delay 250ms for 4Hz
-		vTaskDelay((TickType_t)250); 
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod); 
 	}
 }
+
 
 /* Heartbeat task
  * Sends a node heartbeat out on the CANBus
@@ -49,29 +59,45 @@ void vMCUStatusTask(void *pvParameters) {
 void vHeartbeatTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
+	
+	// Previous wake time pointer
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	
+	// Period
+	const TickType_t xPeriod = 1000;		// In ticks (ms)
+	
 	// Data to send
 	HeartbeatFSM data;
+	
+	// Define CAN packet to send. 
+	// Format: {ID, Length, Data};
+	static CAN_packet packet = {0x204, 2, "fa"};
 	
 	// Setup values
 	data.currentState = RTD;
 	data.someData = 10;
 	
 	for(;;) {
-		// Transmit the data
-		can_tx(FSM_HEARTBEAT_ID, (uint8_t *)&data, sizeof(HeartbeatFSM));
+		// Transmit the data. 
+		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
+		can_send(&packet, 1, 100);
+		
 		// Delay 100ms
-		vTaskDelay((TickType_t)100); 
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
 
+
 /* Send over CAN
- * 
+ * Uses send mailboxes to send enqueued messages over CAN
  * 
  * 
  */
 void vCANSendTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
+	
+	
 }
 
 /* Receive from CAN
@@ -82,4 +108,6 @@ void vCANSendTask(void *pvParameters) {
 void vCANReceiveTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
+	
+	
 }

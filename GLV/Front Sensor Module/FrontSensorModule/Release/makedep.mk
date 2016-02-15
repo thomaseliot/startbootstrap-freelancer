@@ -2,11 +2,9 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Drivers\CAN\can_drv.c
+Drivers\CAN\can.c
 
-Drivers\CAN\can_lib.c
-
-Drivers\CAN\rtos_can_lib.c
+Drivers\CAN\frtos_can.c
 
 main.c
 

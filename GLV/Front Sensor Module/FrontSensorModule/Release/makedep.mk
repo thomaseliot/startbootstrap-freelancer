@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+Config\can_callbacks.c
+
 Drivers\CAN\can.c
 
 Drivers\CAN\frtos_can.c

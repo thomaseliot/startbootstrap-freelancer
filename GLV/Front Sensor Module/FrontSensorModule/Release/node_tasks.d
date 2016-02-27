@@ -10,16 +10,22 @@ node_tasks.d node_tasks.o: .././node_tasks.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stdbool.h \
  .././node_tasks.h ../Source/include/FreeRTOS.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h \
  ../Config/FreeRTOSConfig.h ../Source/include/projdefs.h \
  ../Source/include/portable.h ../Source/include/deprecated_definitions.h \
  ../Source/portable/GCC/ATmega64c1/portmacro.h \
  ../Source/include/mpu_wrappers.h ../Source/include/task.h \
- ../Source/include/list.h ../Drivers/CAN/can.h ../Config/can_ids.h \
+ ../Source/include/list.h ../Drivers/CAN/can.h ../Config/can_config.h \
+ ../Drivers/CAN/frtos_can.h ../Drivers/CAN/can.h \
+ ../Source/include/queue.h ../Config/can_ids.h \
  ../../../Library/Library/cmr_64c1_lib.h ../Config/node_config.h \
- ../Config/can_structs.h ../cmr_constants.h
+ ../../../Library/Library/can_structs.h \
+ ../../../Library/Library/cmr_constants.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\assert.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -43,13 +49,15 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h:
+
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stdbool.h:
 
 .././node_tasks.h:
 
 ../Source/include/FreeRTOS.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h:
 
 ../Config/FreeRTOSConfig.h:
 
@@ -69,12 +77,24 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../Drivers/CAN/can.h:
 
+../Config/can_config.h:
+
+../Drivers/CAN/frtos_can.h:
+
+../Drivers/CAN/can.h:
+
+../Source/include/queue.h:
+
 ../Config/can_ids.h:
 
 ../../../Library/Library/cmr_64c1_lib.h:
 
 ../Config/node_config.h:
 
-../Config/can_structs.h:
+../../../Library/Library/can_structs.h:
 
-../cmr_constants.h:
+../../../Library/Library/cmr_constants.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\assert.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:

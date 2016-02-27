@@ -46,6 +46,7 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../Config/can_callbacks.c \
 ../Drivers/CAN/can.c \
 ../Drivers/CAN/frtos_can.c \
 ../main.c \
@@ -64,6 +65,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+Config/can_callbacks.o \
 Drivers/CAN/can.o \
 Drivers/CAN/frtos_can.o \
 main.o \
@@ -75,6 +77,7 @@ Source/tasks.o \
 node_tasks.o
 
 OBJS_AS_ARGS +=  \
+Config/can_callbacks.o \
 Drivers/CAN/can.o \
 Drivers/CAN/frtos_can.o \
 main.o \
@@ -86,6 +89,7 @@ Source/tasks.o \
 node_tasks.o
 
 C_DEPS +=  \
+Config/can_callbacks.d \
 Drivers/CAN/can.d \
 Drivers/CAN/frtos_can.d \
 main.d \
@@ -97,6 +101,7 @@ Source/tasks.d \
 node_tasks.d
 
 C_DEPS_AS_ARGS +=  \
+Config/can_callbacks.d \
 Drivers/CAN/can.d \
 Drivers/CAN/frtos_can.d \
 main.d \
@@ -141,38 +146,47 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+Config/%.o: ../Config/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.9.2
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -Os -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 Drivers/CAN/%.o: ../Drivers/CAN/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -Os -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -Os -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Source/%.o: ../Source/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -Os -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Source/portable/GCC/ATmega64c1/%.o: ../Source/portable/GCC/ATmega64c1/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -Os -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 Source/portable/MemMang/%.o: ../Source/portable/MemMang/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -O0 -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\include" -I"../Drivers" -I"../Source" -I"../Source/include" -I"../Source/portable" -I"../Source/portable/MemMang" -I".." -I"../Source/portable/GCC/ATmega64c1" -I"../Config" -I"../Drivers/CAN" -I"../../../Library/Library"  -Os -fpack-struct -fshort-enums -g3 -Wall -Wextra -mmcu=atmega64c1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega64c1" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

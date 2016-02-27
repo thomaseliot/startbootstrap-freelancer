@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PCANExplorerProject Version="5.0" Name="CMR16e">
     <Connections AutoReset="0" IgnoreRTRLength="0" ProcessRTR="1">
-        <Connection Bus="1" Enabled="1" Protocol="0" SymbolsFileName="CMR16e.sym" BitRate="28" Connection="PCAN Dongle@pcan_usb" Name="Connection1"/>
+        <Connection Bus="1" Enabled="1" Protocol="0" CalcBusLoad="1" BitRate="28" Connection="PCAN Dongle@pcan_usb" Name="Connection1"/>
     </Connections>
     <MessageFilters/>
     <TransmitList>
         <TransmitListItem Bus="1" CanId="517" Type="0" DLC="1" Data="" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="258" Type="0" DLC="1" Data="" CycleTime="1" IsPaused="1" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="256" Type="0" DLC="1" Data="" CycleTime="1" IsPaused="1" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="257" Type="0" DLC="1" Data="" CycleTime="1" IsPaused="1" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="259" Type="0" DLC="1" Data="" CycleTime="1" IsPaused="1" Creator="User"/>
     </TransmitList>
     <Files>
         <File RelativePath="CMR16e.sym"/>

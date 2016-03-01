@@ -12,32 +12,6 @@
 /* I/O                                                                  */
 /************************************************************************/
 
-/* adc_read
- * Read an ADC channel, blocking until conversion is complete.
- * Arguments:
- *	ch: the channel number to read
- * Returns: the result of the conversion, 8-bit
- */
-uint8_t adc_read(uint8_t ch) {
-	// Set which channel to read. Leave all ADMUX bits as is except MUX4-0
-	// Clear MUX bits
-	ADMUX &= 0xE0;
-	// Guard against invalid channel
-	if(ch > 12) ch = 18; // Read ground
-	
-	// Set MUX to read channel
-	ADMUX |= ch;
-	
-	// Set ADC start conversion bit
-	ADCSRA |= (1 << ADSC);
-	
-	// Wait for ADCSRA bit ADSC to go low for data conversion to complete
-	while(ADCSRA & (1 << ADSC));
-	
-	// Return read value
-	return ADCH;
-}
-
 /* config_io_pin
  * Configures an digital I/O pin as input or output.
  * Arguments:

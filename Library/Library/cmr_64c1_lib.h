@@ -3,7 +3,7 @@
  * 
  * Library for common functions used with the atmega64c1
  *
- * Copyright (c) Carnegie Mellon Racing 2015
+ * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
 
@@ -29,18 +29,20 @@
 #define HIGH	1
 
 // Pin definitions for SPI
-#define SPI_MISO	0	// PB0
-#define SPI_MOSI 1	// PB1
-#define SPI_SCK	7	// PB7
-#define SPI_SSA	1	// PC1
+#define SPI_MISO_PORT	IO_PORTB	// PB0
+#define SPI_MISO_PIN	0
+#define SPI_MOSI_PORT	IO_PORTB	// PB1
+#define SPI_MOSI_PIN	1
+#define SPI_SCK_PORT	IO_PORTB	// PB7
+#define SPI_SCK_PIN		7
+#define SPI_SS_PORT		IO_PORTC	// PC1
+#define SPI_SS_PIN		1
 
 
 /************************************************************************/
 /* I/O                                                                  */
 /************************************************************************/
 
-// Read ADC channel
-uint8_t adc_read(uint8_t ch);
 // Configure I/O pin
 void config_io_pin(uint8_t port, uint8_t port_ch, uint8_t dir);
 // Set value of I/O pin

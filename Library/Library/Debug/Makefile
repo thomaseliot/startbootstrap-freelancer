@@ -37,8 +37,8 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../cmr_can.c \
-../cmr_64c1_lib.c
+../cmr_64c1_lib.c \
+../cmr_can.c
 
 
 PREPROCESSING_SRCS += 
@@ -48,20 +48,20 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-cmr_can.o \
-cmr_64c1_lib.o
+cmr_64c1_lib.o \
+cmr_can.o
 
 OBJS_AS_ARGS +=  \
-cmr_can.o \
-cmr_64c1_lib.o
+cmr_64c1_lib.o \
+cmr_can.o
 
 C_DEPS +=  \
-cmr_can.d \
-cmr_64c1_lib.d
+cmr_64c1_lib.d \
+cmr_can.d
 
 C_DEPS_AS_ARGS +=  \
-cmr_can.d \
-cmr_64c1_lib.d
+cmr_64c1_lib.d \
+cmr_can.d
 
 OUTPUT_FILE_PATH +=libCMRLibrary.a
 

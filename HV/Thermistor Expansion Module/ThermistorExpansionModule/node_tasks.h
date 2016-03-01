@@ -1,36 +1,41 @@
-/* 
- * tasks.h
+/* node_tasks.h
  * File containing tasks to be run by the RTOS
  * 
- * Created: 11/23/2015 6:19:57 PM
- * Author: Shepard Emerson (semerson)
- * 
- * Copyright (c) 2015, Carnegie Mellon Racing
- * 
+ * Copyright (c) 2016, Carnegie Mellon Racing
  */ 
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include "can.h"
-#include "can_config.h"
-#include "frtos_can.h"
-
-//IO pin configuration macros, to choose ports and directions
-#define IO_PORT_B		0
-#define IO_PORT_C		1
-#define IO_PORT_D		2
-#define IO_DIR_INPUT	0
-#define IO_DIR_OUTPUT	1
 
 #ifndef TASKS_H_
 #define TASKS_H_
 
-// Global variables
-extern MOB_STATUS statuses[NO_MOBS];
+/* Drivers */
+#include "adc.h"
+#include "spi.h"
 
+// Task priorities
+#define MCU_STATUS_TASK_PRIORITY		1
+#define ADC_SAMPLE_TASK_PRIORITY		4
+#define WATCHDOG_TASK_PRIORITY			5
+#define THERMISTOR_READ_TASK_PRIORITY	3
+#define THERMISTOR_WRITE_TASK_PRIORITY	3
+
+// Task rates, in Hz
+#define MCU_STATUS_TASK_RATE			4
+#define ADC_SAMPLE_TASK_RATE			100
+#define WATCHDOG_TASK_RATE				2
+#define THERMISTOR_READ_TASK_RATE		100
+#define THERMISTOR_WRITE_TASK_RATE		100
+
+// Globals
+static uint16_t maxThermistorValue;
+
+// Task functions
 void vMCUStatusTask(void *pvParameters);
-void vHeartbeatTask(void *pvParameters);
-void vCANSendTask(void *pvParameters);
-void vCANReceiveTask(void *pvParameters);
+void vADCSampleTask(void *pvParameters);
+void vWatchdogTask(void *pvParameters);
+void vThermistorReadTask(void *pvParameters);
+void vThermistorWriteTask(void *pvParameters);
 
 #endif /* TASKS_H_ */

@@ -17,7 +17,6 @@
 #include "can_config.h"
 #include "cmr_64c1_lib.h"
 #include "node_config.h"
-#include "can_structs.h"
 #include "frtos_can.h"
 #include "assert.h"
 
@@ -41,14 +40,14 @@ void vMCUStatusTask(void *pvParameters) {
 	bool currentValue = 0;	// false
 	
 	// Setup MCU status pin as output
-	config_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, IO_DIR_OUTPUT);
+	pinMode(MCU_STATUS_PORT, MCU_STATUS_CH, IO_DIR_OUTPUT);
 	
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
 		// Flip value
 		currentValue = !currentValue;
 		// Write out value
-		set_io_pin(MCU_STATUS_PORT, MCU_STATUS_CH, currentValue);
+		setPin(MCU_STATUS_PORT, MCU_STATUS_CH, currentValue);
 		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod); 
 	}
@@ -161,3 +160,11 @@ void vCANReceiveTask(void *pvParameters) {
 		}
 	}
 }
+
+
+/* 
+ * Tasks to add:
+ *	- ADC read
+ *	- SW watchdog
+ *	- 
+ */

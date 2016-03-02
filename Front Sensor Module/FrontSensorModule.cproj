@@ -137,7 +137,8 @@
       <Value>../Source/portable/GCC/ATmega64c1</Value>
       <Value>../Config</Value>
       <Value>../Drivers/CAN</Value>
-      <Value>../../../Library/Library</Value>
+      <Value>../../Library</Value>
+      <Value>../Drivers/ADC</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -154,11 +155,6 @@
       <Value>m</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
-  <avrgcc.linker.libraries.LibrarySearchPaths>
-    <ListValues>
-      <Value>../../../Library/Library</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.LibrarySearchPaths>
   <avrgcc.linker.optimization.GarbageCollectUnusedSections>False</avrgcc.linker.optimization.GarbageCollectUnusedSections>
   <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
 </AvrGcc>
@@ -209,13 +205,13 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Config\adc_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Config\can_callbacks.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\can_config.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Config\can_ids.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\can_callbacks.h">
@@ -225,6 +221,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\node_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\ADC\adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\ADC\adc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Drivers\CAN\can.c">
@@ -309,6 +311,7 @@
   <ItemGroup>
     <Folder Include="Config\" />
     <Folder Include="Drivers\" />
+    <Folder Include="Drivers\ADC\" />
     <Folder Include="Drivers\CAN\" />
     <Folder Include="Source" />
     <Folder Include="Source\include" />
@@ -329,7 +332,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Library\Library\CMRLibrary.cproj">
+    <ProjectReference Include="..\..\Library\CMRLibrary.cproj">
       <Name>CMRLibrary</Name>
       <Project>{bcb76e93-e8cb-4024-a06d-960cbe6074ae}</Project>
       <Private>True</Private>

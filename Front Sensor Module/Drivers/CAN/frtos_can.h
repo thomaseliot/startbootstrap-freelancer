@@ -31,6 +31,12 @@ typedef struct MOB_STATUS_t {
 	uint8_t cnt;		// Generic counter variable
 } MOB_STATUS;
 
+// Mailbox callbacks, initialized to NULL. These are assigned in main right now.
+// This is an array of function pointers
+static void (*MOB_CALLBACKS[NO_MOBS])(CAN_packet p) = {
+	NULL, NULL, NULL, NULL, NULL, NULL
+};
+
 // Global queue for all CAN packets (CAN dump)
 extern xQueueHandle CANdumpQueue;
 

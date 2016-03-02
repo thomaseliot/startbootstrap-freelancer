@@ -8,8 +8,6 @@
 #ifndef CAN_CONFIG_H_
 #define CAN_CONFIG_H_
 
-#include "can.h"
-
 // Length of each receive queue
 #define CAN_QUEUE_LEN	5			// Keep this small, or you will eat memory
 

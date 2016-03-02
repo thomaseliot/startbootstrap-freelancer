@@ -15,6 +15,7 @@
 */
 #include <stdint.h>
 #include <stdbool.h>
+#include "can_config.h"
 
 #ifndef CAN_H_
 #define CAN_H_
@@ -22,6 +23,7 @@
 #define NO_MOBS 6 		// number of message object buffers (MOBs) (ATmega64c1)
 #define NOMOB 	0xff 	// return value for getmob()
 #define RTR		0xff 	// special value for length -> RTR packet
+
 
 // CAN packet structure
 // Used to describe a CAN20a (standard 11 bit) packet.

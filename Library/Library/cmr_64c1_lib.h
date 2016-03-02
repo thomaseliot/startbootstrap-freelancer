@@ -44,8 +44,8 @@
 /************************************************************************/
 
 // Configure I/O pin
-void config_io_pin(uint8_t port, uint8_t port_ch, uint8_t dir);
+void pinMode(uint8_t port, uint8_t port_ch, uint8_t dir);
 // Set value of I/O pin
-void set_io_pin(uint8_t port, uint8_t port_ch, uint8_t val);
+void setPin(uint8_t port, uint8_t port_ch, uint8_t val);
 
 #endif /* CMR_64C1_LIB_H_ */

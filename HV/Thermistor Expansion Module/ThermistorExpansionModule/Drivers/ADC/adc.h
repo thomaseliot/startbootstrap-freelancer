@@ -20,9 +20,9 @@ typedef struct ADCMeta_t {
 static ADCMeta adcChannels[NUM_ADC_CH];
 
 // Functions
-void initAdc(void);
-uint16_t adcRead(uint8_t ch);
-void adcReadUpdate(ADCChannel ch);
+void initADC(void);
+uint16_t readADC(uint8_t ch);
+void updateADC(ADCChannel ch);
 uint16_t adcVal(ADCChannel ch);
 
 #endif /* ADC_H_ */

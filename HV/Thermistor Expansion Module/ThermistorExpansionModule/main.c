@@ -25,7 +25,7 @@
 int main(void)
 {	
 	// Initialize ADC
-	initAdc();
+	initADC();
 	
 	// Initialize SPI
 	spiInit();
@@ -34,10 +34,10 @@ int main(void)
 	spiSetDataMode(SPI_MODE1);
 	
 	// Hold both thermistor out relays open
-	config_io_pin(OPEN_FAULT_PORT, OPEN_FAULT_CH, IO_DIR_OUTPUT);
-	config_io_pin(SHORT_FAULT_PORT, SHORT_FAULT_CH, IO_DIR_OUTPUT);
-	set_io_pin(OPEN_FAULT_PORT, OPEN_FAULT_CH, HIGH);
-	set_io_pin(SHORT_FAULT_PORT, SHORT_FAULT_CH, LOW);
+	pinMode(OPEN_FAULT_PORT, OPEN_FAULT_CH, IO_DIR_OUTPUT);
+	pinMode(SHORT_FAULT_PORT, SHORT_FAULT_CH, IO_DIR_OUTPUT);
+	setPin(OPEN_FAULT_PORT, OPEN_FAULT_CH, HIGH);
+	setPin(SHORT_FAULT_PORT, SHORT_FAULT_CH, HIGH);
 	
 	// Create the MCU status task, to blink the LED
 	// Rate: 4Hz

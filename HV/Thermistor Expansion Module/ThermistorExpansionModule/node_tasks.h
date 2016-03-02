@@ -24,9 +24,9 @@
 // Task rates, in Hz
 #define MCU_STATUS_TASK_RATE			4
 #define ADC_SAMPLE_TASK_RATE			100
-#define WATCHDOG_TASK_RATE				2
+#define WATCHDOG_TASK_RATE				4
 #define THERMISTOR_READ_TASK_RATE		100
-#define THERMISTOR_WRITE_TASK_RATE		100
+#define THERMISTOR_WRITE_TASK_RATE		10
 
 // Globals
 static uint16_t maxThermistorValue;

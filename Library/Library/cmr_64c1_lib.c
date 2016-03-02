@@ -20,7 +20,7 @@
  *  dir: the direction, IO_DIR_INPUT or IO_DIR_OUTPUT
  * Returns: void
  */
-void config_io_pin(uint8_t port, uint8_t port_ch, uint8_t dir) {
+void pinMode(uint8_t port, uint8_t port_ch, uint8_t dir) {
 	switch(port){
 		case IO_PORTB:
 			// Crazy bit trickery that sets specific bit to value
@@ -46,7 +46,7 @@ void config_io_pin(uint8_t port, uint8_t port_ch, uint8_t dir) {
  *  val: the value, HIGH or LOW
  * Returns: void
  */
-void set_io_pin(uint8_t port, uint8_t port_ch, uint8_t val) {
+void setPin(uint8_t port, uint8_t port_ch, uint8_t val) {
 	switch(port){
 		case IO_PORTB:
 			// Crazy bit trickery that sets specific bit to value

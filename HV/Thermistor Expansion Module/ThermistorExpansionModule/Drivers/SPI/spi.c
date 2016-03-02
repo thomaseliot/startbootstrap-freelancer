@@ -24,18 +24,18 @@ void spiInit(void) {
 	uint8_t i;
 	
 	// Set digital pin directions for MISO/MOSI/SCK
-	config_io_pin(SPI_MISO_PORT, SPI_MISO_PIN, IO_DIR_INPUT);
-	config_io_pin(SPI_MOSI_PORT, SPI_MOSI_PIN, IO_DIR_OUTPUT);
-	config_io_pin(SPI_SCK_PORT, SPI_SCK_PIN, IO_DIR_OUTPUT); 
+	pinMode(SPI_MISO_PORT, SPI_MISO_PIN, IO_DIR_INPUT);
+	pinMode(SPI_MOSI_PORT, SPI_MOSI_PIN, IO_DIR_OUTPUT);
+	pinMode(SPI_SCK_PORT, SPI_SCK_PIN, IO_DIR_OUTPUT); 
 	
 	// Set digital pin direction for default SS
 	// Note that this must be output, or SPI could go into slave mode
-	config_io_pin(SPI_SS_PORT, SPI_SS_PIN, IO_DIR_OUTPUT);
+	pinMode(SPI_SS_PORT, SPI_SS_PIN, IO_DIR_OUTPUT);
 	
 	// Set digital pin directions for all slaves. If they are connected
 	// to the default SS, this will just be redundant.
 	for(i = 0; i < NUM_SLAVES; i++) {
-		config_io_pin(spiSlaves[i].port, spiSlaves[i].pin, IO_DIR_OUTPUT);
+		pinMode(spiSlaves[i].port, spiSlaves[i].pin, IO_DIR_OUTPUT);
 	}
 	
 	// Deselect all slaves
@@ -89,7 +89,7 @@ void spiSetDataMode(SPI_MODE_t mode) {
 void spiSelect(SPISlave slave) {
 	taskENTER_CRITICAL();
 	// Set pin low
-	set_io_pin(slave.port, slave.pin, LOW);
+	setPin(slave.port, slave.pin, LOW);
 	taskEXIT_CRITICAL();
 }
 
@@ -101,7 +101,7 @@ void spiSelect(SPISlave slave) {
 void spiDeselect(SPISlave slave) {
 	taskENTER_CRITICAL();
 	// Set pin high
-	set_io_pin(slave.port, slave.pin, HIGH);
+	setPin(slave.port, slave.pin, HIGH);
 	taskEXIT_CRITICAL();
 }
 
@@ -184,5 +184,12 @@ uint8_t SPI_read(void) {
  *		void
  */
 void spiWrite(uint8_t byte) {
-	(void)SPI_transaction(byte, 0);
+	// Make sure SPI module has been enabled
+	if( !(SPCR & _BV(SPE)) ) return;
+	
+	// Set data register
+	SPDR = byte;
+	
+	// Wait for transfer to complete
+	while (!(SPSR & (1 << SPIF)));
 }

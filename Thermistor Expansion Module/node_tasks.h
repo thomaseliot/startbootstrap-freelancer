@@ -1,4 +1,6 @@
-/* node_tasks.h
+/* 
+ * node_tasks.h
+ * 
  * File containing tasks to be run by the RTOS
  * 
  * Copyright (c) 2016, Carnegie Mellon Racing

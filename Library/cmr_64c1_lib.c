@@ -1,9 +1,9 @@
 /*
  * cmr_64c1_lib.c
  * 
- * Library for common functions used with the atmega64c1
+ * Library for common functions used with the ATmega64c1
  *
- * Copyright (c) Carnegie Mellon Racing 2015
+ * Copyright (c) Carnegie Mellon Racing 2016
  */
 
 #include "cmr_64c1_lib.h"
@@ -12,7 +12,7 @@
 /* I/O                                                                  */
 /************************************************************************/
 
-/* config_io_pin
+/* pinMode
  * Configures an digital I/O pin as input or output.
  * Arguments:
  *	port: the port to configure, IO_PORT_B, C, or D
@@ -38,7 +38,7 @@ void pinMode(uint8_t port, uint8_t port_ch, uint8_t dir) {
 	}
 }
 
-/* set_io_pin
+/* setPin
  * Sets an digital I/O pin as high or low.
  * Arguments:
  *	port: the port to configure, IO_PORT_B, C, or D

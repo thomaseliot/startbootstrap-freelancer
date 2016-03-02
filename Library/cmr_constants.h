@@ -1,7 +1,9 @@
 /*
  * cmr_constants.h
  * 
- * Author: semerson
+ * Global constant values
+ * 
+ * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
 

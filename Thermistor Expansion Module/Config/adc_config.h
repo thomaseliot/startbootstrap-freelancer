@@ -1,5 +1,7 @@
 /*
  * adc_config.h
+ * 
+ * Analog to digital converter configuration
  *
  * Copyright (c) Carnegie Mellon Racing 2016
  */ 
@@ -19,7 +21,7 @@ typedef enum ADCChannels {
 
 // Channel mapping, symbol to physical ADC channel
 // in order of the above enumeration
-// TODO: This is bad style
+// TODO: Putting static variables in header files is apparently bad style
 static ADCChannel adcChannelMap[NUM_ADC_CH] = {
 	2,		// THERM1
 	3,		// THERM2

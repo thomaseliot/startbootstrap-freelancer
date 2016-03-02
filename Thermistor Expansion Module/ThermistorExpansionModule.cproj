@@ -230,15 +230,6 @@
     <Compile Include="Drivers\ADC\adc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\CAN\can.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\CAN\frtos_can.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\CAN\frtos_can.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Drivers\SPI\spi.c">
       <SubType>compile</SubType>
     </Compile>
@@ -315,7 +306,6 @@
   <ItemGroup>
     <Folder Include="Config\" />
     <Folder Include="Drivers\" />
-    <Folder Include="Drivers\CAN\" />
     <Folder Include="Drivers\ADC" />
     <Folder Include="Drivers\SPI" />
     <Folder Include="Source" />

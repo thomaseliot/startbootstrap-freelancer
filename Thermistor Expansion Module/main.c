@@ -1,6 +1,8 @@
 /* main.c
  * 
  * The main function, runs once then the scheduler takes over
+ * 
+ * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
 #include <avr/io.h>
@@ -10,13 +12,14 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "cmr_64c1_lib.h"
+/* Node configuration */
 #include "node_config.h"
 
 /* Task include files */
 #include "node_tasks.h"
 
-/* Driver include files */
+/* Library and driver include files */
+#include "cmr_64c1_lib.h"
 #include "adc.h"
 #include "spi.h"
 
@@ -24,6 +27,8 @@
 // Main function, runs once
 int main(void)
 {	
+	/* Initialization */
+	
 	// Initialize ADC
 	initADC();
 	
@@ -39,32 +44,36 @@ int main(void)
 	setPin(OPEN_FAULT_PORT, OPEN_FAULT_CH, HIGH);
 	setPin(SHORT_FAULT_PORT, SHORT_FAULT_CH, HIGH);
 	
-	// Create the MCU status task, to blink the LED
+	
+	/* Tasks */
+	
+	// MCU status task, to blink the LED
 	// Rate: 4Hz
     xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
 		NULL, MCU_STATUS_TASK_PRIORITY, NULL);
 	
-	// Create ADC read task
+	// ADC read task
 	// Rate: 100Hz
 	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
 		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 		
-	// Create thermistor read task
+	// Thermistor read task
 	//xTaskCreate(vThermistorReadTask, "TEMPIN", configMINIMAL_STACK_SIZE,
 	//	NULL, THERMISTOR_READ_TASK_PRIORITY, NULL);
 	
-	// Create thermistor write task
+	// Thermistor write task
 	xTaskCreate(vThermistorWriteTask, "TEMPOUT", configMINIMAL_STACK_SIZE,
 		NULL, THERMISTOR_WRITE_TASK_PRIORITY, NULL);
 		
-	// Create watchdog kick task
+	// Watchdog kick task
 	xTaskCreate(vWatchdogTask, "EXTWDT", configMINIMAL_STACK_SIZE,
 		NULL, WATCHDOG_TASK_PRIORITY, NULL);
+	
 	
 	// Start the scheduler
 	vTaskStartScheduler();
 	
-	// Return, the scheduler handles the rest
+	// Return, the scheduler takes over from here
 	return 0;
 }
 

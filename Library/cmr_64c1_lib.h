@@ -1,7 +1,7 @@
 /*
  * cmr_64c1_lib.h
  * 
- * Library for common functions used with the atmega64c1
+ * Library for common functions used with the ATmega64c1
  *
  * Copyright (c) Carnegie Mellon Racing 2016
  */ 

@@ -1,6 +1,8 @@
 /*
  * spi_config.h
  * 
+ * SPI configuration for this node
+ * 
  * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 

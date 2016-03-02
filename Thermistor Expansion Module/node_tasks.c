@@ -8,18 +8,17 @@
 #include <string.h>
 #include <stdbool.h>
 #include "node_tasks.h"
-#include "task.h"
 #include "queue.h"
 #include "cmr_64c1_lib.h"
 #include "node_config.h"
 #include "assert.h"
 
-static uint8_t adc_ch[10];
-
 
 /************************************************************************/
-/* TO BE PLACED IN WDT FILE                                             */
+/* TO BE PLACED IN WDT FILE --- IN PROGRESS                             */
 /************************************************************************
+
+#define 
 
 // Watchdog arrays for all tasks
 static  {

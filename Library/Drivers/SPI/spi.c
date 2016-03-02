@@ -1,8 +1,6 @@
 /*
  * spi.c
  * 
- * SPI driver 
- * 
  * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
@@ -10,8 +8,16 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-/* spiInit
+/* SPI_init
+ * 
  * Initializes SPI on the MCU
+ * 
+ * Arguments: 
+ *		prescaler -	prescaler value to set SCK (SPI Clock). Bus clock / prescaler = SCK.  
+ *					Values are 2, 4, 6, 8, 16, 32, 64, 128
+ * 
+ * Returns:
+ *		void	
  */
 void spiInit(void) {
 	// Function variables
@@ -81,8 +87,10 @@ void spiSetDataMode(SPI_MODE_t mode) {
  * @param slave the slave to select
  */
 void spiSelect(SPISlave slave) {
+	taskENTER_CRITICAL();
 	// Set pin low
 	setPin(slave.port, slave.pin, LOW);
+	taskEXIT_CRITICAL();
 }
 
 /* spiDeselect
@@ -91,8 +99,10 @@ void spiSelect(SPISlave slave) {
  * @param slave the slave to select
  */
 void spiDeselect(SPISlave slave) {
+	taskENTER_CRITICAL();
 	// Set pin high
 	setPin(slave.port, slave.pin, HIGH);
+	taskEXIT_CRITICAL();
 }
 
 /* spiDeselectAll
@@ -122,19 +132,23 @@ void spiSwitchSlave(SPISlave slave) {
 	spiSelect(slave);
 }
 
-/* stpiTransaction
- * Writes a byte over SPI and receives a byte
+/* SPI_transaction
  * 
- * @param byte byte to send over SPI
- * @readOnly - if set to 1, the data register will not be touched before the transaction begins. 
- * @return received byte
+ * Writes a byte over SPI and receive a byte
+ * 
+ * Arguments:
+ *		byte - byte to send over SPI
+ *		read_only - if set to 1, the data register will not be touched before the transaction begins. 
+ * 
+ * Returns:
+ *		received byte
  */
-uint8_t spiTransaction(uint8_t byte, uint8_t readOnly) {
+uint8_t SPI_transaction(uint8_t byte, uint8_t read_only) {
 	// Make sure SPI module has been enabled
 	if( !(SPCR & _BV(SPE)) ) return 0;
 	
 	// Set data register
-	if (!readOnly) {
+	if (!read_only) {
 		SPDR = byte;	
 	}
 	
@@ -145,19 +159,29 @@ uint8_t spiTransaction(uint8_t byte, uint8_t readOnly) {
 	return SPDR;
 }
 
-/* spiRead
+/* SPI_read
+ * 
  * Reads one byte from SPI. Does not touch the SPI data register before transaction. 
  * 
- * @return received byte
+ * Arguments:
+ *		void
+ * 
+ * Returns:
+ *		received byte
  */
-uint8_t spiRead(void) {
-	return spiTransaction(0, 1);
+uint8_t SPI_read(void) {
+	return SPI_transaction(0, 1);
 }
 
-/* spiWrite
- * Writes a byte over SPI and ignores return value
+/* SPI_write
  * 
- * @param byte byte to send over SPI
+ * Writes a byte over SPI and ignore return value
+ * 
+ * Arguments:
+ *		byte - byte to send over SPI
+ * 
+ * Returns:
+ *		void
  */
 void spiWrite(uint8_t byte) {
 	// Make sure SPI module has been enabled

@@ -1,9 +1,6 @@
 /*
  * adc.c
- * 
- * Analog to digital converter driver library
- * 
- * Copyright (c) Carnegie Mellon Racing 2016
+ *
  */ 
 
 #include <avr/io.h>
@@ -78,7 +75,7 @@ uint16_t readADC(uint8_t ch) {
  */
 void updateADC(ADCChannel ch) {
 	uint8_t physicalChannel;
-	uint8_t channelValue;
+	uint16_t channelValue;
 	
 	// Convert ADCChannel to physical channel
 	physicalChannel = adcChannelMap[ch];
@@ -96,6 +93,6 @@ void updateADC(ADCChannel ch) {
  *	ch: the channel enumeration ID to get
  * Returns: the value of that channel 
  */
-uint8_t adcVal(ADCChannel ch) {
+uint16_t adcVal(ADCChannel ch) {
 	return adcChannels[ch].currentValue;
 }

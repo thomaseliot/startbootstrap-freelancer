@@ -128,19 +128,10 @@
     <Compile Include="can_ids.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="can_structs.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="cmr_64c1_lib.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="cmr_64c1_lib.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="cmr_can.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="cmr_can.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="cmr_constants.h">

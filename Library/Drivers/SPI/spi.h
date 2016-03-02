@@ -1,8 +1,6 @@
 /*
  * spi.h
  * 
- * SPI library
- * 
  * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
@@ -13,7 +11,6 @@
 #include "cmr_64c1_lib.h"
 #include "spi_config.h"
 
-// Mode masks
 #define SPI_MODE_MASK		0x0C  // CPOL = bit 3, CPHA = bit 2 on SPCR
 #define SPI_CLOCK_MASK		0x03  // SPR1 = bit 1, SPR0 = bit 0 on SPCR
 #define SPI_2XCLOCK_MASK	0x01  // SPI2X = bit 0 on SPSR
@@ -21,7 +18,6 @@
 #define SPI_LSBFIRST		0
 #define SPI_MSBFIRST		1
 
-// Prescalers
 typedef enum {
 	SPI_CLOCK_DIV4  = 0x00,
 	SPI_CLOCK_DIV16 = 0x01,
@@ -32,7 +28,6 @@ typedef enum {
 	SPI_CLOCK_DIV32 = 0x06
 } SPI_CLOCK_DIV_t;
 
-// Modes
 typedef enum {
 	SPI_MODE0 = 0x00,
 	SPI_MODE1 = 0x04,
@@ -53,8 +48,9 @@ void spiDeselectAll(void);
 void spiSwitchSlave(SPISlave slave);
 
 void spiWrite(uint8_t byte);
-uint8_t spiRead(void);
-uint8_t spiTransaction(uint8_t byte, uint8_t read_only);
+uint8_t SPI_read(void);
+uint8_t SPI_transaction(uint8_t byte, uint8_t read_only);
+
 
 
 #endif /* SPI_H_ */

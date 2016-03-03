@@ -35,7 +35,7 @@ void spiInit(void) {
 	// Deselect all slaves
 	spiDeselectAll();
 	
-	// Enable SPI, and Master
+	// Enable SPI and master mode
 	SPCR = (1 << SPE) | (1 << MSTR); 
 	
 	// Read SPSR and SPDR to clear them
@@ -44,7 +44,7 @@ void spiInit(void) {
 }
 
 /* spiSetClockDivider
- * Set the clock divider to the specified rate
+ * Set the SPI clock divider to the specified rate
  * 
  * @param rate the rate to set to
  */
@@ -61,7 +61,7 @@ void spiSetClockDivider(SPI_CLOCK_DIV_t rate) {
 void spiSetBitOrder(uint8_t bitOrder) {
 	if(bitOrder == SPI_LSBFIRST) {
 		SPCR |= _BV(DORD);
-	} else {
+	} else {	// MSB first
 		SPCR &= ~(_BV(DORD));
 	}
 }

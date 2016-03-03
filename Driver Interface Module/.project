@@ -3,6 +3,7 @@
 	<name>Driver Interface Module</name>
 	<comment></comment>
 	<projects>
+		<project>stm32f429i-disc1_stdperiph_lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

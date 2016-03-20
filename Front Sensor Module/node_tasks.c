@@ -1,11 +1,9 @@
-/*
- * tasks.c
+/* node_tasks.c
+ * Contains code for all tasks
  * 
- * Contains code for all tasks.
- *
- * Created: 11/23/2015 6:19:47 PM
- * Author: semerson
+ * Copyright (c) 2016, Carnegie Mellon Racing
  */ 
+
 
 #include <avr/io.h>
 #include <string.h>
@@ -164,7 +162,6 @@ void vCANReceiveTask(void *pvParameters) {
 
 /* 
  * Tasks to add:
- *	- ADC read
  *	- SW watchdog
  *	- 
  */

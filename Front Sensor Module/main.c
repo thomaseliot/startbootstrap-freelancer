@@ -1,7 +1,8 @@
-/*
- * FrontSensorModule.c
- *
- * Created: 11/23/2015 5:51:36 PM
+/* main.c
+ * 
+ * The main function, runs once then the scheduler takes over
+ * 
+ * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
 #include <avr/io.h>
@@ -22,8 +23,6 @@
 // Global status variable
 MOB_STATUS statuses[NO_MOBS];
 
-//st_cmd_t can_receive_msg;
-//uint64_t can_receive_buffer;
 
 int main(void)
 {	
@@ -67,10 +66,14 @@ int main(void)
 	xTaskCreate(vHeartbeatTask, "HEART", configMINIMAL_STACK_SIZE,
 		statuses, mainHEARTBEAT_TASK_PRIORITY, NULL);
 	
+	// ADC read task
+	// Rate: 100Hz
+	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
+		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
+	
 	// Start the scheduler
 	vTaskStartScheduler();
 	
 	// Return, the scheduler handles the rest
 	return 0;
 }
-

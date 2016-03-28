@@ -195,8 +195,8 @@ void vThermistorWriteTask(void *pvParameters) {
 	(void) pvParameters;
 	
 	// Function variables
-	volatile uint8_t valueToWrite1 = 0x1F;
-	volatile uint8_t valueToWrite2 = 0x00;
+	volatile uint8_t valueToWrite = 0x00;
+	//volatile uint8_t valueToWrite2 = 0x00;
 	volatile uint8_t upperByte, lowerByte;
 	volatile uint8_t command;
 	SPISlave thermPots = spiSlaves[POT_SYNC];
@@ -207,7 +207,7 @@ void vThermistorWriteTask(void *pvParameters) {
 	
 	// Period
 	const TickType_t xPeriod = 1000 / THERMISTOR_WRITE_TASK_RATE;		// In ticks (ms)
-	
+	/*
 	// Send a bunch of zeros for good measure
 	taskENTER_CRITICAL();
 	spiSelect(thermPots);
@@ -217,28 +217,28 @@ void vThermistorWriteTask(void *pvParameters) {
 	spiWrite(0x00);
 	spiDeselect(thermPots);
 	taskEXIT_CRITICAL();
-	
+	*/
 	// Initialize the pot
 	
 	// Enable high impedance on SDO output for daisy chain
-	taskENTER_CRITICAL();
-	spiSelect(thermPots);
-	spiWrite(0x80);
-	spiWrite(0x01);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiDeselect(thermPots);
-	taskEXIT_CRITICAL();
+	//taskENTER_CRITICAL();
+	//spiSelect(thermPots);
+	//spiWrite(0x80);
+	//spiWrite(0x01);
+	//spiWrite(0x00);
+	//spiWrite(0x00);
+	//spiDeselect(thermPots);
+	//taskEXIT_CRITICAL();
 	
 	// Enable RDAC register write access
 	upperByte = 0x1C;
 	lowerByte = 0x02;
 	taskENTER_CRITICAL();
 	spiSelect(thermPots);
-	spiWrite(upperByte);
-	spiWrite(lowerByte);
-	spiWrite(upperByte);
-	spiWrite(lowerByte);
+	spiWrite(0x1C);
+	spiWrite(0x02);
+	//spiWrite(upperByte);
+	//spiWrite(lowerByte);
 	spiDeselect(thermPots);
 	taskEXIT_CRITICAL();
 	
@@ -247,22 +247,22 @@ void vThermistorWriteTask(void *pvParameters) {
 	for(;;) {
 		// Setup bytes to write
 		command = 0x01;
-		upperByte = (command << 2) | (valueToWrite1 >> 6);
-		lowerByte = valueToWrite1 << 2;
+		upperByte = (command << 2) | (valueToWrite >> 6);
+		lowerByte = valueToWrite << 2;
 		
 		// Write
 		taskENTER_CRITICAL();
 		spiSelect(thermPots);
 		spiWrite(upperByte);
 		spiWrite(lowerByte);
-		upperByte = (command << 2) | (valueToWrite2 >> 6);
+		/*upperByte = (command << 2) | (valueToWrite2 >> 6);
 		lowerByte = valueToWrite2 << 2;
   		spiWrite(upperByte);
-		spiWrite(lowerByte);
+		spiWrite(lowerByte);*/
 		spiDeselect(thermPots);
 		taskEXIT_CRITICAL();
 
-		valueToWrite2++;
+		valueToWrite++;
 		
 		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);

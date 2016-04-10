@@ -32,7 +32,7 @@ void vPollButtonsTask(void * pvParameters) {
 
 
 		/* 10ms period = 100Hz */
-		osDelay( &xLastWakeTime, ( osKernelSysTickMicroSec(10*1000) ) );
+		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(10*1000) ) );
 	}
 }
 

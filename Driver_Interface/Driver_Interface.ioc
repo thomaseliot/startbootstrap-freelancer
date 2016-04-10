@@ -1,7 +1,8 @@
 #MicroXplorer Configuration settings - do not modify
-CAN2.CalculateTimeBit=3000
-CAN2.CalculateTimeQuantum=1000.0
-CAN2.IPParameters=CalculateTimeQuantum,CalculateTimeBit
+CAN2.CalculateTimeBit=6000
+CAN2.CalculateTimeQuantum=2000.0
+CAN2.IPParameters=CalculateTimeQuantum,CalculateTimeBit,Prescaler
+CAN2.Prescaler=32
 FREERTOS.IPParameters=Tasks01
 FREERTOS.Tasks01=defaultTask,0,128,StartDefaultTask,Default
 File.Version=6
@@ -116,6 +117,7 @@ Mcu.UserConstants=
 Mcu.UserName=STM32F429ZITx
 MxCube.Version=4.13.0
 MxDb.Version=DB.4.0.130
+NVIC.CAN2_RX0_IRQn=true\:5\:0\:false
 NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
 NVIC.SysTick_IRQn=true\:15\:0\:false
 NVIC.TIM1_UP_TIM10_IRQn=true\:0\:0\:false

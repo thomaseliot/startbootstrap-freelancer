@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item value="C:\Users\Tom\Documents\CMR\STM32 Development\firmware\Driver_Interface\SW4STM32\Driver_Interface\Application\User" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
+	<item value="Default C header template" key="LastUsedHeaderTemplate"/>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
 	</section>
 	<section name="completion_proposal_size">

@@ -1,45 +1,43 @@
-23:04:41 **** Incremental Build of configuration Debug for project Driver_Interface ****
+04:06:20 **** Incremental Build of configuration Debug for project Driver_Interface ****
 make all 
-'Building file: ../Application/User/buttons.c'
+'Building file: ../Application/User/CAN.c'
 'Invoking: MCU GCC Compiler'
 C:\Users\Tom\Documents\CMR\STM32 Development\firmware\Driver_Interface\SW4STM32\Driver_Interface\Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__weak="__attribute__((weak))" -D__packed="__attribute__((__packed__))" -DUSE_HAL_DRIVER -DSTM32F429xx -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/SW4STM32/Driver_Interface/Application/User" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc"  -Os -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/buttons.d" -MT"Application/User/buttons.o" -o "Application/User/buttons.o" "../Application/User/buttons.c"
-../Application/User/buttons.c: In function 'updateButton':
-../Application/User/buttons.c:47:4: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
-    uint32_t buttonMsg = * (uint32_t *) &buttonObject;
-    ^
-../Application/User/buttons.c:48:13: warning: unused variable 'messageStatus' [-Wunused-variable]
-    osStatus messageStatus = osMessagePut(buttonQueue, buttonMsg, 0);
-             ^
-'Finished building: ../Application/User/buttons.c'
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__weak="__attribute__((weak))" -D__packed="__attribute__((__packed__))" -DUSE_HAL_DRIVER -DSTM32F429xx -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/SW4STM32/Driver_Interface/Application/User" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc"  -Os -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/CAN.d" -MT"Application/User/CAN.o" -o "Application/User/CAN.o" "../Application/User/CAN.c"
+'Finished building: ../Application/User/CAN.c'
 ' '
 'Building file: C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c'
 'Invoking: MCU GCC Compiler'
 C:\Users\Tom\Documents\CMR\STM32 Development\firmware\Driver_Interface\SW4STM32\Driver_Interface\Debug
 arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__weak="__attribute__((weak))" -D__packed="__attribute__((__packed__))" -DUSE_HAL_DRIVER -DSTM32F429xx -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/SW4STM32/Driver_Interface/Application/User" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc"  -Os -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/main.d" -MT"Application/User/main.o" -o "Application/User/main.o" "C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c"
-In file included from C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:35:0:
 C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c: In function 'main':
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:118:3: warning: implicit declaration of function 'InitializeCANBUS2' [-Wimplicit-function-declaration]
+   InitializeCANBUS2();
+   ^
+In file included from C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:35:0:
 C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:428:10: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
  { #name, (thread), (priority), (instances), (stacksz)  }
           ^
-C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:138:4: note: in expansion of macro 'osThreadDef'
-    osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 1000);
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:140:4: note: in expansion of macro 'osThreadDef'
+    osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 128);
     ^
 C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:428:10: note: (near initialization for 'os_thread_def_buttonTask.pthread')
  { #name, (thread), (priority), (instances), (stacksz)  }
           ^
-C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:138:4: note: in expansion of macro 'osThreadDef'
-    osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 1000);
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:140:4: note: in expansion of macro 'osThreadDef'
+    osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 128);
     ^
-C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:146:18: warning: unused variable 'button_queue' [-Wunused-variable]
-    osMessageQId (button_queue);           // Declare an ID for the message queue
-                  ^
-In file included from C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:35:0:
-C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:735:23: warning: unused variable 'os_messageQ_def_button_queue' [-Wunused-variable]
- const osMessageQDef_t os_messageQ_def_##name = \
-                       ^
-C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:145:4: note: in expansion of macro 'osMessageQDef'
-    osMessageQDef(button_queue, 12, ButtonObject); // Declare a message queue
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:428:10: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+ { #name, (thread), (priority), (instances), (stacksz)  }
+          ^
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:143:4: note: in expansion of macro 'osThreadDef'
+    osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
+    ^
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:428:10: note: (near initialization for 'os_thread_def_ledTask.pthread')
+ { #name, (thread), (priority), (instances), (stacksz)  }
+          ^
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:143:4: note: in expansion of macro 'osThreadDef'
+    osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
     ^
 In file included from C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:38:0:
 C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c: At top level:
@@ -48,6 +46,12 @@ C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/SW4STM32/
                     ^
 C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/SW4STM32/Driver_Interface/Application/User/buttons.h:39:13: warning: 'updateButton' declared 'static' but never defined [-Wunused-function]
  static void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject buttonObject);
+             ^
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:218:6: warning: 'MX_CAN2_Init' defined but not used [-Wunused-function]
+ void MX_CAN2_Init(void)
+      ^
+C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c:84:13: warning: 'USER_CAN2_Init' declared 'static' but never defined [-Wunused-function]
+ static void USER_CAN2_Init(void);
              ^
 'Finished building: C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Src/main.c'
 ' '
@@ -61,5 +65,5 @@ make --no-print-directory post-build
 arm-none-eabi-objcopy -O binary "Driver_Interface.elf" "Driver_Interface.bin"
 arm-none-eabi-size "Driver_Interface.elf"
    text	   data	    bss	    dec	    hex	filename
-  13956	     20	  17988	  31964	   7cdc	Driver_Interface.elf
+  15984	     20	  18068	  34072	   8518	Driver_Interface.elf
 ' '

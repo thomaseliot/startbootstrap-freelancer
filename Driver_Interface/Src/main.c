@@ -36,6 +36,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "buttons.h"
+#include "led.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -58,6 +59,7 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 osThreadId buttonTaskHandle;
+osThreadId ledTaskHandle;
 
 /* USER CODE END PV */
 
@@ -79,7 +81,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+static void USER_CAN2_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -103,7 +105,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_CAN2_Init();
+//  MX_CAN2_Init();
   MX_DMA2D_Init();
   MX_FMC_Init();
   MX_LTDC_Init();
@@ -113,7 +115,7 @@ int main(void)
   MX_I2C3_Init();
 
   /* USER CODE BEGIN 2 */
-
+  InitializeCANBUS2();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -135,15 +137,17 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   	  /* Button polling task. 100Hz. */
-	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 1000);
+	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 128);
 	  buttonTaskHandle = osThreadCreate(osThread(buttonTask), NULL);
 
-//	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1)
+	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
+	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
 	  osMessageQDef(button_queue, 12, ButtonObject); // Declare a message queue
-	  osMessageQId (button_queue);           // Declare an ID for the message queue
+	  buttonQueue = osMessageCreate(osMessageQ(button_queue), NULL);
+
   /* USER CODE END RTOS_QUEUES */
  
 
@@ -215,7 +219,7 @@ void MX_CAN2_Init(void)
 {
 
   hcan2.Instance = CAN2;
-  hcan2.Init.Prescaler = 16;
+  hcan2.Init.Prescaler = 32;
   hcan2.Init.Mode = CAN_MODE_NORMAL;
   hcan2.Init.SJW = CAN_SJW_1TQ;
   hcan2.Init.BS1 = CAN_BS1_1TQ;
@@ -498,7 +502,6 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
 /* USER CODE END 4 */
 
 /* StartDefaultTask function */

@@ -37,6 +37,7 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN 0 */
+//TODO: Dev board CAN fix
 
 /* USER CODE END 0 */
 
@@ -99,6 +100,7 @@ void CAN2_RX0_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+//TODO: Disco board CAN fix
 
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -37,6 +37,7 @@
 /* USER CODE BEGIN Includes */
 #include "buttons.h"
 #include "led.h"
+#include "can.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -57,9 +58,11 @@ SDRAM_HandleTypeDef hsdram1;
 osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
+CAN_HandleTypeDef hcan1;
 /* Private variables ---------------------------------------------------------*/
 osThreadId buttonTaskHandle;
 osThreadId ledTaskHandle;
+osThreadId canTaskHandle;
 
 /* USER CODE END PV */
 
@@ -81,7 +84,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-static void USER_CAN2_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -115,7 +117,7 @@ int main(void)
   MX_I2C3_Init();
 
   /* USER CODE BEGIN 2 */
-  InitializeCANBUS2();
+  InitializeCANBUS1();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -142,6 +144,9 @@ int main(void)
 
 	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
 	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+
+	  osThreadDef(canTask, vCanStart, osPriorityAboveNormal, 1, 500);
+	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -219,11 +224,11 @@ void MX_CAN2_Init(void)
 {
 
   hcan2.Instance = CAN2;
-  hcan2.Init.Prescaler = 32;
+  hcan2.Init.Prescaler = 2;
   hcan2.Init.Mode = CAN_MODE_NORMAL;
   hcan2.Init.SJW = CAN_SJW_1TQ;
-  hcan2.Init.BS1 = CAN_BS1_1TQ;
-  hcan2.Init.BS2 = CAN_BS2_1TQ;
+  hcan2.Init.BS1 = CAN_BS1_13TQ;
+  hcan2.Init.BS2 = CAN_BS2_2TQ;
   hcan2.Init.TTCM = DISABLE;
   hcan2.Init.ABOM = DISABLE;
   hcan2.Init.AWUM = DISABLE;

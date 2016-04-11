@@ -36,7 +36,7 @@ void vPollButtonsTask(void * pvParameters) {
 	}
 }
 
-static void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject buttonObject){
+void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject buttonObject){
 	if (buttonObject.state == getButtonState(HAL_GPIO_ReadPin(GPIOx, GPIO_pin))) {
 			;;
 		}
@@ -52,7 +52,7 @@ static void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject b
 
 
 //Active low buttons
-static buttonState getButtonState(GPIO_PinState pinState) {
+buttonState getButtonState(GPIO_PinState pinState) {
 	if (pinState == GPIO_PIN_SET)
 		return UN_PRESSED;
 	else

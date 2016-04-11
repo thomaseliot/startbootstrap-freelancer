@@ -2,22 +2,24 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="weak" key="selection"/>
+		<item value="TaskDelay" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="weak"/>
-			<item value="CAN1_RX0_IRQHandler"/>
-			<item value="HCAN1"/>
-			<item value="filter"/>
-			<item value="CanRxMsgTypeDef"/>
-			<item value="CAN2_CLK_ENABLE"/>
-			<item value="HAL_RCC_CAN2_CLK_ENABLE()"/>
+			<item value="taskdelay"/>
+			<item value="delay"/>
+			<item value="CAN"/>
+			<item value="CAN1_RX0_IRQn"/>
+			<item value="hcan2"/>
+			<item value="hcan1"/>
+			<item value="CAN_Receive_IT"/>
 			<item value="HAL_CAN_RxCpltCallback"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Message"/>
+			<item value="hcan1"/>
 			<item value="hcan2"/>
 		</list>
 	</section>

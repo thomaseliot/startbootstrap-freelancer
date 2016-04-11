@@ -1,0 +1,76 @@
+#               Confirmation Dialog Messages
+#
+# The system references these messages via lines that look like "message #"
+# The text that follows these lines is read until the next occurrence of
+# a "message #" line.  Lines starting with '#' are ignored completely.
+# The "message #" lines may have a third token that specifies how the
+# message should be oriented.  For example, "message 1 center" will center
+# the text for message 1 when it is displayed.  "message 1 left" will
+# left justify the text when it is displayed.  This is the default action.
+#
+# Copyright (c) Altia, Inc. 1991
+#
+
+message 1 center
+Save models to current file:
+# ----- SAVE_BEFORE_LOSING
+message 100 center
+Do you want to save your changes?
+#
+message 101 center
+Cannot save design while focused in on a group.
+Cancel operation so you can focus out and save first?
+#
+message 102 center
+Found deck which is hiding object.
+Do you want to change cards to reveal object?
+#
+message 103 center
+This object or one of it's children cannot be scaled safely.  Proceed anyway?
+#
+message 104 center
+This object or one of it's children cannot be rotated safely.  Proceed anyway?
+#
+message 105 center
+This object or one of it's children cannot be stretched safely.  Proceed anyway?
+#
+message 106 center
+This group contains no objects.
+#
+message 201 center
+Do you want to replace the existing file?
+#
+message 202 center
+Do you want to append to the existing file?
+#
+message 300 center
+Do you want to save WMIS directives first?
+#
+message 301 center
+Importing will overwrite existing channel content.  Do you want to continue?
+# ----- ConfMsgIdDeleteStimulus
+message 302 center
+Are you sure you want to permanently delete all of the following stimuli?
+# ----- ConfMsgIdDeleteConnector
+message 303 center
+Are you sure you want to permanently delete this Connector?<br>
+Any connections to this Connector will be disconnected.<br><br>
+<b>WARNING: You cannot undo this operation!</b>
+# ----- ConfMsgIdCantConvTitle
+message 304 center
+Save Absolute Path
+# ----- ConfMsgIdCantConvNotSaved
+message 305 center
+<p>You haven't saved your model yet.</p>
+<p>If you do not save first, the selected path will be saved as an absolute path.</p>
+# ----- ConfMsgIdCantConvDiffDrive
+message 306 center
+<p>Selected path:<br><b>%1</b></p>
+<p>Current Altia model path:<br><b>%2</b></p>
+<p> The path to the file you selected is on a different drive than the current Altia model and therefore must be stored as an absolute path.</p>
+#
+message 307 center
+This Base Object is different from the existing Base Object in this project.
+This copying will update the existing Base Object and all of its Instances, 
+and is NOT undoable. Would you still like to continue?" 
+#

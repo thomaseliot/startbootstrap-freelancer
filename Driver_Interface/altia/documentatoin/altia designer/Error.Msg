@@ -1,0 +1,226 @@
+#                     Error Dialog Messages
+#
+# The system references these messages via lines that look like "message #"
+# The text that follows these lines is read until the next occurrence of
+# a "message #" line.  Lines starting with '#' are ignored completely.
+# The "message #" lines may have a third token that specifies how the
+# message should be oriented.  For example, "message 1 center" will center
+# the text for message 1 when it is displayed.  "message 1 left" will
+# left justify the text when it is displayed.  This is the default action.
+#
+# Copyright (c) Altia, Inc. 1991-2011
+#
+message 1 center
+This copy of the software has expired!
+For assistance, write or call:
+
+Altia, Inc.
+7222 Commerce Center Dr. #240
+Colorado Springs, CO 80919
+719-598-4299
+support@altia.com
+#
+message 2 center
+Models could not be saved to requested file:
+#
+message 3 center
+Cannot open requested models file:
+#
+message 4 center
+No Authorization to run Altia Design.
+A codeword is required.
+For assistance, write or call:
+
+Altia, Inc.
+7222 Commerce Center Dr. #240
+Colorado Springs, CO 80919
+719-598-4299
+support@altia.com
+#
+message 5 center
+Altia Design license checkout failed.
+All available licenses are currently in use.
+#
+message 6 center
+Altia codeword system has been compromised.
+Cannot continue with this software session.
+#
+message 7 center
+Not able to establish communication with a License Manager machine.
+Please fix the problem so this machine can communicate with a 
+License Manager machine and then hit OK.
+#
+message 8 center
+License Manager does not have enough available resources for this session.
+Please have other Altia software sessions return enough resources for this 
+session to continue and then hit OK.
+#
+message 9 center
+This trial copy of the software detects that your machine has an invalid
+date set.  Please set your machine's date to the correct date and
+restart the software.
+#
+message 10 center
+Unable to open control file:
+#
+message 11 center
+Control error with getParams, type:
+#
+message 12 center
+Control error with regFuncs, type:
+#
+message 13 center
+Control error with trigFuncs, type:
+#
+message 14 center
+Control error with enableFuncs, type:
+#
+message 15 center
+Control error with setParams, type:
+#
+message 16 center
+Cannot start Control Editor, unable to open template or script file.
+#
+message 17 center
+Template.ctl does not have a graphic of type:
+#
+message 18 center
+Cannot write to list file:
+#
+message 19 center
+SAVE YOUR DESIGN AND EXIT IMMEDIATELY!  Connection with FLEXlm 
+license server lost.  This session will cease to function unless
+the license server is restored.
+#
+message 20 center
+No Authorization to run Presentation Builder.
+Codewords for Presentation Builder and XML are required.
+For assistance, contact The Boeing Company.
+#
+message 100 center
+Unable to save design in file:
+#
+message 101 center
+Unable to open design file:
+#
+message 102 center
+Unable to import Monochrome BMP file:
+#
+message 103 center
+Unable to import Raster Image file:
+#
+message 104 center
+Unable to import DXF file:
+# ----- CANT_SAVE_STILL_FOCUSED
+message 105 center
+<p>Cannot %1 while inside a group or container object.</p>
+<p>You must focus out to the top level of the model's hierarchy to %1.</p>
+# Cannot save design while focused in on a group.
+#
+message 106 center
+Cannot import design while focused in on a group.
+#
+message 107 center
+Unable to execute client program:
+#
+message 108 center
+Unable to create listing file:
+#
+message 109 center
+Will not overwrite design file with listing file:
+#
+message 110 center
+Error in Editing Connection:
+#
+message 111 center
+Property Error:
+#
+message 112 center
+Help Error:
+#
+message 113 center
+No Authorization to use this connection.
+A codeword is required.
+For assistance, write or call:
+
+Altia, Inc.
+7222 Commerce Center Dr. #240
+Colorado Springs, CO 80919
+719-598-4299
+support@altia.com
+#
+message 114 center
+XML Import Error:
+#
+message 115 center
+Cannot approve object because it does not have a
+Class Name and/or Instance Name property or one
+of these properties is empty.
+#
+message 116 center
+There was an error loading the PDD file.
+#
+message 117 center
+Error trying to import XML file containing WMIS Directives:
+#
+message 118 center
+Error trying to export XML file containing WMIS Directives:
+#
+message 119 center
+Error trying to save WMIS Directives:
+#
+message 120 center
+Error trying to validate WMIS Directives:
+#
+message 121 center
+This object or one of it's children cannot be scaled.
+#
+message 122 center
+This object or one of it's children cannot be rotated.
+#
+message 123 center
+This object or one of it's children cannot be stretched.
+#
+message 124 center
+No authorization to export XML.  A codeword is required.
+#
+message 125 center
+No authorization to import XML.  A codeword is required.
+#
+message 126 center
+Cannot define animation state for this distorted transform.
+#
+message 127 center
+Invalid container contents.
+#
+message 128 center
+The chosen function name cannot be renamed
+because it belongs to an Instance object.
+
+Please use either the Prepend or Replace
+operation so any changes are not lost during
+any future updates to the Instance.
+#
+message 129 left
+INSTANCES ERROR 
+
+Instances of a Base Object may only be used as:
+    1.  Child Instances of one other type of Base Object, or
+    2.  Not as child Instances in all usages.
+
+We recommend you either:
+    A.  Use regular copies of the object (not Instance copies), or
+    B.  Make the Instances children of the same type of Base Object.
+
+The copy/update is canceled because of these conflicting Instance usages:
+
+# ----- ErrMsgIdBlankPropName
+message 130 left
+Please enter a name for the Property.
+# ----- ErrMsgIdNameExists
+message 131 left
+"%1" already exists.  Please use a different name.
+# ----- ErrMsgIdNameReserved
+message 132 left
+"%1" is reserved.  Please use a different name.
+# ----- 

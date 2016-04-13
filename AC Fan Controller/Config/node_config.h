@@ -16,7 +16,7 @@
 
 // MCU Status
 #define MCU_STATUS_PORT		IO_PORTC
-#define MCU_STATUS_CH		0
+#define MCU_STATUS_CH		7
 
 // Define the rest of your I/O configuration here
 

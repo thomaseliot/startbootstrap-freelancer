@@ -1,0 +1,16 @@
+Inputs:
+CAN
+Pushbuttons (GPIO, polling)
+
+Outputs:
+CAN
+LEDs (I2C)
+Display LCD (RGB-18 bit)
+Buzzer (PWM)
+
+
+Tasks:
+Update Display (Altia) 60Hz
+Poll pushbuttons 100Hz
+Update LED bars and buzzer 60Hz
+Can buffer to memory

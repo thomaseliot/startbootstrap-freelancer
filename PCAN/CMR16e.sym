@@ -17,3 +17,11 @@ Color=0000FFh
 Var=State State 0,8	// Current Module State
 Var=Value unsigned 8,8
 
+["DIM Heartbeat"]
+ID=206h	// Driver Interface Module Hearbeat
+CycleTime=100
+Timeout=500
+Color=C0DCC0h
+Var=State State 0,8
+Var="Requested State" State 8,8
+

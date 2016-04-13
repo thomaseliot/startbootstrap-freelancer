@@ -1,11 +1,16 @@
 /*
  * can_callbacks.c
+ * 
+ * Callback functions for CAN receive
  *
- * Created: 2/25/2016 10:00:15 PM
- *  Author: semerson
+ * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
+
 #include "can_callbacks.h"
+
+// Create these based on CAN configuration. They are bound to 
+// receive mailboxes manually in the main function.
 
 // Mailbox 1 callback function
 void mb1_callback(CAN_packet packet) {

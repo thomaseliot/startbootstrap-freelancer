@@ -11,7 +11,7 @@
 #define CMR_CONSTANTS_H_
 
 // Node state, for main state machine run on all nodes.
-typedef enum {GLV_ON, HV_EN, RTD, ERROR} NodeState;
+typedef enum {GLV_ON, HV_EN, RTD, ERROR, UNKNOWN} NodeState;
 
 // System-wide definitions
 #define BRAKE_THRESH	20

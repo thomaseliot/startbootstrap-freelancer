@@ -44,7 +44,7 @@ void initADC(void) {
  *	ch: the channel number to read
  * Returns: the result of the conversion, 8-bit
  */
-uint16_t readADC(uint8_t ch) {
+uint8_t readADC(uint8_t ch) {
 	// Critical section **********************************************************
 	taskENTER_CRITICAL();
 	// Set which channel to read. Leave all ADMUX bits as is except MUX4-0

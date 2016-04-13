@@ -1,0 +1,38 @@
+/*
+ * tasks.h
+ *
+ *  Created on: Apr 9, 2016
+ *      Author: Tom
+ */
+
+#ifndef APPLICATION_USER_TASKS_H_
+#define APPLICATION_USER_TASKS_H_
+typedef uint32_t portTickType;
+osMessageQId buttonQueue;
+
+//Active low buttons
+typedef GPIO_PIN_RESET pressed;
+typedef GPIO_PIN_SET unpressed;
+
+typedef enum {
+	NEXT_BTN,
+	DOWN_BTN,
+	SELECT_BTN,
+	RETURN_BTN,
+	UP_BTN,
+	DOWN_BTN
+} button;
+
+typedef enum {
+	PRESSED = 0,
+	UN_PRESSED = 1
+} buttonState;
+
+typedef struct {
+	button Name;
+	buttonState State;
+} ButtonObject;
+
+
+
+#endif /* APPLICATION_USER_TASKS_H_ */

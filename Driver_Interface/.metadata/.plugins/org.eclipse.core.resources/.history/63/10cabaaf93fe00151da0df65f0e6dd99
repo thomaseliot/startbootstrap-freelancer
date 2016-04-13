@@ -1,0 +1,47 @@
+/*
+ * tasks.c
+ *
+ *  Created on: Apr 9, 2016
+ *      Author: Tom
+ */
+#include "tasks.h"
+#include "cmsis_os.h"
+#include "stm32f4xx_hal.h"
+
+void vPollButtonsTask(void * pvParameters) {
+
+	//Active low buttons
+	typedef GPIO_PIN_RESET pressed;
+	typedef GPIO_PIN_SET unpressed;
+
+	portTickType xLastWakeTime;
+	xLastWakeTime = osKernelSysTick();
+	button NEXT_BTN_press = unpressed;
+	button DOWN_BTN_press = unpressed;
+	button SELECT_BTN_press = unpressed;
+	button RETURN_BTN_press = unpressed;
+	button UP_BTN_press = unpressed;
+	button DOWN_BTN_press = unpressed;
+	GPIO_PinState NEXT_BTN_state =
+	for( ;; )
+	{
+	/* Poll GPIO */
+	HAL_GPIO_ReadPin(NEXT_BTN_GPIO_Port, NEXT_BTN_Pin)
+
+
+	/* 10ms period = 100Hz */
+	vTaskDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(10*1000) ) );
+	}
+}
+
+//static button updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, button  prev_state){
+//	GPIO_PinState ButtonState = HAL_GPIO_ReadPin(GPIOx, GPIO_pin);
+//	if(( == GPIO_PIN_RESET) && (prev_state == unpressed)) {
+//		return
+//	}
+//	else
+//
+//}
+
+
+#define BSPD_ERR_GPIO_Port GPIOE

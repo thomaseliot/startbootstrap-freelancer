@@ -6,7 +6,7 @@ BottomDockPanelSize=102
 MDITabIndex=0
 MaximizedMDIChildren=0
 WindowCount=9
-ClosedWindowsCount=2
+ClosedWindowsCount=3
 
 [ConnectionsWindow]
 Columns=ebncBsoqOl,-24,-40,215,215,110,90,80,80,80,130
@@ -15,10 +15,10 @@ Columns=ebncBsoqOl,-24,-40,215,215,110,90,80,80,80,130
 Name=Window1_RcvXmtForm
 ObjectKind={3F159EA3-60F6-46C7-9062-93F1E6750139}
 Visible=1
-Left=17
-Top=3
-Width=2151
-Height=515
+Left=143
+Top=27
+Width=2064
+Height=1186
 Style=3
 RcvSize=500
 SplitState=1
@@ -85,8 +85,8 @@ ExpandedItems=Connections
 Name=Window1_7A8A32C4B71840D69B8B688F6DEF3068
 ObjectKind={7A8A32C4-B718-40D6-9B8B-688F6DEF3068}
 Visible=0
-FloatLeft=4401
-FloatTop=801
+FloatLeft=59
+FloatTop=32
 FloatWidth=1381
 FloatHeight=868
 Style=2
@@ -111,8 +111,8 @@ DockedTo=LeftDockPanel
 Name=Window1_TimeoutsWindow
 ObjectKind={27B1E93E-3A39-46E0-9BA8-4B40071A7BF5}
 Visible=0
-FloatLeft=4106
-FloatTop=794
+FloatLeft=980
+FloatTop=717
 FloatWidth=460
 FloatHeight=183
 Style=2
@@ -121,23 +121,13 @@ Style=2
 Name=Window1_MacroStatusWindow
 ObjectKind={9D2F99BB-7967-4361-8FA6-7ACD02D41EE3}
 Visible=0
-FloatLeft=4144
-FloatTop=832
+FloatLeft=1242
+FloatTop=581
 FloatWidth=198
 FloatHeight=319
 Style=2
 
 [Closed0]
-Ident=CMR16e.sym
-Left=78
-Top=78
-Width=1397
-Height=515
-SelCol=20
-SelLine=7
-FirstVisibleLine=0
-
-[Closed1]
 Ident=RcvXmt
 Left=22
 Top=46
@@ -147,6 +137,24 @@ RcvSize=500
 SplitState=1
 HexViewSize=60
 HexViewVisible=0
+
+[Closed1]
+Ident=Trace1
+Left=52
+Top=52
+Width=790
+Height=384
+HexViewSize=60
+
+[Closed2]
+Ident=CMR16e.sym
+Left=78
+Top=78
+Width=1397
+Height=515
+SelCol=20
+SelLine=7
+FirstVisibleLine=0
 
 [WatchWindow]
 Columns=nvm

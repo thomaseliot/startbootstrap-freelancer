@@ -10,9 +10,17 @@
 #include "node_tasks.h"
 #include "queue.h"
 #include "cmr_64c1_lib.h"
+#include "can_ids.h"
+#include "can_structs.h"
 #include "node_config.h"
+#include "cmr_constants.h"
 #include "assert.h"
 
+// Current node state, initialized to GLV_ON
+uint8_t currentState = GLV_ON;
+
+// Target global state, used for state transitioning
+uint8_t targetState = GLV_ON;	// Initialized to GLV_ON
 
 /* MCU Status task
  * Toggles the MCU status LED, to blink at 2Hz
@@ -71,8 +79,8 @@ void vADCSampleTask(void *pvParameters) {
 	
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
-		// Loop through and sample all thermistors
-		for(i = THERM1; i <= THERM8; i++) {
+		// Sample all ADC channels
+		for(i = LOWEST_ADC_CH; i <= HIGHEST_ADC_CH; i++) {
 			// Update ADC value in struct
 			updateADC(i);
 		}
@@ -83,13 +91,16 @@ void vADCSampleTask(void *pvParameters) {
 }
 
 /* Heartbeat task
- * Sends node heartbeat out on the CANBus
- * Rate: 10Hz
+ * Sends node heartbeat out on CAN
+ * Rate: 100Hz
  * Priority: 3
  */
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 	int i;
+	
+	// Heartbeat message variable
+	SMHeartbeat_t SMHeartbeat;
 	
 	// Get status variables
 	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
@@ -100,22 +111,22 @@ void vHeartbeatTask(void *pvParameters) {
 	// Period
 	const TickType_t xPeriod = 1000 / HEARTBEAT_TASK_RATE;		// In ticks (ms)
 	
-	// Data to send
-	// HeartbeatFSM data;
-	uint8_t counts[NO_MOBS];
+	// Initialize heartbeat message
+	SMHeartbeat.state = currentState;
+	SMHeartbeat.targetState = targetState;
+	SMHeartbeat.vbatt = adcVal(VBATT);
 	
-	// Define CAN packet to send.
-	// Format: {ID, Length, Data};
-	static CAN_packet packet = {0x300, NO_MOBS, "\0\0\0\0\0\0"};
+	// Define CAN packet to send
+	static CAN_packet packet;
+	packet.id = SM_HEARTBEAT_ID;
+	packet.length = sizeof(SMHeartbeat_t);
 	
 	for(;;) {
-		// Update counts
-		for(i = 0; i < NO_MOBS; i++) {
-			counts[i] = statuses[i].cnt;
-		}
+		// Update vbatt value
+		SMHeartbeat.vbatt = adcVal(VBATT);
 		
-		// Copy counts to data array
-		memcpy(packet.data, counts, NO_MOBS * sizeof(uint8_t));
+		// Copy heartbeat to message array
+		memcpy(packet.data, &SMHeartbeat, sizeof(struct SMHeartbeat_t));
 		
 		// Transmit the data. 
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
@@ -131,12 +142,14 @@ void vHeartbeatTask(void *pvParameters) {
  * Uses send mailboxes to send enqueued messages over CAN
  * Currently unimplemented
  */
+/*
 void vCANSendTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 	
 	
 }
+*/
 
 
 /* Receive from CAN

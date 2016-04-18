@@ -36,6 +36,6 @@ typedef struct {
 
 void vPollButtonsTask(void * pvParameters);
 buttonState getButtonState(GPIO_PinState pinState);
-void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject buttonObject);
+void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject * buttonObject);
 
 #endif /* APPLICATION_USER_TASKS_H_ */

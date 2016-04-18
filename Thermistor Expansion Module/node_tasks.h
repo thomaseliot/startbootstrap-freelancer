@@ -28,7 +28,7 @@
 #define ADC_SAMPLE_TASK_RATE			100
 #define WATCHDOG_TASK_RATE				4
 #define THERMISTOR_READ_TASK_RATE		100
-#define THERMISTOR_WRITE_TASK_RATE		10
+#define THERMISTOR_WRITE_TASK_RATE		20
 
 // Globals
 static uint16_t maxThermistorValue;

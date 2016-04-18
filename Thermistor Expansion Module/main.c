@@ -34,7 +34,7 @@ int main(void)
 	
 	// Initialize SPI
 	spiInit();
-	spiSetClockDivider(SPI_CLOCK_DIV64);
+	// spiSetClockDivider(SPI_CLOCK_DIV64);
 	spiSetBitOrder(SPI_MSBFIRST);
 	spiSetDataMode(SPI_MODE1);
 	

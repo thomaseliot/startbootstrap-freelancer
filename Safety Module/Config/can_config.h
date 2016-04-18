@@ -1,4 +1,5 @@
-/* can_config.h
+/* 
+ * can_config.h
  * 
  * A configuration file for CAN constants
  * 
@@ -24,7 +25,7 @@
 
 // Mailbox directions
 volatile static uint8_t MOB_DIRS[NO_MOBS] = {
-	RX, RX, RX, RX, TX, TX			// 4 RX, 2 TX. Configure based on how much data in/out
+	RX, RX, RX, TX, TX, TX			// 4 RX, 2 TX. Configure based on how much data in/out
 };
 
 // Mailbox IDs
@@ -32,7 +33,7 @@ volatile static uint16_t MOB_IDS[NO_MOBS] = {
 	0x100,							// Test message
 	0x101,							// Test message
 	0x102,							// Test message
-	0x103,							// Test message
+	NO_ID,							// Test message
 	NO_ID, NO_ID					// TX Mailboxes
 };
 
@@ -46,7 +47,7 @@ volatile static uint16_t MOB_MASKS[NO_MOBS] = {
 	0x3FF,							// Match all
 	0x3FF,							// Match all 
 	0x3FF,							// Match all
-	0x3FF,							// Match all
+	NO_MASK,							// Match all
 	NO_MASK, NO_MASK				// TX Mailboxes
 };
 
@@ -55,7 +56,7 @@ volatile static uint8_t MOB_PRIORITIES[NO_MOBS] = {
 	3,								// Change later
 	3,
 	3,
-	3,
+	NO_PRIORITY,
 	NO_PRIORITY, NO_PRIORITY		// TX Mailboxes
 };
 

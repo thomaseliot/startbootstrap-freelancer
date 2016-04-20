@@ -2,6 +2,8 @@
 //#include "cmsis_os.h"
 //#include "stm32f4xx_hal_gpio.h"
 #include "stm32f4xx_hal_can.h"
+#include "can_structs.h"
+#include "can_ids.h"
 
 //http://eraycanli.com/2015/09/28/stm32f4-discovery-can-bus-communication/
 uint8_t CAN1dataReceivedFlag;
@@ -10,23 +12,113 @@ uint8_t CAN1dataReceivedFlag;
 CanTxMsgTypeDef TxMessage; /* Tx message struct */
 CanRxMsgTypeDef RxMessage; /* Rx message struct */
 
-
-CanMessage * CanData;
-osPoolDef (CanData_Pool, 128, CanMessage);
+/*	Max 2^7 = 128 unique messages */
+osPoolDef (CanData_Pool, 256, CanMessage);
 osPoolId (CanData_Pool_id);
+CanMessage * CanData;
 
-void vCanStart(void * pvParameters) {
 
+
+void vCanTask(void * pvParameters) {
 	portTickType xLastWakeTime;
+	NodeState DIstate;
+	NodeState requestedState;
+	osEvent recvdMessage;
+	ButtonObject recvdButton;
+	DIMHeartbeat_t DIM_heartbeat;
+
 	xLastWakeTime = osKernelSysTick();
+	int timeoutTick = 0;
+	DIstate = STATE_UNKNOWN;
+	requestedState = STATE_UNKNOWN;
 
 
 	for( ;; ) {
 
-		CAN1SendMessage(3, "hi");
 
-		/* 16.667ms period = 100Hz */
-		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(10*1000) ) );
+		//Receive button info from queue & request state change
+		do {
+			recvdMessage = osMessageGet(stateButtonQueue, 0);
+			if(recvdMessage.status == osEventMessage) {
+				recvdButton = *(ButtonObject *) recvdMessage.value.p;
+				if(requestedState == DIstate) { //state change should not already be in progress
+					if(recvdButton.name == NEXT_BTN && recvdButton.state == BTN_UN_PRESSED) {
+						requestedState = nextState(DIstate);
+					}
+					else if(recvdButton.name == PREV_BTN && recvdButton.state == BTN_UN_PRESSED) {
+						requestedState = prevState(DIstate);
+					}
+					timeoutTick = 0;
+				}
+			}
+		}while(recvdMessage.status == osEventMessage);
+
+		//On timeout, stop requesting state change
+		if(timeoutTick >= timeoutPeriod){
+			requestedState = DIstate;
+		}
+
+
+		//Change DASH state if safety module has initiated state change on CAN
+		DIstate = getSafetyModuleStateCAN();
+
+
+		//TODO change to heartbeat
+		DIM_heartbeat.state = DIstate;
+		DIM_heartbeat.requestedState = requestedState;
+		DIM_heartbeat.vbatt = 0; //TODO: placeholder
+		CAN1SendMessage(sizeof(DIMHeartbeat_t), &DIM_heartbeat);
+
+		timeoutTick++;
+		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(period) ) );
+	}
+}
+
+//typedef enum {STATE_GLV_ON, STATE_HV_EN, STATE_RTD, STATE_ERROR, STATE_UNKNOWN} NodeState;
+
+NodeState nextState(NodeState DIstate) {
+	switch(DIstate) {
+		case STATE_UNKNOWN:
+			return STATE_UNKNOWN;
+		case STATE_ERROR:
+			return STATE_GLV_ON;
+		case STATE_GLV_ON:
+			return STATE_HV_EN;
+		case STATE_HV_EN:
+			return STATE_RTD;
+		case STATE_RTD:
+			return STATE_RTD;
+		default:
+			return STATE_ERROR;
+	}
+}
+
+NodeState prevState(NodeState DIstate) {
+	switch(DIstate) {
+		case STATE_UNKNOWN:
+			return STATE_UNKNOWN;
+		case STATE_ERROR:
+			return STATE_ERROR;
+		case STATE_GLV_ON:
+			return STATE_GLV_ON;
+		case STATE_HV_EN:
+			return STATE_RTD;
+		case STATE_RTD:
+			return STATE_HV_EN;
+		default:
+			return STATE_ERROR;
+	}
+}
+
+NodeState getSafetyModuleStateCAN() {
+	CanMessage SMmsg;
+	SMmsg = CanData[CanData_idx(SM_HEARTBEAT_ID)];
+	if(SMmsg.length) {
+		SMHeartbeat_t SMhbeat = * (SMHeartbeat_t *) SMmsg.data;
+		return SMhbeat.state;
+	}
+	else {
+		return STATE_ERROR;
 	}
 }
 
@@ -117,8 +209,7 @@ void InitializeCANBUS1()
 	hcan1.pTxMsg->RTR = CAN_RTR_DATA; /* Remote transmission request:data */
 	hcan1.pTxMsg->IDE = CAN_ID_STD; /* Identifier type: standard */
 
-	/* Create memory block to store arriving CAN data
-		Max 2^7 = 128 unique messages */
+	/* Create memory block to store arriving CAN data */
 	CanData_Pool_id = osPoolCreate (osPool (CanData_Pool));
 		if (CanData_Pool_id != NULL)  {
 		    // allocate a memory block
@@ -153,28 +244,11 @@ void CAN1SendMessage(uint8_t length, uint8_t *data)
 }
 
 
-/* CAN1 Rx FIFO0 interrupt service routine */
-//void CAN1_RX0_IRQHandler()
-//{
-//	if(HAL_CAN_Receive(&hcan1, 0, 5000) == HAL_OK) /* Packet received from CANBUS successfully */
-//	{
-//		uint8_t idx = RxMessage.StdId & 0b01111111;
-//
-//		CanData[idx].id = RxMessage.StdId;
-//		CanData[idx].length = RxMessage.DLC;
-//		for(uint8_t i =0; i < RxMessage.DLC; i++){
-//			CanData[idx].data[i] = RxMessage.Data[i];
-//		}
-//	}
-//
-//	return;
-//}
-
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan) {
 
 	CanRxMsgTypeDef Message;
 	Message = * (hcan->pRxMsg);
-	uint8_t idx = Message.StdId & 0b01111111;
+	uint8_t idx = CanData_idx(Message.StdId);
 
 	CanData[idx].id = Message.StdId;
 	CanData[idx].length = Message.DLC;
@@ -197,3 +271,5 @@ void CAN1_RX0_IRQHandler(void)
 
   /* USER CODE END CAN2_RX0_IRQn 1 */
 }
+
+

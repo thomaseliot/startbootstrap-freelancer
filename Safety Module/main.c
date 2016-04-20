@@ -39,19 +39,12 @@ int main(void)
 	// Initialize ADC
 	initADC();
 	
+	// Initialize CAN
 	can_init();
-	
-	
-	// Assign mailbox callbacks
-	statuses[0].cbk = mb1_callback;
-	statuses[1].cbk = mb2_callback;
-	statuses[2].cbk = mb3_callback;
-	statuses[3].cbk = mb4_callback;
 	
 	/* Tasks */
 	
 	// Create tasks for receive mailboxes
-	/*
 	for(i = 0; i < NO_MOBS; i++) {
 		
 		// Initialize mailbox status
@@ -59,6 +52,9 @@ int main(void)
 		statuses[i].cnt = 0;
 		
 		if(MOB_DIRS[i] == RX) {
+			// Assign callback to task
+			statuses[i].cbk = MOB_CALLBACKS[i];
+			
 			// Name of task
 			char name[4];
 			sprintf(name, "RCV%d", i);
@@ -66,7 +62,7 @@ int main(void)
 			xTaskCreate(vCANReceiveTask, name, configMINIMAL_STACK_SIZE,
 				(void *)(&statuses[i]), MOB_PRIORITIES[i], NULL);
 		}
-	}*/
+	}
 	
 	// MCU status task, to blink the LED
 	// Rate: 4Hz

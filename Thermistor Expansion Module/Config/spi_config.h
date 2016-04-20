@@ -12,11 +12,11 @@
 #include "cmr_64c1_lib.h"
 
 // Number of slaves
-#define NUM_SLAVES			1
+#define NUM_SLAVES			2
 
 // Slave enumeration
 typedef enum SPISlaveEnum {
-	POT_SYNC
+	POT1_SS, POT2_SS
 };
 
 // Struct for storing port/pin of slave
@@ -27,7 +27,8 @@ typedef struct SPISlave_t {
 
 // Slave configuration array
 static SPISlave spiSlaves[NUM_SLAVES] = {
-	{IO_PORTC, 1}	// POT Sync, Port C1
+	{IO_PORTC, 1},	// POT1, Port C1
+	{IO_PORTC, 2}	// POT2, Port C2
 };
 
 

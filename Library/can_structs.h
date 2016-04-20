@@ -10,8 +10,9 @@
 #ifndef CAN_STRUCTS_H_
 #define CAN_STRUCTS_H_
 
-// Heartbeats
+#include <stdint.h>
 
+// Heartbeats
 // Safety Module
 typedef struct SMHeartbeat_t {
 	uint8_t state;

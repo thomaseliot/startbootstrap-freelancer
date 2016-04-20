@@ -196,10 +196,11 @@ void vThermistorWriteTask(void *pvParameters) {
 	
 	// Function variables
 	volatile uint8_t valueToWrite = 0x00;
-	//volatile uint8_t valueToWrite2 = 0x00;
 	volatile uint8_t upperByte, lowerByte;
 	volatile uint8_t command;
-	SPISlave thermPots = spiSlaves[POT_SYNC];
+	SPISlave pot1 = spiSlaves[POT1_SS];
+	SPISlave pot2 = spiSlaves[POT2_SS];
+	int fuck = 0;
 	
 	// Previous wake time pointer, initialized to current tick count.
 	// This gets updated by vTaskDelayUntil every time it is called
@@ -207,39 +208,38 @@ void vThermistorWriteTask(void *pvParameters) {
 	
 	// Period
 	const TickType_t xPeriod = 1000 / THERMISTOR_WRITE_TASK_RATE;		// In ticks (ms)
-	/*
-	// Send a bunch of zeros for good measure
-	taskENTER_CRITICAL();
-	spiSelect(thermPots);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiDeselect(thermPots);
-	taskEXIT_CRITICAL();
-	*/
-	// Initialize the pot
 	
-	// Enable high impedance on SDO output for daisy chain
+	spiTransaction(0x00, 0);
+	spiTransaction(0x00, 0);
+	
+	// Write some zeros for good measure
 	//taskENTER_CRITICAL();
-	//spiSelect(thermPots);
-	//spiWrite(0x80);
-	//spiWrite(0x01);
+	//spiSelect(pot1);
 	//spiWrite(0x00);
 	//spiWrite(0x00);
-	//spiDeselect(thermPots);
+	//spiDeselect(pot1);
+	//spiSelect(pot2);
+	//spiWrite(0x00);
+	//spiWrite(0x00);
+	//spiDeselect(pot2);
 	//taskEXIT_CRITICAL();
 	
-	// Enable RDAC register write access
+	// Enable RDAC register write access for each pot
 	upperByte = 0x1C;
 	lowerByte = 0x02;
 	taskENTER_CRITICAL();
-	spiSelect(thermPots);
-	spiWrite(0x1C);
-	spiWrite(0x02);
-	//spiWrite(upperByte);
-	//spiWrite(lowerByte);
-	spiDeselect(thermPots);
+	//spiSelect(pot1);
+	//spiWrite(0x1C);
+	//spiWrite(0x02);
+	//spiDeselect(pot1);
+	
+	//spiWrite(0x00);
+	//spiWrite(0x00);
+	
+	//spiSelect(pot1);
+	//spiWrite(0x1C);
+	//spiWrite(0x02);
+	//spiDeselect(pot1);
 	taskEXIT_CRITICAL();
 	
 	
@@ -252,17 +252,17 @@ void vThermistorWriteTask(void *pvParameters) {
 		
 		// Write
 		taskENTER_CRITICAL();
-		spiSelect(thermPots);
+		spiSelect(pot1);
 		spiWrite(upperByte);
 		spiWrite(lowerByte);
-		/*upperByte = (command << 2) | (valueToWrite2 >> 6);
-		lowerByte = valueToWrite2 << 2;
-  		spiWrite(upperByte);
-		spiWrite(lowerByte);*/
-		spiDeselect(thermPots);
+		spiDeselect(pot1);
 		taskEXIT_CRITICAL();
 
-		valueToWrite++;
+		valueToWrite += 1;
+		//if(fuck) setPin(POT2_CTRL_PORT, POT2_CTRL_CH, HIGH);
+		//else setPin(POT2_CTRL_PORT, POT2_CTRL_CH, LOW);
+		
+		fuck = !fuck;
 		
 		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);

@@ -16,6 +16,8 @@
 #include "adc.h"
 #include "frtos_can.h"
 #include "can_config.h"
+#include "can_structs.h"
+#include "cmr_constants.h"
 
 // Task priorities
 #define MCU_STATUS_TASK_PRIORITY		1
@@ -26,7 +28,6 @@
 #define MCU_STATUS_TASK_RATE			4
 #define ADC_SAMPLE_TASK_RATE			100
 #define HEARTBEAT_TASK_RATE				100
-
 
 // Task functions
 void vMCUStatusTask(void *pvParameters);

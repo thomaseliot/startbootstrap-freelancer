@@ -27,5 +27,7 @@
 #define OPEN_FAULT_CH		7
 #define SHORT_FAULT_PORT	IO_PORTD		// Short circuit on thermistor output
 #define SHORT_FAULT_CH		0
+#define POT2_CTRL_PORT		IO_PORTC		// Connect/Disconnect Parallel Pot
+#define POT2_CTRL_CH		3
 
 #endif /* NODE_CONFIG_H_ */

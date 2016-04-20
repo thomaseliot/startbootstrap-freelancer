@@ -24,7 +24,6 @@ ID=204h	// Driver Interface Module Hearbeat
 DLC=3
 CycleTime=10
 Timeout=100
-Color=C0DCC0h
 Var=State State 0,8
 Var=Requested_State State 16,8
 Var=VBatt unsigned 8,8 /u:V
@@ -73,7 +72,7 @@ DLC=3
 CycleTime=10
 Timeout=100
 Var=State State 0,8
-Var=VBatt unsigned 8,8 /u:V /f:0.066666
+Var=SM_Vbatt unsigned 8,8 /u:V /f:0.066666
 Var=Target_State State 16,8
 
 [MC_L_Modulation_And_Flux_Info]

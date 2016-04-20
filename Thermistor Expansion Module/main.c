@@ -34,15 +34,20 @@ int main(void)
 	
 	// Initialize SPI
 	spiInit();
-	// spiSetClockDivider(SPI_CLOCK_DIV64);
+	spiSetClockDivider(SPI_CLOCK_DIV32);
 	spiSetBitOrder(SPI_MSBFIRST);
 	spiSetDataMode(SPI_MODE1);
+
 	
 	// Hold both thermistor out relays open
 	pinMode(OPEN_FAULT_PORT, OPEN_FAULT_CH, IO_DIR_OUTPUT);
 	pinMode(SHORT_FAULT_PORT, SHORT_FAULT_CH, IO_DIR_OUTPUT);
 	setPin(OPEN_FAULT_PORT, OPEN_FAULT_CH, HIGH);
 	setPin(SHORT_FAULT_PORT, SHORT_FAULT_CH, HIGH);
+	
+	// Enable second parallel pot
+	pinMode(POT2_CTRL_PORT, POT2_CTRL_CH, IO_DIR_OUTPUT);
+	setPin(POT2_CTRL_PORT, POT2_CTRL_CH, LOW);
 	
 	
 	/* Tasks */

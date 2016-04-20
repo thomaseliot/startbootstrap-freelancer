@@ -12,15 +12,11 @@
 #include "cmr_64c1_lib.h"
 #include "can_ids.h"
 #include "can_structs.h"
+#include "can_callbacks.h"
+#include "can_payloads.h"
 #include "node_config.h"
 #include "cmr_constants.h"
 #include "assert.h"
-
-// Current node state, initialized to GLV_ON
-uint8_t currentState = GLV_ON;
-
-// Target global state, used for state transitioning
-uint8_t targetState = GLV_ON;	// Initialized to GLV_ON
 
 /* MCU Status task
  * Toggles the MCU status LED, to blink at 2Hz
@@ -98,9 +94,11 @@ void vADCSampleTask(void *pvParameters) {
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 	int i;
-	
-	// Heartbeat message variable
-	SMHeartbeat_t SMHeartbeat;
+	NodeState nextState;
+	// Current node state, initialized to GLV_ON
+	static NodeState currentState = GLV_ON;
+	// Target global state, used for state transitioning
+	static NodeState targetState = GLV_ON;
 	
 	// Get status variables
 	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
@@ -117,22 +115,49 @@ void vHeartbeatTask(void *pvParameters) {
 	SMHeartbeat.vbatt = adcVal(VBATT);
 	
 	// Define CAN packet to send
-	static CAN_packet packet;
+	CAN_packet packet;
 	packet.id = SM_HEARTBEAT_ID;
 	packet.length = sizeof(SMHeartbeat_t);
 	
 	for(;;) {
+		//if (targetState > 4) {
+		//	return;
+		//}
+		
+		// Update target state to DIM's requested state, if present
+		if(DIMHeartbeat.requestedState != NULL) {
+			targetState = DIMHeartbeat.requestedState;
+		}
+		
+		// Update states
+		currentState = GLV_ON;
+		SMHeartbeat.state = currentState;
+		SMHeartbeat.targetState = targetState;
+		
+		//if (targetState > 4) {
+		//	return;
+		//}
+		
 		// Update vbatt value
 		SMHeartbeat.vbatt = adcVal(VBATT);
 		
 		// Copy heartbeat to message array
-		memcpy(packet.data, &SMHeartbeat, sizeof(struct SMHeartbeat_t));
+		memcpy(packet.data, &SMHeartbeat, sizeof(SMHeartbeat_t));
 		
-		// Transmit the data. 
+		//if (targetState > 4) {
+		//	return;
+		//}
+		
+		
+		// Transmit the data
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
 		can_send(&packet, get_free_mob(), 100);
+
+		//if (targetState > 4) {
+		//	return;
+		//}
 		
-		// Delay 100ms
+		// Delay 10ms
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
@@ -189,13 +214,17 @@ void vCANReceiveTask(void *pvParameters) {
 		// Receive message
 		xQueueReceive(queue, &packet, portMAX_DELAY);
 		
+		//taskENTER_CRITICAL();
 		// Increment mailbox receive count
-		status.cnt++;
+		// status.cnt++;
 		
 		// See if a callback function is defined
+		
 		if(status.cbk != NULL) {
 			// Call function with packet as parameter
 			(*(status.cbk))(packet);
 		}
+		
+		//taskEXIT_CRITICAL();
 	}
 }

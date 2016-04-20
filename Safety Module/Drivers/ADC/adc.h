@@ -16,9 +16,6 @@ typedef struct ADCMeta_t {
 	uint16_t currentValue;
 } ADCMeta;
 
-// Channel data storage
-static ADCMeta adcChannels[NUM_ADC_CH];
-
 // Functions
 void initADC(void);
 uint16_t readADC(uint8_t ch);

@@ -63,6 +63,8 @@ CAN_HandleTypeDef hcan1;
 osThreadId buttonTaskHandle;
 osThreadId ledTaskHandle;
 osThreadId canTaskHandle;
+osMessageQId stateButtonQueue;
+osMessageQId interfaceButtonQueue;
 
 /* USER CODE END PV */
 
@@ -153,13 +155,16 @@ int main(void)
 	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
 	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
-	  osThreadDef(canTask, vCanStart, osPriorityAboveNormal, 1, 500);
+	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
-	  osMessageQDef(button_queue, 12, ButtonObject); // Declare a message queue
-	  buttonQueue = osMessageCreate(osMessageQ(button_queue), NULL);
+	  osMessageQDef(ibutton_queue, 12, ButtonObject); // Declare a message queue
+	  interfaceButtonQueue = osMessageCreate(osMessageQ(ibutton_queue), NULL);
+
+	  osMessageQDef(sbutton_queue, 12, ButtonObject); // Declare a message queue
+	  stateButtonQueue = osMessageCreate(osMessageQ(sbutton_queue), NULL);
 
   /* USER CODE END RTOS_QUEUES */
  

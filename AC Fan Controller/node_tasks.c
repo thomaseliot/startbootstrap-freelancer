@@ -47,6 +47,142 @@ void vMCUStatusTask(void *pvParameters) {
 	}
 }
 
+void vFanTestTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+
+	// Period
+	const TickType_t xPeriod = FAN_TEST_TASK_PERIOD;		// In ticks (ms)
+
+	// Initialize IO ports
+	pinMode(IO_PORTC, 0, IO_DIR_OUTPUT);
+	pinMode(IO_PORTD, 0, IO_DIR_OUTPUT);
+	pinMode(IO_PORTD, 1, IO_DIR_OUTPUT);
+
+	// All On
+	pinMode(IO_PORTD, 3, IO_DIR_OUTPUT);
+
+	// PWM Settings
+	// Set at OCR0A, clear at TOP. Use Fast PWM Mode. Clock Prescaler of 8.
+	//TCCR0A |= (1<<WGM01)|(1<<WGM00)|(1<<COM0A1);
+	//CCR0B |= (1 << CS00);
+
+	// Task variables
+	uint8_t fanState = 0;
+	uint8_t testPWMs[8] = {63, 127, 191, 255, 191, 127, 63, 0};
+	//uint8_t testPWMs[8] = {31,  63,  95, 127,  95,  63, 31, 0};
+
+	// Enable three fans
+	setPin(IO_PORTC, 0, HIGH);
+	setPin(IO_PORTD, 0, HIGH);
+	setPin(IO_PORTD, 1, HIGH);
+	
+
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		
+		// Load the PWM duty cycle and move to the next index, with wrap-around
+		//OCR0A = testPWMs[(fanState++) & (0x07)];
+		setPin(IO_PORTD, 3, HIGH);
+
+		//taskYIELD();
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+
+	}
+	
+	// Delay until next period
+}
+
+void vFanUpdateTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+
+	// Period
+	const TickType_t xPeriod = 1000/FAN_UPDATE_TASK_RATE;		// In ticks (ms)
+
+	// Initialize IO ports
+	pinMode(IO_PORTC, 0, IO_DIR_OUTPUT);
+	pinMode(IO_PORTD, 0, IO_DIR_OUTPUT);
+	pinMode(IO_PORTD, 1, IO_DIR_OUTPUT);
+	
+	pinMode(IO_PORTD, 3, IO_DIR_OUTPUT);
+
+	// PWM Settings
+	// Set at OCR0A, clear at TOP. Use Fast PWM Mode.
+	//TCCR0A |= (1<<WGM01)|(1<<WGM00)|(1<<COM0A1);
+	//TCCR0B |= (1 << CS00);
+	pwmInit(PWM_0A, PWM_CLOCK_DIV1);
+	
+	// Enable three fans
+	setPin(IO_PORTC, 0, HIGH);
+	setPin(IO_PORTD, 0, HIGH);
+	setPin(IO_PORTD, 1, HIGH);
+	
+
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		switch(fan_state){
+			case FAN_OFF:
+				pwmSetDutyCycle(PWM_0A, 0);
+				break;
+			case FAN_RAMP:
+				pwmSetDutyCycle(PWM_0A, fan_duty);
+				break;
+			case FAN_ON:
+				pwmSetDutyCycle(PWM_0A, 255);			
+				break;
+			default:
+				pwmSetDutyCycle(PWM_0A, 0);			
+		}
+
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
+void vFanSetTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+
+	// Period
+	const TickType_t xPeriod = 1000/FAN_SET_TASK_RATE;		// In ticks (ms)
+	
+	fan_state = FAN_OFF;
+	fan_duty = 0;
+	
+	vTaskDelayUntil(&xLastWakeTime, 2000);
+
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		switch(fan_state){
+			case FAN_OFF:
+				fan_state = FAN_RAMP;
+				break;
+			case FAN_RAMP:
+				if(fan_duty == 255)	fan_state = FAN_ON;
+				else fan_duty+=RAMP_SPEED;
+				break;
+			case FAN_ON:
+			default:
+				break;
+		}
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
 
 /* ADC sample task
  * Samples all ADC channels
@@ -87,12 +223,13 @@ void vADCSampleTask(void *pvParameters) {
  * Rate: 10Hz
  * Priority: 3
  */
+/*
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 	int i;
 	
 	// Get status variables
-	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
+	//MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
 	
 	// Previous wake time pointer
 	TickType_t xLastWakeTime = xTaskGetTickCount();
@@ -125,25 +262,27 @@ void vHeartbeatTask(void *pvParameters) {
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
-
+*/
 
 /* Send over CAN
  * Uses send mailboxes to send enqueued messages over CAN
  * Currently unimplemented
  */
+/*
 void vCANSendTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 	
 	
 }
-
+*/
 
 /* Receive from CAN
  * 
  * 
  * 
  */
+/*
 void vCANReceiveTask(void *pvParameters) {
 	// Function Variables
 	volatile xQueueHandle queue;
@@ -184,3 +323,4 @@ void vCANReceiveTask(void *pvParameters) {
 		}
 	}
 }
+*/

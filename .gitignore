@@ -8,6 +8,7 @@
 *.gch
 *.pch
 
+
 # Libraries
 *.lib
 *.a
@@ -40,4 +41,6 @@
 
 # PCAN
 **/*~
-*~
+
+# Eclipse
+.metadata/

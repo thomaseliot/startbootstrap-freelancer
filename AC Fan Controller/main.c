@@ -22,27 +22,30 @@
 #include "cmr_64c1_lib.h"
 #include "adc.h"
 #include "spi.h"
+#include "can_callbacks.h"
 
 // Global status variable
 MOB_STATUS statuses[NO_MOBS];
+
+
 
 // Main function, runs once
 int main(void)
 {	
 	// Function variables
 	uint16_t i;
-
+	
 	/* Initialization */
 	
 	// Initialize ADC
 	initADC();
 	
 	// Initialize SPI
-	spiInit();
+	//spiInit();
 	// TODO: Change these for SPI temp sensor
-	spiSetClockDivider(SPI_CLOCK_DIV64);
-	spiSetBitOrder(SPI_MSBFIRST);
-	spiSetDataMode(SPI_MODE1);
+	//spiSetClockDivider(SPI_CLOCK_DIV64);
+	//spiSetBitOrder(SPI_MSBFIRST);
+	//spiSetDataMode(SPI_MODE1);
 	
 	
 	// Assign mailbox callbacks
@@ -54,6 +57,7 @@ int main(void)
 	/* Tasks */
 	
 	// Create tasks for receive mailboxes
+	/*
 	for(i = 0; i < NO_MOBS; i++) {
 		
 		// Initialize mailbox status
@@ -69,7 +73,7 @@ int main(void)
 			(void *)i, MOB_PRIORITIES[i], NULL);
 		}
 	}
-	
+	*/
 	// MCU status task, to blink the LED
 	// Rate: 4Hz
     xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
@@ -77,11 +81,21 @@ int main(void)
 	
 	// ADC read task
 	// Rate: 100Hz
-	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
-		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
+	//xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
+	//	NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 		
 	// Module-specific tasks here
 	
+	// Fan speed update task
+	// Rate: 50Hz
+	xTaskCreate(vFanSetTask, "FAN_ST", configMINIMAL_STACK_SIZE,
+		NULL, FAN_SET_TASK_PRIORITY, NULL);
+		
+	// Fan speed update task
+	// Rate: 100Hz	
+	xTaskCreate(vFanUpdateTask, "FAN_UP", configMINIMAL_STACK_SIZE,
+		NULL, FAN_UPDATE_TASK_PRIORITY, NULL);
+			
 	
 	// Start the scheduler
 	vTaskStartScheduler();

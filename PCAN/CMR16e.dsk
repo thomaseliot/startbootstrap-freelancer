@@ -15,10 +15,17 @@ Columns=ebncBsoqOl,-24,-40,215,215,110,90,80,80,80,130
 Name=Window1_RcvXmtForm
 ObjectKind={3F159EA3-60F6-46C7-9062-93F1E6750139}
 Visible=1
+<<<<<<< HEAD
 Left=57
 Top=8
 Width=1307
 Height=727
+=======
+Left=77
+Top=0
+Width=811
+Height=472
+>>>>>>> 0f74485371ecf50508a9618638444461ea8725c2
 Style=3
 RcvSize=409
 SplitState=1
@@ -34,7 +41,7 @@ FloatTop=57
 FloatWidth=500
 FloatHeight=200
 Style=2
-TabIndex=0
+TabIndex=3
 SplitPos=153
 
 [2]
@@ -54,7 +61,11 @@ ObjectKind={FB44BF1E-7C70-4F04-A5B5-A476C4006598}
 Visible=1
 Left=18
 Top=1
+<<<<<<< HEAD
 Width=1901
+=======
+Width=1421
+>>>>>>> 0f74485371ecf50508a9618638444461ea8725c2
 Height=100
 FloatLeft=1653
 FloatTop=374
@@ -70,7 +81,11 @@ Visible=1
 Left=1
 Top=18
 Width=273
+<<<<<<< HEAD
 Height=768
+=======
+Height=588
+>>>>>>> 0f74485371ecf50508a9618638444461ea8725c2
 FloatLeft=1423
 FloatTop=23
 FloatWidth=234
@@ -99,7 +114,11 @@ Visible=1
 Left=1
 Top=18
 Width=183
+<<<<<<< HEAD
 Height=768
+=======
+Height=588
+>>>>>>> 0f74485371ecf50508a9618638444461ea8725c2
 FloatLeft=110
 FloatTop=145
 FloatWidth=250
@@ -128,6 +147,16 @@ FloatHeight=319
 Style=2
 
 [Closed0]
+Ident=CMR16e.sym
+Left=78
+Top=78
+Width=1397
+Height=515
+SelCol=20
+SelLine=7
+FirstVisibleLine=0
+
+[Closed1]
 Ident=RcvXmt
 Left=22
 Top=46
@@ -138,23 +167,13 @@ SplitState=1
 HexViewSize=60
 HexViewVisible=0
 
-[Closed1]
+[Closed2]
 Ident=Trace1
 Left=52
 Top=52
 Width=790
 Height=384
 HexViewSize=60
-
-[Closed2]
-Ident=CMR16e.sym
-Left=78
-Top=78
-Width=1397
-Height=515
-SelCol=20
-SelLine=7
-FirstVisibleLine=0
 
 [WatchWindow]
 Columns=nvm

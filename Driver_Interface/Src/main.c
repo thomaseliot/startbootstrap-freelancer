@@ -118,6 +118,14 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   InitializeCANBUS1();
+
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Pin = RETURN_BTN_Pin|UP_BTN_Pin|SELECT_BTN_Pin|PREV_BTN_Pin|DOWN_BTN_Pin|NEXT_BTN_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+	HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -139,7 +147,7 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   	  /* Button polling task. 100Hz. */
-	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 128);
+	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 500);
 	  buttonTaskHandle = osThreadCreate(osThread(buttonTask), NULL);
 
 	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
@@ -480,11 +488,11 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LCD_DE_Pin LCD_SPI_CS_Pin */
-  GPIO_InitStruct.Pin = LCD_DE_Pin|LCD_SPI_CS_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+//  GPIO_InitStruct.Pin = LCD_DE_Pin|LCD_SPI_CS_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+//  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : RETURN_BTN_Pin UP_BTN_Pin */
   GPIO_InitStruct.Pin = RETURN_BTN_Pin|UP_BTN_Pin;

@@ -1,0 +1,31 @@
+22:34:25 **** Incremental Build of configuration Debug for project Driver_Interface ****
+make all 
+'Building file: ../Application/User/CAN.c'
+'Invoking: MCU GCC Compiler'
+C:\Users\Tom\Documents\CMR\STM32 Development\firmware\Driver_Interface\SW4STM32\Driver_Interface\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__weak="__attribute__((weak))" -D__packed="__attribute__((__packed__))" -DUSE_HAL_DRIVER -DSTM32F429xx -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/SW4STM32/Driver_Interface/Application/User" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/Tom/Documents/CMR/STM32 Development/firmware/Driver_Interface/Inc"  -Os -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/CAN.d" -MT"Application/User/CAN.o" -o "Application/User/CAN.o" "../Application/User/CAN.c"
+../Application/User/CAN.c: In function 'vCanStart':
+../Application/User/CAN.c:26:22: warning: pointer targets in passing argument 2 of 'CAN1SendMessage' differ in signedness [-Wpointer-sign]
+   CAN1SendMessage(3, "hi");
+                      ^
+In file included from ../Application/User/CAN.c:1:0:
+../Application/User/can.h:35:6: note: expected 'uint8_t * {aka unsigned char *}' but argument is of type 'char *'
+ void CAN1SendMessage(uint8_t length, uint8_t *data);
+      ^
+'Finished building: ../Application/User/CAN.c'
+' '
+'Building target: Driver_Interface.elf'
+'Invoking: MCU GCC Linker'
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F429ZITx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "Driver_Interface.elf" @"objects.list"  
+'Finished building target: Driver_Interface.elf'
+' '
+make --no-print-directory post-build
+'Generating binary and Printing size information:'
+arm-none-eabi-objcopy -O binary "Driver_Interface.elf" "Driver_Interface.bin"
+arm-none-eabi-size "Driver_Interface.elf"
+   text	   data	    bss	    dec	    hex	filename
+  16480	     20	  18132	  34632	   8748	Driver_Interface.elf
+' '
+
+22:34:26 Build Finished (took 1s.283ms)
+

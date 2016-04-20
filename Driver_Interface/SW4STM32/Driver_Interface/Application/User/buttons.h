@@ -12,6 +12,7 @@
 #define APPLICATION_USER_TASKS_H_
 
 typedef uint32_t portTickType;
+osMessageQId buttonQueue;
 
 
 typedef enum {
@@ -24,8 +25,8 @@ typedef enum {
 } button;
 
 typedef enum {
-	BTN_PRESSED = 0,
-	BTN_UN_PRESSED = 1
+	PRESSED = 0,
+	UN_PRESSED = 1
 } buttonState;
 
 typedef struct {
@@ -33,10 +34,8 @@ typedef struct {
 	buttonState state;
 } ButtonObject;
 
-extern osMessageQId stateButtonQueue;
-extern osMessageQId interfaceButtonQueue;
 void vPollButtonsTask(void * pvParameters);
 buttonState getButtonState(GPIO_PinState pinState);
-void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject * buttonObject, osMessageQId buttonQueue);
+void updateButton(GPIO_TypeDef * GPIOx, uint16_t GPIO_pin, ButtonObject * buttonObject);
 
 #endif /* APPLICATION_USER_TASKS_H_ */

@@ -5,6 +5,7 @@
 #include "can_structs.h"
 #include "can_ids.h"
 
+
 //http://eraycanli.com/2015/09/28/stm32f4-discovery-can-bus-communication/
 uint8_t CAN1dataReceivedFlag;
 

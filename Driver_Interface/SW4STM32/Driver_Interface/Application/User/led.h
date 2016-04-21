@@ -13,41 +13,36 @@
 /* 100Hz task freq = 10 ms period = 10,000us */
 #define period (10*10000)
 
-//BGR
-//typedef struct {
-//	int8_t b_driver;
-//	int8_t b_pin;
-//	int8_t g_driver;
-//	int8_t g_pin;
-//	int8_t r_driver;
-//	int8_t r_pin;
-//} led_t;
-//
-//#define BAR_LED_1 4,0,4,1,4,2
-//#define BAR_LED_2 4,3,4,4,4,5
-//#define BAR_LED_3 4,6,4,7,4,8
-//#define BAR_LED_4
+extern I2C_HandleTypeDef hi2c3;
 
-//1 byte each: alpha R G B
 typedef uint32_t color_t;
+typedef uint8_t led_id_t;
 
 typedef uint32_t portTickType;
 
-//#define I2C_TIMEOUT
+#define I2C_TIMEOUT osKernelSysTickMicroSec(10)
 
 #define get_blue(c) (c&0xFF)
 #define get_green(c) ((c>>8)&0xFF)
 #define get_red(c) ((c>>16)&0xFF)
 #define get_alpha(c) ((c>>24)&0xFF)
+#define make_color(c,a) ((a<<24)|c)
 
-#define LED_DRV_1_ADR_W (96<<1)
-#define LED_DRV_2_ADR_W (97<<1)
-#define LED_DRV_3_ADR_W (98<<1)
-#define LED_DRV_4_ADR_W (99<<1)
-#define LED_DRV_5_ADR_W (100<<1)
-#define LED_DRV_6_ADR_W (101<<1)
+#define COLOR_RED make_color(0xFF0000, 0xFF)
+#define COLOR_BLUE make_color(0x00FF00, 0xFF)
+#define COLOR_GREEN make_color(0x00F00, 0xFF)
+
+#define DRV1 (96<<1)
+#define DRV2 (97<<1)
+#define DRV3 (98<<1)
+#define DRV4 (99<<1)
+#define DRV5 (100<<1)
+#define DRV6 (101<<1)
 
 
 void vLedUpdateTask(void * pvParameters);
+void set_led(led_id_t * led_id, color_t led_color);
+void ledInitAll();
+void ledInit(int8_t led_addr);
 
 #endif /* APPLICATION_USER_LED_H_ */

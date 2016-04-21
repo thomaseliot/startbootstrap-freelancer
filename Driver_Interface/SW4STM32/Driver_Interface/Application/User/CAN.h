@@ -9,12 +9,7 @@
 #define APPLICATION_USER_CAN_H_
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
-
-
-//extern uint8_t CAN1dataReceivedFlag;
-
-
-
+#include "buttons.h"
 
 
 
@@ -24,17 +19,33 @@ typedef struct {
 	uint8_t data[8];
 } CanMessage;
 
-void vCanStart(void * pvParameters);
+typedef enum {STATE_GLV_ON, STATE_HV_EN, STATE_RTD, STATE_ERROR, STATE_UNKNOWN} NodeState;
 
 
 
-//osPoolDef (CanData_Pool, 128, CanMessage);
-//osPoolId   CanData_Pool_Id;
 
-void InitializeCANBUS1();
+extern CanMessage * CanData;
+
+/* 100Hz task freq = 10 ms period = 10,000us */
+#define period (10*10000)
+
+/* 1s state change timeout = 1,000,000us */
+#define timeoutPeriod (1000000/period)
+
+#define CanData_idx(x) (x & 0b01111111)
+
+extern osMessageQId stateButtonQueue;
+extern CAN_HandleTypeDef hcan2;
+
+
+
+void UserInitCan2();
+void vCanTask(void * pvParameters);
 void CAN1SendMessage(uint8_t length, uint8_t *data);
+NodeState nextState(NodeState DIstate);
+NodeState prevState(NodeState DIstate);
+NodeState getSafetyModuleStateCAN();
 
-extern CAN_HandleTypeDef hcan1;
 
 
 #endif /* APPLICATION_USER_CAN_H_ */

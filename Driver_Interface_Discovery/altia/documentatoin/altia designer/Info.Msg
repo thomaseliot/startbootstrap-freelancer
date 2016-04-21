@@ -1,0 +1,1798 @@
+#               Information Dialog Messages
+#
+# The system references these messages via lines that look like "message #"
+# The text that follows these lines is read until the next occurrence of
+# a "message #" line.  Lines starting with '#' are ignored completely.
+# The "message #" lines may have a third token that specifies how the
+# message should be oriented.  For example, "message 1 center" will center
+# the text for message 1 when it is displayed.  "message 1 left" will
+# left justify the text when it is displayed.  This is the default action.
+#
+# Copyright (c) Altia, Inc. 1991-2013
+#
+# IMPORTANT -- version information has been removed from this file.
+#              The application code will insert the version into specific
+#              messages using the version strings from product.h
+#              (JJM, 3/27/2013)
+#
+# To add versions to specific messages, refer to StrBank::infoMsg()
+# located in StrBank.cpp
+#
+message 1 center
+The OpenSceneGraph is protected by Copyright, and is licensed under the terms
+of the OpenSceneGraph Public License (OSGPL).  To read this license please visit:
+http://www.openscenegraph.org/projects/osg/wiki/Legal
+Nokia Corporation and/or its subsidiaries. Nokia, Qt and their respective logos
+are trademarks of Nokia Corporation in Finland and/or other countries worldwide.
+The usage of Qt in Altia Design is under the conditions of the GNU Lesser General
+Public License (LGPL) version 2.1. To read this license please visit:
+http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+ICU is protected by Copyright (c) 1995-2014 International Business Machines
+Corporation and others.  All rights reserved.  To read this license please visit:
+http://http://source.icu-project.org/repos/icu/icu/trunk/license.html
+For ICU: Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, provided that the above
+copyright notice(s) and this permission notice appear in all copies of the Software
+and that both the above copyright notice(s) and this permission notice appear in
+supporting documentation.
+#
+message 2 center
+This message should never appear.
+If this message appears, please contact Altia, Inc.
+Error code:  Impossible (PB) Copyright Dialog
+#
+message 3 center
+Copyright (c) Altia, Inc. 1991-2013
+All rights reserved worldwide
+U.S. Patents 5,883,639; 6,957,418
+#
+message 4 center
+Copyright (c) Altia, Inc. 1991-2013
+All rights reserved worldwide
+U.S. Patents 5,883,639; 6,957,418
+#
+message 100 center
+Not found:
+#
+message 101 center
+Document validated successfully.
+#
+message 102 center
+<p>Creating connections in Altia 11 is performed in a slightly different manner than in prior versions of Altia.</p>
+<p>In prior versions of Altia Design, each object had its own Connection list window.  In this version of Altia, all selected objects are displayed in a single list within the Connections pane.  Connecting two objects together is the same as before.  Simply hilight an output (plug) and an input (socket) and click the Connect button.</p>
+<p>If the objects you wish to connect together are not at the same focus level, you can pin an object in the Connections pane list.  Pinned objects will remain displayed at the top of the list.  To make a connection, simply pin the first object, then navigate within the Universe window to the second object and select it.  Now both objects will be visible in the Connections pane list and you can select the Connectors you wish to link to create a Connection.</p>
+<p> You can view this help at any time by hovering your mouse over the tooltip help indicator icon at the top right of the Connections pane, as shown below:</p>
+<p><img src=":/Connection/HelpIndicator"/></p>
+#
+# Video URL (retrieves a list of videos for the Welcome screen)
+message 103 center
+http://www.altia.com/videolist/videolist.txt
+#
+# Image Object Library (Used when Importing a Raster)
+message 104 center
+${ALTIAHOME}/models/Special Functions/Image Object.dsn
+#
+# Message of the day URL
+message 105 center
+http://www.altia.com/message/message.txt
+#
+# info for "please pick a control code statement"
+message 200 center
+The Code Assist tool helps create Altia Control Code Statements.
+#
+message 201 center
+Select a statement type from the drop down control.  Press ENTER to when finished to create the control code statement on the current line in the text editor.  Pressing ENTER will also insert and advance to a new blank line.
+#
+# info for "COMMENT"
+message 202 center
+<b>COMMENT:</b> statements can be placed anywhere in the control code.
+#
+message 203 center
+They are used to insert helpful information and do not affect control execution. Comments generally document what is being done and why it was done the way it was.
+#
+# info for "WHEN"
+message 204 center
+<b>WHEN:</b> Once the WHEN is defined, Altia Design will watch for an event that satisfies this relationship. When the relationship is true, the statements under the WHEN will be executed.
+#
+message 205 center
+At the top-most level, you can specify what conditions to look for with one or more WHEN statements. Each WHEN statement consists of an animation/stimulus name, a value, and a relationship between the two. The value in the second field may be numeric or another animation/stimulus name.
+#
+# info for "ROUTINE"
+message 206 center
+<b>ROUTINE:</b> statements are listed at the top level of control along with WHEN statements, but they only execute when explicitly invoked using a CALL statement.
+#
+message 207 center
+To create a ROUTINE, you fill in the routine name and, optionally, any routine parameters and locals. Parameters are names or values that represent values given to the ROUTINE when it is called. Locals are names needed to hold temporary values inside the routine when it executes. All control statements necessary to accomplish the sub-task are then added underneath the ROUTINE statement.
+#
+# info for "GLOBALS"
+message 208 center
+<b>GLOBALS:</b> statements are placed at the top level of control code. It declares the listed names to be global in scope, meaning all control statements for all objects can access them.
+#
+message 209 center
+Multiple names are declared in a single GLOBALS statement by separating the names with space characters. Globals are storage elements for holding arithmetic results or strings required by WHEN and/or ROUTINE blocks.
+The names appearing in a GLOBALS statement are only recognized within control and are not visible outside of control (i.e., they are not visible for animation, stimulus definitions, or external client applications).
+Control globals are not given a formal type when they are declared in a GLOBALS statement. Instead, a global dynamically takes on a type based on the type of the value assigned to it from a SET, MATH, CALL, or EXPR statement.
+#
+# info for "IF"
+message 210 center
+<b>IF:</b> statements allows you to test the value of an animation, stimulus, control, global, parameter, or local name and take action based on the outcome of the test.
+#
+message 211 center
+The IF permits conditional execution of control based on whether the relationship between the name and the value is true. The IF statement appears indented below the WHEN statement because the IF statement is subject to the WHEN statement.
+Fill in the animation/stimulus/control/global/parameter/local name and the value to test against.  If the name typed into the first field is new and, therefore, has no current value, its value will be 0 for the purposes of the IF statement execution.
+#
+# info for "ELSEIF"
+message 212 center
+<b>ELSEIF:</b> statement provides an easier way of specifying an ELSE followed by an IF.
+#
+message 213 center
+If the preceding IF condition is false, the test of the ELSEIF condition will take place. If true, the control statements under the ELSEIF will be executed.
+#
+# info for "ELSE"
+message 214 center
+<b>ELSE:</b> statement handles the alternative case where the IF statement above it fails.
+#
+message 215 center
+An ELSE sub-block gives your design the opportunity to execute a different sub-block should the IF condition not be met. Based on the test condition, either the control statements under the IF or those under the ELSE will be executed. The ELSE has no fields to populate since the matching IF defines the test.
+#
+# info for "AND"
+message 216 center
+<b>AND:</b> can be placed immediately after an IF/LOOP statment or more AND or OR statements.
+#
+message 217 center
+The AND/OR statements are placed on the same line as the IF/LOOP statement. The AND/OR statements permit the creation of more complicated condition checks.
+#
+# info for "OR"
+message 218 center
+<b>OR:</b> can be placed immediately after an IF/LOOP statment or more AND or OR statements.
+#
+message 219 center
+The AND/OR statements are placed on the same line as the IF/LOOP statement. The AND/OR statements permit the creation of more complicated condition checks.
+#
+# info for "EXPR"
+message 220 center
+<b>EXPR:</b> statement allows setting an animation, stimulus, global, routine local, or routine parameter name to the result of almost any mathematical or logical expression.
+#
+message 221 center
+Legal operands in the expression field are:
+<ul><li>an integer or floating point value</li>
+<li>an animation/stimulus name (whose integer/floating point value will be used)</li>
+<li>a global, routine local, or routine parameter name</li>
+<li>a string enclosed in double-quotes (e.g., "Hello World") if a string is appropriate for the operation</li>
+<li>a library function, specified by placing a $ in front of the name (e.g. $sin $floor $abs)</li>
+<li>an interpreter command enclosed in brackets [] (e.g. $format and $scan)</li></ul>
+#
+# info for "MATH"
+message 222 center
+<b>MATH:</b> statement is used to set an animation, stimulus, control, global, parameter, or local name to a simple mathematical expression (usually involving another animation, stimulus, or control name).
+#
+message 223 center
+Instead of setting a name’s value to a specific number, a MATH statement can change a name’s value by a particular formula (e.g., increasing the value by 1). As with the SET statement, execution of this statement generates an event for the name with a new value if the name is not a global nor routine local.
+#
+# info for "SET"
+message 224 center
+<b>SET:</b> statement lets you set the value for an animation, stimulus, control, global, parameter, or local name.
+#
+message 225 center
+If the name is not a global and not a routine parameter nor local name, this can change the state of an animation and generate an event that can trigger the execution of other control blocks or start/stop timer stimulus.
+#
+# info for "LOOP"
+message 226 center
+<b>LOOP:</b> statements are used to repeat a section of control while a test condition is true.
+#
+message 227 center
+A LOOP statement is used in conjunction with an END statement. The first time a running control block encounters a LOOP statement, it checks the WHILE condition to see if it is true. If so, Altia Design will execute each statement in the LOOP control block. When it reaches the end of the LOOP control block, Altia Design will check the WHILE condition to see if it is still true. If so, the whole LOOP control block will again be executed.
+#
+# info for "CALL"
+message 228 center
+<b>CALL:</b> statement transfers control to a ROUTINE that will execute prior to continuing with the next statement.
+#
+message 229 center
+A CALL executes the named routine, giving it the values for the listed parameters. If filled in, the name in the RESULT field will be given the value returned by the routine.
+#
+# info for "RETURN"
+message 230 center
+<b>RETURN:</b> statement allows a ROUTINE block to return to its caller prior to the end of the routine and (optionally) return a value that will be assigned to the name in the matching CALL statement’s RESULT field.
+#
+message 231 center
+The RETURN statement can appear anywhere within a ROUTINE block any number of times with different return values. The RETURN value can be a name (animation, stimulus, global, routine local or routine parameter) in which case the value associated with the name is the return value.
+#
+# info for "END"
+message 232 center
+<b>END:</b> statement is used to either finish a control block (WHEN or ROUTINE) or finish a control sub-block (IF, ELSE, ELSEIF, or LOOP).
+#
+message 233 center
+For example, when you insert an IF statement, all statements entered after it will be indented underneath it and contingent upon it. When you insert an END statement to finish an IF subblock, the next statement entered will have the same left margin as the IF statement and will not be contingent upon it, unless it is an ELSE or ELSEIF statement.
+#
+# info for "OPEN"
+message 234 center
+<b>OPEN:</b> statement allows access a text file to read/write with the READ/WRITE statements.
+#
+message 235 center
+The file name should be enclosed in double quotation marks.  Make sure to specify the correct file access of READ, WRITE, or APPEND.
+#
+# info for "WRITE"
+message 236 center
+<b>WRITE:</b> writes the given value to the given text file, appending the specified delimiter.
+#
+message 237 center
+Use a WRITE statement to copy information received in, or generated by, your design to a text file.  In the "Write:" field enter either a name or a text string enclosed in double quotation marks (e.g., "Hello World"). If you insert a name, the value for the name at the time the WRITE statement is executed will be written to the indicated file in its textual form.
+#
+# info for "READ"
+message 238 center
+<b>READ:</b> reads a value from the given text file and sets the animation, stimulus, control, global, parameter, or local name to the value.
+#
+message 239 center
+The text in the file should be numeric or a double-quoted string, delimited by the chosen delimiter. Like the SET and MATH statements, execution of this statement generates an event for the name with the new value if the name is not a global or routine local.
+#
+# info for "CLOSE"
+message 240 center
+<b>CLOSE:</b> statement is used to close a text file that you have accessed in a control block.
+#
+message 241 center
+You may use an OPEN and one or more WRITE statements in a control block to access a file and write to it. However, if you want to READ that data from the file later in a control block, you must insert a CLOSE statement at some point before the first READ statement to ensure that the information at the beginning of the file will be available for reading.
+#
+# info for "OPEN_VIEW"
+message 242 center
+<b>OPEN_VIEW:</b> opens a new view into the current design. The new view is a completely separate window and usually displays a different portion of the design
+#
+message 243 center
+A unique identification number (id) is assigned to the new view. If id is the number of an existing view, that view is updated according to the remaining values in the OPEN_VIEW statement. The ID cannot be 0 because this ID is reserved for the main view.
+The area of the design that should appear in the view is specified with x and y, the design file coordinates that should appear at the lower left corner of the view. If unspecified, the defaults for the main view are used.
+A new view is positioned relative to an existing reference window. The reference window can be the Root Window, which is the screen itself, the Main Window, which is the main Altia view, or another view window that has a specific ID number. Use the ref win menu to select the appropriate option. The relative position of the new view to the reference window's lower left corner is specified by setting ref x and ref y. If unspecified, the center of the reference window is chosen.
+The new view's width and height are given in screen pixels. If left empty, the width and height of the main view are used.
+The window style for a new view is specified by choosing Toplevel or Child from the style menu. A window with a Toplevel style is independent from its reference window. A Child style window will stay on top of its reference window and move when the reference window moves. Currently, only Toplevel is supported.
+#
+# info for "CLOSE_VIEW"
+message 244 center
+<b>CLOSE_VIEW:</b> closes a view previously opened with OPEN_VIEW.
+#
+message 245 center
+The id field is the identification number of the view to close. It must be an ID number for a view previously opened with an OPEN_VIEW statement. An ID of 0 is ignored because it refers to the main view.
+#
+# info for "OPEN_DESIGN"
+message 246 center
+<b>OPEN_DESIGN:</b> opens a new design file in the current Altia session.
+#
+message 247 center
+A unique identification number (id) is assigned to the new design. If id is the number of a design already open, that design is replaced by the new one and all its views are updated appropriately.
+The FILE field may be a string between double quotes or any global/local name whose current value is a string. In addition, a text I/O object's text animation name can be used, as can @name, meaning use that name's value as the name whose value is to be substituted.
+After a design is opened with OPEN_DESIGN, additional views into the new design can be opened using the OPEN_VIEW statement.
+#
+# info for "CLOSE_DESIGN"
+message 248 center
+<b>CLOSE_DESIGN:</b> closes a design previously opened with OPEN_DESIGN.
+#
+message 249 center
+If one or more views are opened for the design with the identification number id, the views are closed automatically. An ID of 0 is ignored because it refers to the main view.
+#
+# info for "EXTERN"
+message 250 center
+<b>EXTERN:</b> statement is used to execute a routine residing in a shared library external to Altia Design.
+#
+message 251 center
+The EXTERN statement executes the named routine from the named shared library.
+One or more parameters may be passed to the routine by placing values or names in the Parameters field using spaces to separate the parameter items.
+If filled in, the name in the RESULT field will be given the value returned by the external routine.
+The type of the return value from the routine must be provided to ensure a correct conversion to an animation, stimulus, global, local, or parameter name type.  Possible types are String, Integer, or None. Change the return type by pressing on the current type label and selecting a new type from the resulting menu.
+#
+# syntax for invalid command
+message 300 center
+<i>Invalid Command</i>
+#
+# syntax for "COMMENT"
+message 301 center
+<b>//</b> [<i>comment text</i>]
+#
+# syntax for "WHEN"
+message 302 center
+<b>WHEN</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <b>{</b>[<i>value</i>]<b>}</b>
+#
+# syntax for "ROUTINE"
+message 303 center
+<b>ROUTINE</b> <i>name</i> <b>{</b><i>parameter list</i><b>} {</b><i>local variable list</i><b>}</b>
+#
+# syntax for "GLOBALS"
+message 304 center
+<b>GLOBALS</b> <b>{</b><i>global variable list</i><b>}</b>
+#
+# syntax for "IF"
+message 305 center
+<b>IF</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i> [OR,AND ...]
+#
+# syntax for "ELSEIF"
+message 306 center
+<b>ELSEIF</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i> [OR,AND ...]
+#
+# syntax for "ELSE"
+message 307 center
+<b>ELSE</b>
+#
+# syntax for "AND"
+message 308 center
+<b>AND</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i>
+#
+# syntax for "OR"
+message 309 center
+<b>OR</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i>
+#
+# syntax for "EXPR"
+message 310 center
+<b>EXPR</b> <i>animation</i> <b>{</b><i>expression statement</i><b>}</b>
+#
+# syntax for "MATH"
+message 311 center
+<b>MATH</b> <i>result operand1</i> (<b>+,-,*,/,%</b>) <i>operand2</i>
+#
+# syntax for "SET"
+message 312 center
+<b>SET</b> <i>result operand</i>
+#
+# syntax for "LOOP"
+message 313 center
+<b>LOOP</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i> [OR,AND ...]
+#
+# syntax for "CALL"
+message 314 center
+<b>CALL</b> <i>name</i> <b>{</b><i>parameter list</i><b>}</b> <i>result</i>
+#
+# syntax for "RETURN"
+message 315 center
+<b>RETURN</b> <i>result</i>
+#
+# syntax for "END"
+message 316 center
+<b>END</b>
+#
+# syntax for "OPEN"
+message 317 center
+<b>OPEN</b> <i>filename</i> (<b>r,w,a+</b>)
+#
+# syntax for "WRITE"
+message 318 center
+<b>WRITE</b> <i>animation</i> (<b>TAB,SPACE,RETURN</b>) <i>filename</i>
+#
+# syntax for "READ"
+message 319 center
+<b>READ</b> <i>animation</i> (<b>TAB,SPACE,RETURN</b>) <i>filename</i>
+#
+# syntax for "CLOSE"
+message 320 center
+<b>CLOSE</b> <i>filename</i>
+#
+# syntax for "OPEN_VIEW"
+message 321 center
+<b>OPEN_VIEW</b> <i>id x y</i> (<b>Root,Main,ID</b>) <b>{</b>[winid]<b>}</b> <i>width height winX winY</i> (<b>Toplevel,Borderless,Message,3DBorder,Dialog,FullScreen</b>) <i>magnification viewname</i>
+#
+# syntax for "CLOSE_VIEW"
+message 322 center
+<b>CLOSE_VIEW</b> <i>id</i>
+#
+# syntax for "OPEN_DESIGN"
+message 323 center
+<b>OPEN_DESIGN</b> <i>id filename</i>
+#
+# syntax for "CLOSE_DESIGN"
+message 324 center
+<b>CLOSE_DESIGN</b> <i>id</i>
+#
+# syntax for "EXTERN"
+message 325 center
+<b>EXTERN</b> <i>name</i> <b>{</b><i>parameter list</i><b>}</b> <i>library</i> (<b>STRING/INT/NONE</b>) <i>result</i>
+#
+# template for invalid command
+message 330 center
+<i>Invalid Command Syntax</i>
+#
+# template for "COMMENT"
+message 331 center
+//
+#
+# template for "WHEN"
+message 332 center
+WHEN {} == {}
+#
+# template for "ROUTINE"
+message 333 center
+ROUTINE {} {} {}
+#
+# template for "GLOBALS"
+message 334 center
+GLOBALS {}
+#
+# template for "IF"
+message 335 center
+IF {} == {}
+#
+# template for "ELSEIF"
+message 336 center
+ELSEIF {} == {}
+#
+# template for "ELSE"
+message 337 center
+ELSE
+#
+# template for "AND"
+message 338 center
+AND {} == {}
+#
+# template for "OR"
+message 339 center
+OR {} == {}
+#
+# template for "EXPR"
+message 340 center
+EXPR {} {}
+#
+# template for "MATH"
+message 341 center
+MATH {} {} + {}
+#
+# template for "SET"
+message 342 center
+SET {} {}
+#
+# template for "LOOP"
+message 343 center
+LOOP {} < {}
+#
+# template for "CALL"
+message 344 center
+CALL {} {} {}
+#
+# template for "RETURN"
+message 345 center
+RETURN {}
+#
+# template for "END"
+message 346 center
+END
+#
+# template for "OPEN"
+message 347 center
+OPEN {} r
+#
+# template for "WRITE"
+message 348 center
+WRITE {} RETURN {}
+#
+# template for "READ"
+message 349 center
+READ {} RETURN {}
+#
+# template for "CLOSE"
+message 350 center
+CLOSE {}
+#
+# template for "OPEN_VIEW"
+message 351 center
+OPEN_VIEW {} {} {} Root {} {} {} {} {} Toplevel {} {}
+#
+# template for "CLOSE_VIEW"
+message 352 center
+CLOSE_VIEW {}
+#
+# template for "OPEN_DESIGN"
+message 353 center
+OPEN_DESIGN {} {}
+#
+# template for "CLOSE_DESIGN"
+message 354 center
+CLOSE_DESIGN {}
+#
+# template for "EXTERN"
+message 355 center
+EXTERN {} {} {} INT {}
+#
+# tootip for invalid command
+message 400 center
+#
+# tootip for "COMMENT"
+message 401 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">COMMENT (Ctrl + K)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>//</b> [<i>comment text</i>]</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">COMMENT statements can be placed anywhere in the control code. They are used to insert helpful information or documentation and are ignored when control code is executed.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">// This is a comment.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "WHEN"
+message 402 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">WHEN (Ctrl + W)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>WHEN</b> <i>animation</i> (==,&lt;=,&lt;,&gt;,&gt;=,!=) <b>{</b>[<i>value</i>]<b>}</b></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Each WHEN statement consists of an animation or stimulus name, a value, and a relationship between the two. The value field may be numeric or another animation/stimulus name.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Once the WHEN is defined, Altia Design will watch for an event that satisfies this relationship. When the relationship is true, the control statements under that WHEN will be executed.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">WHEN myDeck_card == 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">WHEN new_x > curr_x</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt; white-space:nowrap">WHEN myAnim == {} (evaluates to true when myAnim is set to any value)</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "ROUTINE"
+message 403 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">ROUTINE (Ctrl + R)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>ROUTINE</b> <i>name</i> <b>{</b><i>parameter list</i><b>}</b> <b>{</b><i>local variable list</i><b>}</b></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A ROUTINE is a named sequence of control statements for accomplishing a sub-task.  ROUTINE statements only execute when explicitly invoked using a CALL statement.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Parameters are declared in the PARAMS field of the ROUTINE statement as one or more names or values separated by space characters. The number of items in the PARAMS line must match exactly with the number of PARAM items in each CALL statement that references the same ROUTINE name.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Locals are declared in the LOCALS field of the ROUTINE statement as one or more names separated by space characters. As soon as a ROUTINE completes, the locals and their values are destroyed. </span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">ROUTINE myRoutine {anim_a anim_b anim_c} {tempValA tempValB}</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">ROUTINE doWork myAnim {}</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "GLOBALS"
+message 404 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">GLOBALS (Ctrl + G)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>GLOBALS</b> <b>{</b><i>global variable list</i><b>}</b></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The GLOBALS statement is placed at the top level of control code. It declares the listed names to be global in scope, meaning all control statements for all objects can access them. Multiple names are declared in a single GLOBALS statement by separating the names with space (" ") characters.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A global is typically used to hold a temporary arithmetic result during a WHEN block execution and/or between WHEN and ROUTINE block executions until it is appropriate to assign the result to an animation name. This is in contrast to a local which is similar in capability and usage to a global but only persists during execution of the ROUTINE block in which the local is declared.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">GLOBALS myGlobal</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">GLOBALS globAnim_1 globAnim_2 globAnim_3</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "IF"
+message 405 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">IF (Ctrl + I)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>IF</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i> [OR,AND ...]</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">An IF statement allows you to test the value of an animation/stimulus/control/global/parameter/local name and take action based on the outcome of the test.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF myAnim == 5</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF anim_1 > 0 AND anim_1 &lt;10</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "ELSEIF"
+message 406 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">ELSEIF (Ctrl + N)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>ELSEIF</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i> [OR,AND ...]</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The ELSEIF statement provides an easier way of specifying an ELSE followed by an IF. If the preceding IF condition is false, the test of the ELSEIF condition will take place. If true, the control statements under the ELSEIF will be executed.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The ELSEIF statement is only available immediately after an END statement that completes an earlier IF or ELSEIF block.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF a == 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   ...</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">END</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>ELSEIF a &gt;= 1</b></span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   ...</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">END</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "ELSE"
+message 407 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">ELSE (Ctrl + L)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>ELSE</b></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">An ELSE statement handles the alternative case where the IF statement above it fails. The ELSE has no fields to populate since the matching IF defines the test.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF a == 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   . . .</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">END</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>ELSE</b></span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   . . .</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">END</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "AND"
+message 408 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">AND (Ctrl + B)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>AND</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The AND/OR statements are placed on the same line as the IF/LOOP statement. The AND/OR statements permit the creation of more complicated condition checks.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF anim_a == 1 OR anim_b == 1 <b>AND anim_c != 0</b></span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "OR"
+message 409 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">OR (Ctrl + O)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>OR</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The AND/OR statements are placed on the same line as the IF/LOOP statement. The AND/OR statements permit the creation of more complicated condition checks.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF anim_a == 1 <b>OR anim_b == 1</b> AND anim_c != 0</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "EXPR"
+message 410 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">EXPR (Ctrl + P)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>EXPR</b> <i>animation</i> <b>{</b><i>expression statement</i><b>}</b></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The EXPR statement allows setting an animation, stimulus, global, routine local, or routine parameter name to the result of almost any mathematical or logical expression.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Legal operands in the expression field are:<ul><li>an integer or floating point value</li><li>an animation/stimulus name (whose integer/floating point value will be used)</li><li>a global, routine local, or routine parameter name</li><li>a string enclosed in double-quotes (e.g., "Hello World") if a string is appropriate for the operation</li><li>a library function, specified by placing a $ in front of the name (e.g. $sin $floor $abs)</li><li>an interpreter command enclosed in brackets [ ] (e.g. $format and $scan)</li></ul></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The EXPR statement is used to compute more complicated expressions than those possible with a SET or MATH statement.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">EXPR myAnim {50 * 1.25}</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">EXPR myAnim {(val_a + val_b) / (10 - val_c)}</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">EXPR myAnim {[$format "%s times %s is %d" "two" "five" 10]}</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">EXPR myAnim {$fmod(val_y,10)} </span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "MATH"
+message 411 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">MATH (Ctrl + M)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>MATH</b> <i>result operand1</i> (<b>+,-,*,/,%</b>) <i>operand2</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The MATH statement is used to set an animation/stimulus/control/ global/parameter/local name to a simple mathematical expression (usually involving another animation/stimulus/control name).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The MATH statement's functionality has been superceded by the EXPR statement.  The MATH statement is retained for backwards compatibility with older versions of Altia Design.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">MATH resultAnim anim_a + 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">MATH resultAnim anim_a * anim_b</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "SET"
+message 412 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">SET (Ctrl + S)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>SET</b> <i>result operand</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A SET statement lets you set the value for an animation/stimulus/control/global/parameter/local name.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If the name is not a global and not a routine's parameter/local name, this can change the state of an animation and generate an event that can trigger the execution of other control blocks or start/stop timer stimulus.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">SET timerEnable 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">SET anim_a anim_b</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">SET text_anim "Hello world"</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "LOOP"
+message 413 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">LOOP (Ctrl + L)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>LOOP</b> <i>animation</i> (<b>==,&lt;=,&lt;,&gt;,&gt;=,!=</b>) <i>value</i> [OR,AND ...]</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">LOOP statements are used to repeat a section of control while a test condition is true.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A LOOP statement is used in conjunction with an END statement. The first time a running control block encounters a LOOP statement, it evaluates the LOOP condition to see if it is true. If so, Altia Design will execute each statement in the LOOP control block. When it reaches the end of the LOOP control block, Altia Design will check the LOOP condition to see if it is still true. If so, the whole LOOP control block will again be executed.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">SET val_a 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>LOOP val_a &lt; 10</b></span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   ...</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   EXPR val_a {val_a + 1}</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">END</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "CALL"
+message 414 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">CALL (Ctrl + D)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>CALL</b> <i>name</i> <b>{</b><i>parameter list</i><b>}</b> <i>result</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The CALL statement transfers control to a ROUTINE that will execute prior to continuing with the next statement.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A CALL executes the named routine, giving it the values for the listed parameters. If a result parameter is supplied, it will be given the value returned by the routine.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">CALL myRoutine</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">CALL doMath {val_a val_b val_c} result_val</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "RETURN"
+message 415 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">RETURN (Ctrl + T)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>RETURN</b> <i>result</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The RETURN statement allows a ROUTINE block to return to its caller prior to the end of the routine and (optionally) return a value that will be assigned to the name in the matching CALL statement’s RESULT field.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The RETURN statement can appear anywhere within a ROUTINE block any number of times with different return values. The RETURN value can be a name (animation, stimulus, global, routine local or routine parameter) in which case the value associated with the name is the return value.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">RETURN</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">RETURN 0</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">RETURN resultVal</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "END"
+message 416 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">END (Ctrl + E)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>END</b></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The END statement is used to either finish a control block (WHEN or ROUTINE) or finish a control sub-block (IF, ELSE, ELSEIF, or LOOP).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">For example, when you insert an IF statement, all statements entered after it will be indented underneath it and contingent upon it. When you insert an END statement to finish an IF subblock, the next statement entered will have the same left margin as the IF statement and will not be contingent upon it, unless it is an ELSE or ELSEIF statement.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">IF val_a == 1</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   ...</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>END</b></span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">ELSEIF val_a == 2</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">   ...</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>END</b></span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "OPEN"
+message 417 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">OPEN</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>OPEN</b> <i>filename</i> (<b>r,w,a+</b>)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The OPEN statement allows access a text file to read/write with the READ/WRITE statements.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The file name should be enclosed in double quotation marks.  Make sure to specify the correct file access of READ, WRITE, or APPEND.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>OPEN "myfile.txt" r</b></span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">READ num_val TAB "myfile.txt"</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">CLOSE "myfile.txt"</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "WRITE"
+message 418 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">WRITE</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>WRITE</b> <i>animation</i> (<b>TAB,SPACE,RETURN</b>) <i>filename</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The WRITE statement writes the given value to the given text file, appending the specified delimiter.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Use a WRITE statement to copy information received in, or generated by, your design to a text file.  For the "animation" parameter, enter either an animation name or a text string enclosed in double quotation marks. If you enter an animation name, the value for the name at the time the WRITE statement is executed will be written to the indicated file in its textual form.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">WRITE "Hello World!" RETURN myFile</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">WRITE myAnim TAB "myFile.txt"</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "READ"
+message 419 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">READ</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>READ</b> <i>animation</i> (<b>TAB,SPACE,RETURN</b>) <i>filename</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The READ statement reads a value from the given text file and sets the animation, stimulus, control, global, parameter, or local name to the value.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The text in the file should be numeric or a double-quoted string, delimited by the chosen delimiter. Like the SET and MATH statements, execution of this statement generates an event for the read animation name with the new value if the animation name is not a global or routine local.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">READ anim_name  TAB "myFile.txt" </span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">READ temp_num SPACE currFile</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "CLOSE"
+message 420 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">CLOSE</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>CLOSE</b> <i>filename</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The CLOSE statement is used to close a text file that you have previously opened with an OPEN command.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">You may use an OPEN and one or more WRITE statements in a control block to access a file and write to it. However, if you want to READ that data from the file later in a control block, you must insert a CLOSE statement at some point before the first READ statement to ensure that the information at the beginning of the file will be available for reading.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">OPEN "myfile.txt" r</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">READ num_val TAB "myfile.txt"</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;"><b>CLOSE "myfile.txt"</b></span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "OPEN_VIEW"
+message 421 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">OPEN_VIEW</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>OPEN_VIEW</b> <i>id x y</i> (<b>Root,Main,ID</b>) <b>{</b>[winid]<b>}</b> <i>width height winX winY</i> (<b>Toplevel,Borderless,Message,3DBorder,Dialog,FullScreen</b>) <i>magnification viewname</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">OPEN_VIEW opens a new view into the current design. The new view is a completely separate window and usually displays a different portion of the design.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A unique identification number (id) is assigned to the new view. If id is the number of an existing view, that view is updated according to the remaining values in the OPEN_VIEW statement. The ID cannot be 0 because this ID is reserved for the main view.  The area of the design that should appear in the view is specified with x and y, the design file coordinates that should appear at the lower left corner of the view. If unspecified, the defaults for the main view are used.  A new view is positioned relative to an existing reference window. The reference window can be the Root Window, which is the screen itself, the Main Window, which is the main Altia view, or another view window that has a specific ID number. Use the ref win menu to select the appropriate option. The relative position of the new view to the reference window's lower left corner is specified by setting ref x and ref y. If unspecified, the center of the reference window is chosen. The new view's width and height are given in screen pixels. If left empty, the width and height of the main view are used. The window style for a new view is specified by choosing Toplevel or Child from the style menu. A window with a Toplevel style is independent from its reference window. A Child style window will stay on top of its reference window and move when the reference window moves. Currently, only Toplevel is supported.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt; white-space:nowrap">OPEN_VIEW 10 x_pos y_pos Root {} width_val height_val 0 0 Toplevel 1 "My New View"</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "CLOSE_VIEW"
+message 422 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">CLOSE_VIEW</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>CLOSE_VIEW</b> <i>id</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">CLOSE_VIEW closes a view previously opened with OPEN_VIEW.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The <i>id</i> parameter is the identification number of the view to close. It must be an ID number for a view previously opened with an OPEN_VIEW statement. An ID of 0 is ignored because it refers to the main  view.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt; white-space:nowrap">CLOSE_VIEW 10</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "OPEN_DESIGN"
+message 423 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">OPEN_DESIGN</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>OPEN_DESIGN</b> <i>id filename</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">OPEN_DESIGN opens a new design file in the current Altia session.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">A unique identification number specified by the <i>id</i> parameter is assigned to the new design. If id is the number of a design already open, that design is replaced by the new one and all its views are updated appropriately. The <i>filename</i> parameter may be a string between double quotes or any global/local name whose current value is a string. In addition, a text I/O object's text animation name can be used, as can @name, meaning use that name's value as the name whose value is to be substituted.  After a design is opened with OPEN_DESIGN, additional views into the new design can be opened using the OPEN_VIEW statement.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">OPEN_DESIGN myID "filename.dsn"</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">OPEN_DESIGN 1 textObj_text</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "CLOSE_DESIGN"
+message 424 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">CLOSE_DESIGN</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>CLOSE_DESIGN</b> <i>id</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">CLOSE_DESIGN closes a design previously opened with OPEN_DESIGN.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If one or more views are opened for the design with the identification number id, the views are closed automatically. An ID of 0 is ignored because it refers to the main view.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Examples:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">CLOSE_DESIGN myID</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">CLOSE_DESIGN 10</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for "EXTERN"
+message 425 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">EXTERN</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;"><b>EXTERN</b> <i>name</i> <b>{</b><i>parameter list</i><b>}</b> <i>library</i> (<b>STRING/INT/NONE</b>) <i>result</i></span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The EXTERN statement is used to execute a routine residing in a shared library (.dll, .so, .sl, etc.) external to Altia Design.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The EXTERN statement executes the named routine from the named shared library.  One or more parameters may be passed to the routine by placing values or names in the Parameters field using spaces to separate the parameter items.  If filled in, the name in the RESULT field will be given the value returned by the external routine.  The type of the return value from the routine must be provided to ensure a correct conversion to an animation, stimulus, global, local, or parameter name type.  Possible types are String, Integer, or None.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:12pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt; font-weight:600;">Example:</span></p>
+<p style=" margin-left:20px;"><span style=" font-size:8pt;">EXTERN myRoutine {param_1 10 param_3} myLib.dll INT result_val </span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html
+#
+# tootip for Codegen: Graphic Objects
+message 500 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Graphic Objects</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option if you want generated code to include graphics objects (vectors, rasters, etc).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option should always be checked.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Stimulus
+message 501 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option if you want the generated code to process mouse and keyboard stimulus defined in the model.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The target must have a mouse, keyboard, and/or touchscreen driver to support stimulus.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Timers
+message 502 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Timers</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option if you want the generated code to contain timer stimulus defined in the model.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Many Altia Code Generation targets support timer stimulus if the generated code has access to a system clock.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia Target User's Guide for your target for more information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Control Code
+message 503 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Control Code</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option if you want the generated code to include control logic defined in the model.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia DeepScreen User's Guide and the Altia Target User's Guide for your target for more information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Builtins
+message 504 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Dynamic Built-in Animations</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The following built-in functions are always available:</span></p>
+<ul><li>altiaCacheOutput</li><li>altiaDisableOnlyInput</li><li>altiaEnableOnlyInput</li><li>altiaErrorOutput</li><li>altiaGetObjWH</li><li>altiaGetObjXY</li><li>altiaInitDesign</li><li>altiaQuit</li><li>altiaSetImage</li><li>altiaSetObj</li></ul>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option if you want code generated for additional built-in functions that dynamically modify objects in your .dsn file (such as altiaPopToTop, altiaSetOpacity, etc). See the Altia User's Guide for details.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia DeepScreen User's Guide and the Altia Target User's Guide for your target for a full list of supported built-in functions.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Software scaling
+message 505 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Software Scaling for Images</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option for Software Render targets if you wish to generate code for the algorithms that scale, stretch, rotate, and distort bitmap images (identified as Raster, Stencil, or Image objects in Altia) and text (Labels, Text I/Os, or Multi-line Text objects).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">For a target that uses an accelerated render engine (such as an OpenGL ES, OpenVG, or custom 2D target), this option should usually be unchecked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia Target User's Guide for your target for more information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Anti-Aliased Fonts
+message 506 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Anti-Aliased Fonts</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">When enabled this option will smooth the appearance of text objects (Labels, Text I/Os, or Multi-line Text objects) when rendered.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option is set using the View Ribbon controls (See 'Use Monochrome Fonts' checkbox).</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Unicode Font Characters
+message 507 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Unicode Font Characters</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate text characters in wide format (Unicode). Unicode allows support for languages beyond western European such as Chinese and Japanese.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia Target User's Guide for your target to determine if your target supports code generation for Unicode font characters.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Please also see the Unicode User’s Guide in the Altia Design software program group for more details about working with Unicode fonts and Unicode string manipulation.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: External Resource Files
+message 508 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">External Resource Files</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate the data for bitmap images (identified as Raster, Stencil, or Image objects in Altia) and text (Labels, Text I/Os, or Multi-line Text objects) to external binary files (altiaDataBank[0-n].bin) rather than as data structures in the generated source code. This reduces the size of the source code to be compiled and the size of the final executable code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia Target User's Guide for your target to determine if your target supports External Resource Files and for more detailed information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Image Objects use file system
+message 509 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Image Objects use file system</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate code to access the image files referenced by Image objects from the file system at execution time.  This code generation option is only supported by targets that have access to a file system which can hold image files.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If this option is not checked, the image data displayed by an Image object at code generation time is stored within the generated source code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia DeepScreen User's Guide for more information and the Altia Target User's Guide for your target to determine if your target supports this feature.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Embed data for 3D Object meshes
+message 510 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Embed data for 3D Object meshes</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to embed 3D Object's mesh data within the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia Target User's Guide for your target to determine if your target supports this feature.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Skin Objects use file system
+message 511 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Skin Objects use file system</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate code to access the skin configuration files referenced by Skin objects from the file system at execution time.  This code generation option is only supported by targets that have access to a file system which can hold skin configuration files.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If this option is not checked, the skin data used by a Skin object at code generation time is stored within the generated source code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia DeepScreen User's Guide for more information and the Altia Target User's Guide for your target to determine if your target supports this feature.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Language Objects use file system
+message 512 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Language Objects use file system</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate code to access the language configuration files referenced by Language objects from the file system at execution time.  This code generation option is only supported by targets that have access to a file system which can hold language configuration files.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If this option is not checked, the language data used by a Language object at code generation time is stored within the generated source code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia DeepScreen User's Guide for more information and the Altia Target User's Guide for your target to determine if your target supports this feature.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Allow inline color tags for Multiline Text
+message 513 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Allow inline color tags for Multiline Text</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate code for Multi-line text objects that supports changing the text color of individual characters using HTML-style color tags.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to theAltia DeepScreen User's Guide for more information and the Altia Target User's Guide for your target to determine if your target supports this feature.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Use Dynamic Memory Allocation
+message 514 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Use Dynamic Memory Allocation</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If this option is checked, certain objects (Text I/O, Multi-line, plots, etc.) will use dynamically allocated memory to store their contents rather than predefined fixed length arrays. Raster and Stencil objects will use dynamic memory to store temporary data for rendering, scaling, stretching or rotating.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If this option is unchecked, code generated for objects in your model will use the static memory values specified below.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia Target User's Guide for your target for possible restrictions or recommendations on the use of this option.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max text string length (static memory)
+message 515 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max text string length (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of characters used by dynamic strings in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max multi-line text string length (static memory)
+message 516 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max multi-line text string length (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of characters used by Multi-line Text object's text strings in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max sound file text string length (static memory)
+message 517 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max sound file text string length (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of characters used by Sound objects to store the sound file path and filename in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max line plot x/y pair count (static memory)
+message 518 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max line plot x/y pair count (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of Line Plot object X/Y pairs supported in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max poly plot x/y pair count (static memory)
+message 519 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max poly plot x/y pair count (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of Dynamic Polygon object X/Y pairs supported in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max dynamic poly plot x/y pair count (static memory)
+message 520 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max dynamic poly plot x/y pair count (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of Dynamic Polygon plot object X/Y pairs supported in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max dynamic line plot x/y pair count (static memory)
+message 521 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max dynamic line plot x/y pair count (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of Dynamic Multi-line plot object X/Y pairs supported in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max strip chart x/y pair count (static memory)
+message 522 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max strip chart x/y pair count (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of Strip Chart object X/Y pairs supported in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max pie object slice count (static memory)
+message 523 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max pie object slice count (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of slices for Pie chart objects in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max tick mark major divisions (static memory)
+message 524 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max tick mark major divisions (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of major divisions for Tickmark objects in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max tick mark minor divisions (static memory)
+message 525 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max tick mark minor divisions (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of minor divisions for Tickmark objects in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max tick mark sub divisions (static memory)
+message 526 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max tick mark sub divisions (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of sub divisions for Tickmark objects in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Max tick mark string length (static memory)
+message 527 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Max tick mark string length (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the maximum number of characters for labels within Tickmark objects in the generated code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Show Image Formatter Dialog
+message 528 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Show Image Formatter Dialog</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to show an extra dialog at code generation time that details the processing of bitmap images (identified as Raster, Stencil, or Image objects in Altia) and text (Labels, Text I/Os, or Multi-line Text objects).</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Automatically close Image Formatter Dialog
+message 529 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Automatically close Image Formatter Dialog</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to automatically close the Image Formatter dialog.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If unchecked, you must manually close the Image Formatter dialog during code generation.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Ignore Image Formatter missing image errors
+message 530 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Ignore Image Formatter missing image errors</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to treat Image object's invalid or missing image file references as warnings rather than an errors.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If unchecked, missing or invalid Image Object file references will halt the code generation process.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Full-Screen Mode
+message 531 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Full-Screen Mode</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Used for targets on a windowed operating system.  Forces the window to occupy the entire display.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">The objects are not any larger or smaller in Full Screen Mode.  Rather, the window simply takes up the entire display.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Support for Full Screen Mode is DeepScreen target dependent.  Please see the target's documentation for possible restrictions.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Monotype Font Engine
+message 532 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Monotype Font Engine</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">When enabled this option will use the MonoType iType Font Engine to create the text characters used to render all text objects (Labels, Text I/Os, or Multi-line Text objects).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option is set using the View Ribbon controls (See 'Use Monotype Font Rendering' checkbox).</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Text Shaping
+message 533 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Text Shaping</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">When enabled this option will modify all displayed text using shaping (bidirectional layout and glyph substitution).  This affects all text objects (Labels, Text I/Os, or Multi-line Text objects).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option is set using the View Ribbon controls (See 'Use Text Shaping' checkbox).</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 534 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum internal buffer size for MultiPlot objects (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum buffer size in points for a single line in one MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 535 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of lines that can be plotted in a MultiPlot (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of lines that can be shown in a single MultPlot object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 536 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot pixel annotations (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of pixel annotations for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 537 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot line annotations (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of line annotations for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 538 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot rectangle annotations (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of rectangle annotations for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 539 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot ellipse annotations (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of ellipse annotations for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 540 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot polygon annotations (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of polygon annotations for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 541 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of sides for a MultiPlot polygon annotation (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of sides for a single polygon annotation for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 542 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot text annotations (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of text annotations for a single MultiPlot Object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: Multiplot
+message 543 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Maximum number of MultiPlot axis labels (static memory)</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Sets the maximum number of axis labels that can be displayed for a single axis in a single MultiPlot object.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be ignored if "Use Dynamic Memory Allocation" is checked.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">This option will be grayed out if your model does not contain the associated object.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: bitfields
+message 544 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Pack Data into Bit Fields</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to pack high volume data (data which occurs frequently in generated code) into bit fields during DeepScreen code generation.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Some code generation options and certain objects in your .dsn file can reduce the effectiveness of the bit field optimization. These include:</span></p>
+<ul><li>"Dynamic Built-in Animations" code generation option</li>
+<li>"Image Objects use File System" code generation option</li>
+<li>Snapshot Object</li><li>3D Scene Object</li></ul>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia User's Guide and the Altia DeepScreen User's Guide for more information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: tinytext
+message 545 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Remove Advanced Text I/O Animations</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to remove rarely used advanced Text I/O features during DeepScreen code generation. This usually results in a significant memory savings. These advanced Text I/O animations are typically only used to create an interactive text entry field such as those found in the standard Inputs library of Altia Design.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">To exclude individual Text I/O's from this optimization, you may add a "DeepScreen Optimize" property to the desired object(s) in the Altia Design Properties pane. See the Standard Properties section of the Properties Editor chapter of the Altia Design User's Guide for details.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Uncheck this option to disable all Text I/O optimization.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia User's Guide and the Altia DeepScreen User's Guide for more information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: supergroups
+message 546 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Remove Superfluous Groups</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Groups that are only organizational (i.e. do not effect child objects) are unnecessary and optimizing them out of the generated code can result in significant memory savings.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">When checked, this option will remove groups that do not affect their child object(s) (i.e. the group has no assigned color, font or opacity attributes, no transformations, and no defined Animation, Stimulus, Control Code or Connections).</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">To exclude individual groups from this optimization, you may add a "DeepScreen Optimize" property to the desired group(s) in the Altia Design Properties pane. See the Properties Editor chapter of the Altia Design User's Guide for details.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">When the Dynamic Built-in Animations option is enabled, this option will be disabled. Superfluous groups cannot be removed because built-in functions in Control Logic or application code may dynamically reference a group's object ID.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia User's Guide and the Altia DeepScreen User's Guide for more information.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# tootip for Codegen: 3D Scene Objects use file system
+message 547 center
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">3D Scene Objects use file system</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Check this option to generate code to access the scene files referenced by 3D Scene objects from the file system at execution time.  This code generation option is only supported by targets that have access to a file system which can hold scene files.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">If this option is not checked, the scene data displayed by 3D Scene objects at code generation time is stored within the generated source code.</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Refer to the Altia DeepScreen User's Guide for more information and the Altia Target User's Guide for your target to determine if your target supports this feature.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdPropNameReserved
+message 600 left
+The name entered is reserved!  Please enter another name.
+#
+# ----- InfoMsgIdPropNameInUse
+message 601 left
+The name entered is in use!  Please enter another name.
+#
+# ----- InfoMsgIdImageFilter
+message 602 left
+Images (*.png *.bmp *.jpg *.jpeg);;All Files (*.*)
+#
+# ----- InfoMsgIdStimXPosTooltip
+message 610 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus X</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the X position of the lower left corner of the rectangular stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimYPosTooltip
+message 611 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Y</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the Y position of the lower left corner of the rectangular stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimWidthTooltip
+message 612 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Width</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the width, in pixels, of the rectangular stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimHeightTooltip
+message 613 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Height</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the height, in pixels, of the rectangular stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimRadiusTooltip
+message 614 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Radius</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the outter radius, in pixels, of the polar stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimInnerTooltip
+message 615 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Inner</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the inner radius, in pixels, of the polar stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimAngleTooltip
+message 616 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Angle</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the starting angle, in degrees, of the polar stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdStimSpanTooltip
+message 617 left
+<html><head><style type="text/css">
+p, li { white-space: pre-wrap;  margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;}
+</style></head><body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p>
+<p><span style=" font-size:8pt; font-weight:600;">Stimulus Span</span></p>
+<p style="-qt-paragraph-type:empty;font-size:8pt;"></p>
+<p style=" margin-left:10px;"><span style=" font-size:8pt;">Specify the span, in degrees, of the polar stimulus region.</span></p>
+<p style="-qt-paragraph-type:empty; font-size:4pt;"></p></body></html>
+#
+# ----- InfoMsgIdTDSceneConvert
+message 630 left
+<p>Altia Design's 3D Composer needs to convert</p>
+<p><b>%1</b></p>
+<p>to Open Scene Graph Binary format (.osgb) before it can be used.</p>
+#
+# ----- InfoMsgIdTDSceneFileExists
+message 631 left
+<p>The Open Scene Graph file, </p>
+<p><b>%1</b></p>
+<p>already exists.  Do you want to overwrite it?</p>
+#
+# ----- InfoMsgIdTDSceneIdChgOpt
+message 632 left
+<p>The ID value %2 is already in use.</p>
+<p>Swap the old ID value %1 with the new value %2 or<br>
+choose Push to automatically renumber all<br>
+sequential IDs greater than the new value %2.</p>
+#

@@ -63,6 +63,8 @@ CAN_HandleTypeDef hcan1;
 osThreadId buttonTaskHandle;
 osThreadId ledTaskHandle;
 osThreadId canTaskHandle;
+osMessageQId stateButtonQueue;
+osMessageQId interfaceButtonQueue;
 
 /* USER CODE END PV */
 
@@ -107,7 +109,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-//  MX_CAN2_Init();
+  MX_CAN2_Init();
   MX_DMA2D_Init();
   MX_FMC_Init();
   MX_LTDC_Init();
@@ -117,15 +119,7 @@ int main(void)
   MX_I2C3_Init();
 
   /* USER CODE BEGIN 2 */
-  InitializeCANBUS1();
-
-
-	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Pin = RETURN_BTN_Pin|UP_BTN_Pin|SELECT_BTN_Pin|PREV_BTN_Pin|DOWN_BTN_Pin|NEXT_BTN_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-	HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  UserInitCan2();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -153,13 +147,16 @@ int main(void)
 	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
 	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
-	  osThreadDef(canTask, vCanStart, osPriorityAboveNormal, 1, 500);
+	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
-	  osMessageQDef(button_queue, 12, ButtonObject); // Declare a message queue
-	  buttonQueue = osMessageCreate(osMessageQ(button_queue), NULL);
+	  osMessageQDef(ibutton_queue, 12, ButtonObject); // Declare a message queue
+	  interfaceButtonQueue = osMessageCreate(osMessageQ(ibutton_queue), NULL);
+
+	  osMessageQDef(sbutton_queue, 12, ButtonObject); // Declare a message queue
+	  stateButtonQueue = osMessageCreate(osMessageQ(sbutton_queue), NULL);
 
   /* USER CODE END RTOS_QUEUES */
  
@@ -270,7 +267,7 @@ void MX_I2C3_Init(void)
 {
 
   hi2c3.Instance = I2C3;
-  hi2c3.Init.ClockSpeed = 100000;
+  hi2c3.Init.ClockSpeed = 200000;
   hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c3.Init.OwnAddress1 = 0;
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -488,11 +485,11 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LCD_DE_Pin LCD_SPI_CS_Pin */
-//  GPIO_InitStruct.Pin = LCD_DE_Pin|LCD_SPI_CS_Pin;
-//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//  GPIO_InitStruct.Pull = GPIO_NOPULL;
-//  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-//  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  GPIO_InitStruct.Pin = LCD_DE_Pin|LCD_SPI_CS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : RETURN_BTN_Pin UP_BTN_Pin */
   GPIO_InitStruct.Pin = RETURN_BTN_Pin|UP_BTN_Pin;

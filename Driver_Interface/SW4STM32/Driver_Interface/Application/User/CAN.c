@@ -190,7 +190,7 @@ void CAN1SendMessage(uint8_t length, uint8_t *data)
 		hcan2.pTxMsg->Data[d] = *(data + d); /* Write every byte to Data[] variable */
 	}
 
-	HAL_CAN_Transmit_IT(&hcan2);
+	HAL_CAN_Transmit_IT(&hcan2	);
 	//TODO: error handling
 	//HAL_CAN_Transmit(&hcan1, 3000); /* Transmit the packet */
 

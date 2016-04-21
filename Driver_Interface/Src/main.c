@@ -120,6 +120,16 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   UserInitCan2();
+  HAL_GPIO_WritePin(CHECK_GPIO_Port, CHECK_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(CHECK_GPIO_Port, CHECK_Pin, GPIO_PIN_SET);
+
+  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_SET);
+
+//  char recv_string[10] = "";
+//  HAL_SDRAM_Write_8b(&hsdram1, 0, "hi", 3);
+//  HAL_SDRAM_Read_8b(&hsdram1, 0, recv_string, 3);
+
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -144,8 +154,8 @@ int main(void)
 	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 500);
 	  buttonTaskHandle = osThreadCreate(osThread(buttonTask), NULL);
 
-	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
-	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+//	  osThreadDef(ledTask, vLedUpdateTask, osPriorityHigh, 1, 1024);
+//	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
 	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);

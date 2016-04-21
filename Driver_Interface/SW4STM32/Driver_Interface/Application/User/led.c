@@ -1,4 +1,6 @@
 #include "led.h"
+#include "mxconstants.h"
+#include "stm32f4xx_hal_gpio.h"
 
 static color_t led_top_color[16];
 static color_t led_left_color[8];
@@ -74,6 +76,7 @@ void vLedUpdateTask(void * pvParameters) {
 		for(int i = 0; i < 8; i++) {
 				set_led(led_right_id[i], led_right_color[i]);
 		}
+
 
 
 

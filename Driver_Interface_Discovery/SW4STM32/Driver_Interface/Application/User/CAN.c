@@ -123,14 +123,59 @@ NodeState getSafetyModuleStateCAN() {
 	}
 }
 
-void UserInitCan2()
+void InitializeCANBUS1()
 {
-
+	GPIO_InitTypeDef GPIO_InitStruct;
 	CAN_FilterConfTypeDef CAN_FilterStruct;
 
 
-	hcan2.pTxMsg = &TxMessage; /* Pointer to CAN Tx message */
-	hcan2.pRxMsg = &RxMessage; /* Pointer to CAN Rx message */
+	__HAL_RCC_CAN1_CLK_ENABLE(); /* Enable CANBUS-1 clock */
+
+	__GPIOA_CLK_ENABLE(); /* Enable GPIOD clock */
+
+
+	//TODO: Disco board CAN: PA11 = RX, PA12 = TX
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP; /* Alternate Function Push-Pull mode */
+	GPIO_InitStruct.Pull = GPIO_NOPULL; /* No resistor */
+	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Alternate = GPIO_AF9_CAN1; /* Alternate pin function: AF9 / CAN1 */
+	GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_11; /* PA12(CAN1_TX) & PA11(CAN1_RX) */
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct); /* Initialize registers */
+	//TODO: unbreak the rest of GPIOA
+
+//
+//	hcan2.Instance = CAN1;
+//
+//	hcan2.Init.Prescaler = 19; /* Time quanta prescaler (tq = (Prescaler+1)/42MHz) */
+//	hcan2.Init.Mode = CAN_MODE_NORMAL; /* Normal communication mode */
+//	hcan2.Init.SJW = CAN_SJW_4TQ; /* 4 time-quanta re-sync jump width */
+//	hcan2.Init.BS1 = CAN_BS1_9TQ; /* 9 tq before sampling point */
+//	hcan2.Init.BS2 = CAN_BS2_8TQ; /* 8 tq after sampling point (before end) */
+//	hcan2.Init.TTCM = DISABLE; /* Time-triggered communication */
+//	hcan2.Init.ABOM = DISABLE; /* Automatic bus-off management */
+//	hcan2.Init.AWUM = DISABLE; /* Automatic wake-up mode */
+//	hcan2.Init.NART = DISABLE; /* Non-automatic retransmission mode */
+//	hcan2.Init.RFLM = DISABLE; /* Receive FIFO locked mode */
+//	hcan2.Init.TXFP = DISABLE; /* Transmit FIFO priority */
+//	HAL_CAN_Init(&hcan2); /* Init CAN1 registers */
+
+
+	  hcan1.pTxMsg = &TxMessage; /* Pointer to CAN Tx message */
+	  hcan1.pRxMsg = &RxMessage; /* Pointer to CAN Rx message */
+
+	  hcan1.Instance = CAN1;
+	  hcan1.Init.Prescaler = 2;
+	  hcan1.Init.Mode = CAN_MODE_NORMAL;
+	  hcan1.Init.SJW = CAN_SJW_1TQ;
+	  hcan1.Init.BS1 = CAN_BS1_13TQ;
+	  hcan1.Init.BS2 = CAN_BS2_2TQ;
+	  hcan1.Init.TTCM = DISABLE;
+	  hcan1.Init.ABOM = DISABLE;
+	  hcan1.Init.AWUM = DISABLE;
+	  hcan1.Init.NART = DISABLE;
+	  hcan1.Init.RFLM = DISABLE;
+	  hcan1.Init.TXFP = DISABLE;
+	  HAL_CAN_Init(&hcan1);
 
 	CAN_FilterStruct.FilterIdHigh = 0x0000; /* Upper 16bit filter ID */
 	CAN_FilterStruct.FilterIdLow = 0x0000; /* Filter lower 16bit ID */
@@ -142,7 +187,7 @@ void UserInitCan2()
 	CAN_FilterStruct.FilterScale = CAN_FILTERSCALE_32BIT; /* 32bit ID filter */
 	CAN_FilterStruct.FilterActivation = ENABLE; /* Enable this filter */
 	CAN_FilterStruct.BankNumber = 14; /* Start slave bank filter (?) */
-	HAL_CAN_ConfigFilter(&hcan2, &CAN_FilterStruct); /* Initialize filter */
+	HAL_CAN_ConfigFilter(&hcan1, &CAN_FilterStruct); /* Initialize filter */
 
 //
 //	HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 1, 1); /* Set CAN1 Rx interrupt priority to 1-1 */
@@ -151,17 +196,19 @@ void UserInitCan2()
 
 
     //TODO: disco board CAN fix
+    HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 1, 1);
+	HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn);
 //
 //	__HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_FMP0); /* Enable 'message pending in FIFO0' interrupt */
-	HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
+	HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
 
 	//TODO: set node ID
-	hcan2.pTxMsg->StdId = 0b01000000110; /* Standard ID of this device */
+	hcan1.pTxMsg->StdId = 0b01000000110; /* Standard ID of this device */
 	// 100Hz Hearbeat DI-module
 	// 010   0000     0110
 //	hcan1.pTxMsg->ExtId = 0x01; /* Extended ID */
-	hcan2.pTxMsg->RTR = CAN_RTR_DATA; /* Remote transmission request:data */
-	hcan2.pTxMsg->IDE = CAN_ID_STD; /* Identifier type: standard */
+	hcan1.pTxMsg->RTR = CAN_RTR_DATA; /* Remote transmission request:data */
+	hcan1.pTxMsg->IDE = CAN_ID_STD; /* Identifier type: standard */
 
 	/* Create memory block to store arriving CAN data */
 	CanData_Pool_id = osPoolCreate (osPool (CanData_Pool));
@@ -181,16 +228,16 @@ void UserInitCan2()
 
 void CAN1SendMessage(uint8_t length, uint8_t *data)
 {
-	hcan2.pTxMsg->DLC = length; /* Specify the data length */
+	hcan1.pTxMsg->DLC = length; /* Specify the data length */
 
 	uint8_t d;
 
 	for(d = 0; d < length; ++d)
 	{
-		hcan2.pTxMsg->Data[d] = *(data + d); /* Write every byte to Data[] variable */
+		hcan1.pTxMsg->Data[d] = *(data + d); /* Write every byte to Data[] variable */
 	}
 
-	HAL_CAN_Transmit_IT(&hcan2);
+	HAL_CAN_Transmit_IT(&hcan1);
 	//TODO: error handling
 	//HAL_CAN_Transmit(&hcan1, 3000); /* Transmit the packet */
 
@@ -210,7 +257,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan) {
 		CanData[idx].data[i] = Message.Data[i];
 	}
 
-	HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
+	HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
 	return;
 
 }
@@ -220,7 +267,7 @@ void CAN1_RX0_IRQHandler(void)
   /* USER CODE BEGIN CAN2_RX0_IRQn 0 */
 
   /* USER CODE END CAN2_RX0_IRQn 0 */
-  HAL_CAN_IRQHandler(&hcan2);
+  HAL_CAN_IRQHandler(&hcan1);
   /* USER CODE BEGIN CAN2_RX0_IRQn 1 */
 
   /* USER CODE END CAN2_RX0_IRQn 1 */

@@ -37,7 +37,7 @@
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
-
+/*
 #define BSPD_ERR_Pin GPIO_PIN_2
 #define BSPD_ERR_GPIO_Port GPIOE
 #define BMS_ERR_Pin GPIO_PIN_3
@@ -66,8 +66,43 @@
 #define DOWN_BTN_GPIO_Port GPIOD
 #define NEXT_BTN_Pin GPIO_PIN_9
 #define NEXT_BTN_GPIO_Port GPIOG
-
+*/
 /* USER CODE BEGIN Private defines */
+
+#define BSPD_ERR_Pin GPIO_PIN_2
+#define BSPD_ERR_GPIO_Port GPIOE
+#define BMS_ERR_Pin GPIO_PIN_3
+#define BMS_ERR_GPIO_Port GPIOE
+#define LCD_RESET_Pin GPIO_PIN_6
+#define LCD_RESET_GPIO_Port GPIOE
+#define CHECK_Pin GPIO_PIN_14
+#define CHECK_GPIO_Port GPIOC
+#define IMD_ERR_Pin GPIO_PIN_15
+#define IMD_ERR_GPIO_Port GPIOC
+#define LCD_DE_Pin GPIO_PIN_6
+#define LCD_DE_GPIO_Port GPIOF
+#define LCD_SPI_CS_Pin GPIO_PIN_8
+#define LCD_SPI_CS_GPIO_Port GPIOF
+#define BUZZER_PWM_Pin GPIO_PIN_1
+#define BUZZER_PWM_GPIO_Port GPIOA
+
+#define RETURN_BTN_Pin GPIO_PIN_4
+#define RETURN_BTN_GPIO_Port GPIOF
+
+#define UP_BTN_Pin GPIO_PIN_1
+#define UP_BTN_GPIO_Port GPIOF
+
+#define SELECT_BTN_Pin GPIO_PIN_5
+#define SELECT_BTN_GPIO_Port GPIOF
+
+#define PREV_BTN_Pin GPIO_PIN_2
+#define PREV_BTN_GPIO_Port GPIOF
+
+#define DOWN_BTN_Pin GPIO_PIN_0
+#define DOWN_BTN_GPIO_Port GPIOF
+
+#define NEXT_BTN_Pin GPIO_PIN_3
+#define NEXT_BTN_GPIO_Port GPIOF
 
 /* USER CODE END Private defines */
 

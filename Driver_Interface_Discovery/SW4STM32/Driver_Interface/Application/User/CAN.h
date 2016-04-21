@@ -35,11 +35,11 @@ extern CanMessage * CanData;
 #define CanData_idx(x) (x & 0b01111111)
 
 extern osMessageQId stateButtonQueue;
-extern CAN_HandleTypeDef hcan2;
+extern CAN_HandleTypeDef hcan1;
 
 
 
-void UserInitCan2();
+void InitializeCANBUS1();
 void vCanTask(void * pvParameters);
 void CAN1SendMessage(uint8_t length, uint8_t *data);
 NodeState nextState(NodeState DIstate);

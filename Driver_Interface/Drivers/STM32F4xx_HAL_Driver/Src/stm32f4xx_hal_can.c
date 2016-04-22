@@ -375,7 +375,7 @@ HAL_StatusTypeDef HAL_CAN_ConfigFilter(CAN_HandleTypeDef* hcan, CAN_FilterConfTy
   
   /* Select the start slave bank */
   CAN1->FMR &= ~((uint32_t)CAN_FMR_CAN2SB);
-  CAN1->FMR |= (uint32_t)(sFilterConfig->BankNumber << 8U);
+//  CAN1->FMR |= (uint32_t)(sFilterConfig->BankNumber << 8U);
      
   /* Filter Deactivation */
   CAN1->FA1R &= ~(uint32_t)filternbrbitpos;

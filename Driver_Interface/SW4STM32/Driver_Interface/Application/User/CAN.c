@@ -41,7 +41,7 @@ void vCanTask(void * pvParameters) {
 		do {
 			recvdMessage = osMessageGet(stateButtonQueue, 0);
 			if(recvdMessage.status == osEventMessage) {
-				recvdButton = *(ButtonObject *) recvdMessage.value.p;
+				recvdButton = *((ButtonObject *) (& recvdMessage.value.v));
 				if(requestedState == DIstate) { //state change should not already be in progress
 					if(recvdButton.name == NEXT_BTN && recvdButton.state == BTN_UN_PRESSED) {
 						requestedState = nextState(DIstate);
@@ -68,9 +68,10 @@ void vCanTask(void * pvParameters) {
 		DIM_heartbeat.state = DIstate;
 		DIM_heartbeat.requestedState = requestedState;
 		DIM_heartbeat.vbatt = 0; //TODO: placeholder
-		CAN1SendMessage(sizeof(DIMHeartbeat_t), &DIM_heartbeat);
+		CAN2SendMessage(sizeof(DIMHeartbeat_t), &DIM_heartbeat);
 
 		timeoutTick++;
+		HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(period) ) );
 	}
 }
@@ -116,7 +117,7 @@ NodeState getSafetyModuleStateCAN() {
 	SMmsg = CanData[CanData_idx(SM_HEARTBEAT_ID)];
 	if(SMmsg.length) {
 		SMHeartbeat_t SMhbeat = * (SMHeartbeat_t *) SMmsg.data;
-		return SMhbeat.state;
+		return SMhbeat.targetState;
 	}
 	else {
 		return STATE_ERROR;
@@ -129,8 +130,7 @@ void UserInitCan2()
 	CAN_FilterConfTypeDef CAN_FilterStruct;
 
 
-	hcan2.pTxMsg = &TxMessage; /* Pointer to CAN Tx message */
-	hcan2.pRxMsg = &RxMessage; /* Pointer to CAN Rx message */
+
 
 	CAN_FilterStruct.FilterIdHigh = 0x0000; /* Upper 16bit filter ID */
 	CAN_FilterStruct.FilterIdLow = 0x0000; /* Filter lower 16bit ID */
@@ -145,21 +145,16 @@ void UserInitCan2()
 	HAL_CAN_ConfigFilter(&hcan2, &CAN_FilterStruct); /* Initialize filter */
 
 //
-//	HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 1, 1); /* Set CAN1 Rx interrupt priority to 1-1 */
-//	HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn); /* Enable CAN1 Rx Interrupt */
+//	HAL_NVIC_SetPriority(CAN2_RX0_IRQn, 1, 1); /* Set CAN1 Rx interrupt priority to 1-1 */
+//	HAL_NVIC_EnableIRQ(CAN2_RX0_IRQn); /* Enable CAN1 Rx Interrupt */
 
 
 
     //TODO: disco board CAN fix
 //
-//	__HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_FMP0); /* Enable 'message pending in FIFO0' interrupt */
-	HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
+//	__HAL_CAN_ENABLE_IT(&hcan2, CAN_IT_FMP0); /* Enable 'message pending in FIFO0' interrupt */
 
-	//TODO: set node ID
-	hcan2.pTxMsg->StdId = 0b01000000110; /* Standard ID of this device */
-	// 100Hz Hearbeat DI-module
-	// 010   0000     0110
-//	hcan1.pTxMsg->ExtId = 0x01; /* Extended ID */
+	hcan2.pTxMsg->StdId = DIM_HEARTBEAT_ID; /* Standard ID of this device */
 	hcan2.pTxMsg->RTR = CAN_RTR_DATA; /* Remote transmission request:data */
 	hcan2.pTxMsg->IDE = CAN_ID_STD; /* Identifier type: standard */
 
@@ -174,12 +169,15 @@ void UserInitCan2()
 				}
 		}
 
+	HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
+
+
 
 	return;
 }
 
 
-void CAN1SendMessage(uint8_t length, uint8_t *data)
+void CAN2SendMessage(uint8_t length, uint8_t *data)
 {
 	hcan2.pTxMsg->DLC = length; /* Specify the data length */
 
@@ -210,20 +208,22 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan) {
 		CanData[idx].data[i] = Message.Data[i];
 	}
 
+	/* Seems like if this call fails, the interrupt never happens again and CAN
+	   stops being received, so we restart it every 0.01s in the hearbeat task.*/
 	HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
 	return;
 
 }
-
-void CAN1_RX0_IRQHandler(void)
-{
-  /* USER CODE BEGIN CAN2_RX0_IRQn 0 */
-
-  /* USER CODE END CAN2_RX0_IRQn 0 */
-  HAL_CAN_IRQHandler(&hcan2);
-  /* USER CODE BEGIN CAN2_RX0_IRQn 1 */
-
-  /* USER CODE END CAN2_RX0_IRQn 1 */
-}
+//in stm32f4xx_it.c
+//void CAN2_RX0_IRQHandler(void)
+//{
+//  /* USER CODE BEGIN CAN2_RX0_IRQn 0 */
+//
+//  /* USER CODE END CAN2_RX0_IRQn 0 */
+//  HAL_CAN_IRQHandler(&hcan2);
+//  /* USER CODE BEGIN CAN2_RX0_IRQn 1 */
+//
+//  /* USER CODE END CAN2_RX0_IRQn 1 */
+//}
 
 

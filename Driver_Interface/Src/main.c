@@ -237,7 +237,8 @@ void SystemClock_Config(void)
 /* CAN2 init function */
 void MX_CAN2_Init(void)
 {
-
+	hcan2.pTxMsg = &TxMessage; /* Pointer to CAN Tx message */
+	hcan2.pRxMsg = &RxMessage; /* Pointer to CAN Rx message */
   hcan2.Instance = CAN2;
   hcan2.Init.Prescaler = 2;
   hcan2.Init.Mode = CAN_MODE_NORMAL;

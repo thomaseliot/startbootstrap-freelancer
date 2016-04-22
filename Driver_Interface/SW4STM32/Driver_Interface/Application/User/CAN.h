@@ -36,6 +36,8 @@ extern CanMessage * CanData;
 
 extern osMessageQId stateButtonQueue;
 extern CAN_HandleTypeDef hcan2;
+extern CanTxMsgTypeDef TxMessage; /* Tx message struct */
+extern CanRxMsgTypeDef RxMessage;
 
 
 

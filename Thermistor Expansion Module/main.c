@@ -47,7 +47,7 @@ int main(void)
 	
 	// Enable second parallel pot
 	pinMode(POT2_CTRL_PORT, POT2_CTRL_CH, IO_DIR_OUTPUT);
-	setPin(POT2_CTRL_PORT, POT2_CTRL_CH, LOW);
+	setPin(POT2_CTRL_PORT, POT2_CTRL_CH, HIGH);
 	
 	
 	/* Tasks */

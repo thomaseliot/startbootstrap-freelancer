@@ -200,7 +200,6 @@ void vThermistorWriteTask(void *pvParameters) {
 	volatile uint8_t command;
 	SPISlave pot1 = spiSlaves[POT1_SS];
 	SPISlave pot2 = spiSlaves[POT2_SS];
-	int fuck = 0;
 	
 	// Previous wake time pointer, initialized to current tick count.
 	// This gets updated by vTaskDelayUntil every time it is called
@@ -209,14 +208,11 @@ void vThermistorWriteTask(void *pvParameters) {
 	// Period
 	const TickType_t xPeriod = 1000 / THERMISTOR_WRITE_TASK_RATE;		// In ticks (ms)
 	
-	spiTransaction(0x00, 0);
-	spiTransaction(0x00, 0);
-	
 	// Write some zeros for good measure
 	//taskENTER_CRITICAL();
 	//spiSelect(pot1);
-	//spiWrite(0x00);
-	//spiWrite(0x00);
+	spiWrite(0x00);
+	spiWrite(0x00);
 	//spiDeselect(pot1);
 	//spiSelect(pot2);
 	//spiWrite(0x00);
@@ -226,12 +222,14 @@ void vThermistorWriteTask(void *pvParameters) {
 	
 	// Enable RDAC register write access for each pot
 	upperByte = 0x1C;
-	lowerByte = 0x02;
+	lowerByte = 0x03;
 	taskENTER_CRITICAL();
-	//spiSelect(pot1);
-	//spiWrite(0x1C);
-	//spiWrite(0x02);
-	//spiDeselect(pot1);
+	spiSelect(pot1);
+	spiWrite(0x80);
+	spiWrite(0x01);
+	spiWrite(0x1C);
+	spiWrite(0x03);
+	spiDeselect(pot1);
 	
 	//spiWrite(0x00);
 	//spiWrite(0x00);
@@ -259,10 +257,7 @@ void vThermistorWriteTask(void *pvParameters) {
 		taskEXIT_CRITICAL();
 
 		valueToWrite += 1;
-		//if(fuck) setPin(POT2_CTRL_PORT, POT2_CTRL_CH, HIGH);
-		//else setPin(POT2_CTRL_PORT, POT2_CTRL_CH, LOW);
 		
-		fuck = !fuck;
 		
 		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);

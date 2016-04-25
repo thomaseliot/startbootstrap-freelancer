@@ -117,7 +117,7 @@ NodeState getSafetyModuleStateCAN() {
 	SMmsg = CanData[CanData_idx(SM_HEARTBEAT_ID)];
 	if(SMmsg.length) {
 		SMHeartbeat_t SMhbeat = * (SMHeartbeat_t *) SMmsg.data;
-		return SMhbeat.targetState;
+		return SMhbeat.state;
 	}
 	else {
 		return STATE_ERROR;

@@ -33,6 +33,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
+#include "mxconstants.h"
 
 /* USER CODE BEGIN Includes */
 #include "buttons.h"
@@ -123,8 +124,8 @@ int main(void)
   HAL_GPIO_WritePin(CHECK_GPIO_Port, CHECK_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(CHECK_GPIO_Port, CHECK_Pin, GPIO_PIN_SET);
 
-  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_SET);
+//  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_RESET);
+//  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_SET);
 
 //  char recv_string[10] = "";
 //  HAL_SDRAM_Write_8b(&hsdram1, 0, "hi", 3);
@@ -154,8 +155,8 @@ int main(void)
 	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 500);
 	  buttonTaskHandle = osThreadCreate(osThread(buttonTask), NULL);
 
-//	  osThreadDef(ledTask, vLedUpdateTask, osPriorityHigh, 1, 1024);
-//	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+	  osThreadDef(ledTask, vLedUpdateTask, osPriorityHigh, 1, 1024);
+	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
 	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);
@@ -277,8 +278,19 @@ void MX_DMA2D_Init(void)
 void MX_I2C3_Init(void)
 {
 
+	/*
+	 * The following is the required sequence in master mode.
+	 *
+	 * Program the peripheral input clock in I2C_CR2 Register in order to generate correct
+	 * timings
+	 * Configure the clock control registers
+	 * Configure the rise time register
+	 * Program the I2C_CR1 register to enable the peripheral
+	 * Set the START bit in the I2C_CR1 register to generate a Start condition
+	 */
+
   hi2c3.Instance = I2C3;
-  hi2c3.Init.ClockSpeed = 200000;
+  hi2c3.Init.ClockSpeed = 100000;
   hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c3.Init.OwnAddress1 = 0;
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -473,7 +485,7 @@ void MX_GPIO_Init(void)
   __GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin|LED_DRV_OE_L_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, CHECK_Pin|IMD_ERR_Pin, GPIO_PIN_RESET);
@@ -482,7 +494,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOF, LCD_DE_Pin|LCD_SPI_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BSPD_ERR_Pin BMS_ERR_Pin LCD_RESET_Pin */
-  GPIO_InitStruct.Pin = BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin;
+  GPIO_InitStruct.Pin = BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin|LED_DRV_OE_L_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;

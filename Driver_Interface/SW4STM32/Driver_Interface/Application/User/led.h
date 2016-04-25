@@ -11,7 +11,7 @@
 #include "cmsis_os.h"
 
 /* 100Hz task freq = 10 ms period = 10,000us */
-#define period (10*10000)
+#define period (10*1000)
 
 extern I2C_HandleTypeDef hi2c3;
 
@@ -20,7 +20,7 @@ typedef uint8_t led_id_t;
 
 typedef uint32_t portTickType;
 
-#define I2C_TIMEOUT osKernelSysTickMicroSec(10)
+#define I2C_TIMEOUT 0
 
 #define get_blue(c) (c&0xFF)
 #define get_green(c) ((c>>8)&0xFF)

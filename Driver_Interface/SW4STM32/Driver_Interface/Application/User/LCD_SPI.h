@@ -10,6 +10,7 @@
 
 #define SPI_TIMEOUT 1000
 
+void LCD_IO_Init(void);
 static void SPIx_Init(void);
 static uint32_t SPIx_Read(uint8_t ReadSize);
 static void SPIx_Write(uint16_t Value);
@@ -20,6 +21,7 @@ static void LCD_CS_LOW();
 static void LCD_CS_HIGH();
 static void LCD_WRX_LOW();
 static void LCD_WRX_HIGH();
+void LCD_Delay(uint32_t Delay);
 
 
 #define LCD_SPI_SCL_Pin GPIO_PIN_7

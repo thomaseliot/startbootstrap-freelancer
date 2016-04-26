@@ -27,10 +27,10 @@ typedef enum {STATE_GLV_ON, STATE_HV_EN, STATE_RTD, STATE_ERROR, STATE_UNKNOWN} 
 extern CanMessage * CanData;
 
 /* 100Hz task freq = 10 ms period = 10,000us */
-#define period (10*10000)
+#define PERIOD (10*1000)
 
 /* 1s state change timeout = 1,000,000us */
-#define timeoutPeriod (1000000/period)
+#define TIMEOUT_PERIOD (1000000/PERIOD)
 
 #define CanData_idx(x) (x & 0b01111111)
 

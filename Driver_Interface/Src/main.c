@@ -118,7 +118,7 @@ int main(void)
   MX_FMC_Init();
   MX_LTDC_Init();
 //  MX_SPI1_Init();
-  MX_SPI5_Init();
+//  MX_SPI5_Init();
   MX_TIM2_Init();
   MX_I2C3_Init();
 
@@ -128,8 +128,9 @@ int main(void)
 //  osDelay(osKernelSysTickMicroSec(1000000));
 
   ili9341_Init();
-  ili9341_DisplayOn();
-
+//  ili9341_DisplayOn();
+  volatile uint16_t lcd_id =  ili9341_ReadID();
+  lcd_id++;
 
 
   /* USER CODE BEGIN 2 */

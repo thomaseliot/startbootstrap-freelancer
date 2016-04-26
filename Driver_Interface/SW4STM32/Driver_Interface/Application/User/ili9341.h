@@ -131,7 +131,7 @@
 #define LCD_RGBSET              0x2D   /* Color SET */   
 #define LCD_RAMRD               0x2E   /* Memory Read */   
 #define LCD_PLTAR               0x30   /* Partial Area */   
-#define LCD_VSCRDEF             0x33   /* Vertical Scrolling Definition */   
+#define LCD_VSCRDEF             0x33   /* Vertical Scrolling Definition */  0x09
 #define LCD_TEOFF               0x34   /* Tearing Effect Line OFF */   
 #define LCD_TEON                0x35   /* Tearing Effect Line ON */   
 #define LCD_MAC                 0x36   /* Memory Access Control register*/

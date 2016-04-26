@@ -38,6 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "ili9341.h"
 
+
 /** @addtogroup BSP
   * @{
   */ 
@@ -121,6 +122,13 @@ void ili9341_Init(void)
   /* Initialize ILI9341 low level bus layer ----------------------------------*/
   LCD_IO_Init();
   
+
+
+  ili9341_WriteReg(0x01);
+  LCD_Delay(200);
+
+
+
   /* Configure LCD */
   ili9341_WriteReg(0xCA);
   ili9341_WriteData(0xC3);
@@ -247,8 +255,9 @@ void ili9341_Init(void)
   */
 uint16_t ili9341_ReadID(void)
 {
-  LCD_IO_Init();
-  return ((uint16_t)ili9341_ReadData(LCD_READ_ID4, LCD_READ_ID4_SIZE));
+//  LCD_IO_Init();
+//  return ((uint16_t)ili9341_ReadData(LCD_READ_ID4, LCD_READ_ID4_SIZE));
+  return ((uint16_t)ili9341_ReadData(LCD_RDDST, 4));
 }
 
 /**

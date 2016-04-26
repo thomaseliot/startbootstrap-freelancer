@@ -152,8 +152,8 @@ int main(void)
 	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 500);
 	  buttonTaskHandle = osThreadCreate(osThread(buttonTask), NULL);
 
-	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
-	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+//	  osThreadDef(ledTask, vLedUpdateTask, osPriorityAboveNormal, 1, 500);
+//	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
 	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);

@@ -22,8 +22,8 @@ CanMessage * CanData;
 
 void vCanTask(void * pvParameters) {
 	portTickType xLastWakeTime;
-	NodeState DIstate;
-	NodeState requestedState;
+	NodeState DIstate; //State of the dash (and car)
+	NodeState requestedState; //State requested by dash
 	osEvent recvdMessage;
 	ButtonObject recvdButton;
 	DIMHeartbeat_t DIM_heartbeat;
@@ -41,7 +41,7 @@ void vCanTask(void * pvParameters) {
 		do {
 			recvdMessage = osMessageGet(stateButtonQueue, 0);
 			if(recvdMessage.status == osEventMessage) {
-				recvdButton = *(ButtonObject *) recvdMessage.value.p;
+				recvdButton = *((ButtonObject *) (& recvdMessage.value.v));
 				if(requestedState == DIstate) { //state change should not already be in progress
 					if(recvdButton.name == NEXT_BTN && recvdButton.state == BTN_UN_PRESSED) {
 						requestedState = nextState(DIstate);
@@ -55,7 +55,7 @@ void vCanTask(void * pvParameters) {
 		}while(recvdMessage.status == osEventMessage);
 
 		//On timeout, stop requesting state change
-		if(timeoutTick >= timeoutPeriod){
+		if(timeoutTick >= TIMEOUT_PERIOD){
 			requestedState = DIstate;
 		}
 
@@ -71,7 +71,8 @@ void vCanTask(void * pvParameters) {
 		CAN1SendMessage(sizeof(DIMHeartbeat_t), &DIM_heartbeat);
 
 		timeoutTick++;
-		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(period) ) );
+		HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
+		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(PERIOD) ) );
 	}
 }
 
@@ -103,7 +104,7 @@ NodeState prevState(NodeState DIstate) {
 		case STATE_GLV_ON:
 			return STATE_GLV_ON;
 		case STATE_HV_EN:
-			return STATE_RTD;
+			return STATE_GLV_ON;
 		case STATE_RTD:
 			return STATE_HV_EN;
 		default:
@@ -122,6 +123,7 @@ NodeState getSafetyModuleStateCAN() {
 		return STATE_ERROR;
 	}
 }
+
 
 void InitializeCANBUS1()
 {
@@ -199,11 +201,10 @@ void InitializeCANBUS1()
     HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 1, 1);
 	HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn);
 //
-//	__HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_FMP0); /* Enable 'message pending in FIFO0' interrupt */
-	HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
+
 
 	//TODO: set node ID
-	hcan1.pTxMsg->StdId = 0b01000000110; /* Standard ID of this device */
+	hcan1.pTxMsg->StdId = DIM_HEARTBEAT_ID; /* Standard ID of this device */
 	// 100Hz Hearbeat DI-module
 	// 010   0000     0110
 //	hcan1.pTxMsg->ExtId = 0x01; /* Extended ID */
@@ -221,7 +222,8 @@ void InitializeCANBUS1()
 				}
 		}
 
-
+		//	__HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_FMP0); /* Enable 'message pending in FIFO0' interrupt */
+			HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
 	return;
 }
 

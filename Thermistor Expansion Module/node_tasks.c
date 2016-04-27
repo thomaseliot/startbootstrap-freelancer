@@ -197,6 +197,7 @@ void vThermistorWriteTask(void *pvParameters) {
 	// Function variables
 	volatile uint8_t valueToWrite = 0x00;
 	volatile uint8_t upperByte, lowerByte;
+	volatile uint8_t readUpper, readLower;
 	volatile uint8_t command;
 	SPISlave pot1 = spiSlaves[POT1_SS];
 	SPISlave pot2 = spiSlaves[POT2_SS];
@@ -225,10 +226,13 @@ void vThermistorWriteTask(void *pvParameters) {
 	lowerByte = 0x03;
 	taskENTER_CRITICAL();
 	spiSelect(pot1);
-	spiWrite(0x80);
-	spiWrite(0x01);
+	spiWrite(0x20);
+	spiWrite(0x00);
+	readUpper = spiRead();
+	readLower = spiRead();
 	spiWrite(0x1C);
-	spiWrite(0x03);
+    spiWrite(0x03);
+	
 	spiDeselect(pot1);
 	
 	//spiWrite(0x00);

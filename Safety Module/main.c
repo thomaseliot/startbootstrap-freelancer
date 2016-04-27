@@ -76,8 +76,8 @@ int main(void)
 	
 	// ADC read task
 	// Rate: 100Hz
-	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
-		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
+	//xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
+	//	NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 		
 	// Module-specific tasks here
 	

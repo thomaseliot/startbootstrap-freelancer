@@ -16,16 +16,8 @@
 
 // MCU Status
 #define MCU_STATUS_PORT		IO_PORTC
-#define MCU_STATUS_CH		0
+#define MCU_STATUS_CH		7
 
-// External Watchdog Kick
-#define EXT_WD_KICK_PORT	IO_PORTD
-#define EXT_WD_KICK_CH		1
-
-// Thermistor Fault Controls
-#define OPEN_FAULT_PORT		IO_PORTC		// Open circuit on thermistor output
-#define OPEN_FAULT_CH		7
-#define SHORT_FAULT_PORT	IO_PORTD		// Short circuit on thermistor output
-#define SHORT_FAULT_CH		0
+// Define the rest of your I/O configuration here
 
 #endif /* NODE_CONFIG_H_ */

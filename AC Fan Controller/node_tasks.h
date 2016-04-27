@@ -16,26 +16,40 @@
 #include "adc.h"
 #include "spi.h"
 #include "pwm.h"
+#include "can.h"
+#include "can_config.h"
+#include "frtos_can.h"
+
+//CAN definitions
+#include "can_structs.h"
+#include "can_ids.h"
+
 
 // Task priorities
 #define MCU_STATUS_TASK_PRIORITY		2
 #define ADC_SAMPLE_TASK_PRIORITY		4
-#define FAN_UPDATE_TASK_PRIORITY		3
+#define FAN_UPDATE_TASK_PRIORITY		4
 #define FAN_SET_TASK_PRIORITY		    3
+#define HEARTBEAT_TASK_PRIORITY			4
+
 
 // Task rates, in Hz
+#define HEARTBEAT_TASK_RATE				100
 #define MCU_STATUS_TASK_RATE			4
 #define ADC_SAMPLE_TASK_RATE			100
 #define FAN_SET_TASK_RATE				20
 #define FAN_UPDATE_TASK_RATE			100
-#define FAN_TEST_TASK_PERIOD			2000
 
-#define RAMP_SPEED						1
+//Length of ramp in seconds; max is 13s.
+#define RAMP_LENGTH						5
+
+#define MAX_DUTY						127
 
 //Fan States
 #define FAN_OFF							0
 #define FAN_RAMP						1
 #define FAN_ON							2
+#define FAN_ERROR						3
 
 
 // Task functions

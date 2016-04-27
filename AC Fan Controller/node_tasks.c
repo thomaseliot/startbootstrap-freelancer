@@ -46,7 +46,7 @@ void vMCUStatusTask(void *pvParameters) {
 		vTaskDelayUntil(&xLastWakeTime, xPeriod); 
 	}
 }
-
+/*
 void vFanTestTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
@@ -96,6 +96,7 @@ void vFanTestTask(void *pvParameters) {
 	
 	// Delay until next period
 }
+*/
 
 void vFanUpdateTask(void *pvParameters) {
 	// Make compiler happy
@@ -137,7 +138,7 @@ void vFanUpdateTask(void *pvParameters) {
 				pwmSetDutyCycle(PWM_0A, fan_duty);
 				break;
 			case FAN_ON:
-				pwmSetDutyCycle(PWM_0A, 255);			
+				pwmSetDutyCycle(PWM_0A, MAX_DUTY);			
 				break;
 			default:
 				pwmSetDutyCycle(PWM_0A, 0);			
@@ -162,6 +163,9 @@ void vFanSetTask(void *pvParameters) {
 	fan_state = FAN_OFF;
 	fan_duty = 0;
 	
+	//Calculate the step size to achieve the desired ramp time
+	//Add for a ceiling, ensuring some ramp.
+	unsigned int speed = (256/(FAN_SET_TASK_RATE*RAMP_LENGTH)) + 1;
 	vTaskDelayUntil(&xLastWakeTime, 2000);
 
 	// Executes infinitely with defined period using vTaskDelayUntil
@@ -171,8 +175,14 @@ void vFanSetTask(void *pvParameters) {
 				fan_state = FAN_RAMP;
 				break;
 			case FAN_RAMP:
-				if(fan_duty == 255)	fan_state = FAN_ON;
-				else fan_duty+=RAMP_SPEED;
+				if(MAX_DUTY - fan_duty < speed){
+					// If fan_duty is within one step of the max,
+					// set to max and change state
+					fan_duty = MAX_DUTY;
+					fan_state = FAN_ON;
+				}
+				//Otherwise increment
+				else fan_duty+=speed;
 				break;
 			case FAN_ON:
 			default:
@@ -187,18 +197,16 @@ void vFanSetTask(void *pvParameters) {
 /* ADC sample task
  * Samples all ADC channels
  * Rate: 100Hz
- * Priority: 5 (highest)
+ * Priority: 4 
  */
 void vADCSampleTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 	
-	volatile uint16_t j;
-	
 	// Previous wake time pointer, initialized to current tick count.
 	// This gets updated by vTaskDelayUntil every time it is called
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-		
+	
 	// Period
 	const TickType_t xPeriod = 1000 / ADC_SAMPLE_TASK_RATE;		// In ticks (ms)
 	
@@ -207,62 +215,68 @@ void vADCSampleTask(void *pvParameters) {
 	
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
-		// Loop through and sample all thermistors
-		for(i = THERM1; i <= THERM8; i++) {
+		// Sample all ADC channels
+		for(i = LOWEST_ADC_CH; i <= HIGHEST_ADC_CH; i++) {
 			// Update ADC value in struct
 			updateADC(i);
 		}
 		
 		// Delay until next period
-   		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }
 
 /* Heartbeat task
  * Sends node heartbeat out on the CANBus
- * Rate: 10Hz
- * Priority: 3
+ * Rate: 100Hz
+ * Priority: 4
  */
-/*
+
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
-	int i;
-	
+
+	//Heartbeat message variable
+	AFCHeartbeat_t AFCHeartbeat;
+		
 	// Get status variables
-	//MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
+	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
 	
 	// Previous wake time pointer
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	
 	// Period
-	const TickType_t xPeriod = 1;		// In ticks (ms)
+	const TickType_t xPeriod = 1000/ HEARTBEAT_TASK_RATE;		// In ticks (ms)
 	
-	// Data to send
-	// HeartbeatFSM data;
-	uint8_t counts[NO_MOBS];
+
+
 	
 	// Define CAN packet to send.
 	// Format: {ID, Length, Data};
-	static CAN_packet packet = {0x300, NO_MOBS, "\0\0\0\0\0\0"};
+	static CAN_packet packet;
+	packet.id = 0x205;
+	packet.length = sizeof(AFCHeartbeat_t);		
 	
-	for(;;) {
-		// Update counts
-		for(i = 0; i < NO_MOBS; i++) {
-			counts[i] = statuses[i].cnt;
-		}
+	for(;;) {	
+		// Data to send
+		AFCHeartbeat.state = fan_state;
+		AFCHeartbeat.vbatt = adcVal(VBATT);
+		AFCHeartbeat.fan1Current = adcVal(FAN1_IS);
+		AFCHeartbeat.fan2Current = adcVal(FAN2_IS);
+		AFCHeartbeat.fan3Current = adcVal(FAN3_IS);	
 		
-		// Copy counts to data array
-		memcpy(packet.data, counts, NO_MOBS * sizeof(uint8_t));
+		//Copy data to message array
+		memcpy(packet.data, &AFCHeartbeat, sizeof(AFCHeartbeat_t));
 		
 		// Transmit the data. 
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
-		can_send(&packet, get_free_mob(), 100);
+		//int mob = get_free_mob();
+		can_send(&packet, 3, 100);
 		
 		// Delay 100ms
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
-*/
+
 
 /* Send over CAN
  * Uses send mailboxes to send enqueued messages over CAN
@@ -277,12 +291,12 @@ void vCANSendTask(void *pvParameters) {
 }
 */
 
+
 /* Receive from CAN
  * 
  * 
  * 
  */
-/*
 void vCANReceiveTask(void *pvParameters) {
 	// Function Variables
 	volatile xQueueHandle queue;
@@ -291,8 +305,10 @@ void vCANReceiveTask(void *pvParameters) {
 	volatile uint16_t param_val;
 	
 	// Get MOB number
-	param_val = (uint16_t) pvParameters;
-	mob_num = statuses[param_val].mob_num;
+	// Get status variables
+	MOB_STATUS status = *((MOB_STATUS *)pvParameters);
+	
+	mob_num = status.mob_num;
 	
 	// Make sure this is an RX mailbox
 	// assert(MOB_DIRS[status.mob_num] == RX);
@@ -314,13 +330,12 @@ void vCANReceiveTask(void *pvParameters) {
 		xQueueReceive(queue, &packet, portMAX_DELAY);
 		
 		// Increment mailbox receive count
-		statuses[param_val].cnt++;
+		status.cnt++;
 		
 		// See if a callback function is defined
-		if(statuses[param_val].cbk != NULL) {
+		if(status.cbk != NULL) {
 			// Call function with packet as parameter
-			(*(statuses[param_val].cbk))(packet);
+			(*(status.cbk))(packet);
 		}
 	}
 }
-*/

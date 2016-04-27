@@ -32,14 +32,12 @@ MOB_STATUS statuses[NO_MOBS];
 // Main function, runs once
 int main(void)
 {	
-	// Function variables
-	uint16_t i;
-	
+	// Function variables	
 	/* Initialization */
 	
 	// Initialize ADC
 	initADC();
-	
+	can_init();
 	// Initialize SPI
 	//spiInit();
 	// TODO: Change these for SPI temp sensor
@@ -79,10 +77,16 @@ int main(void)
     xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
 		NULL, MCU_STATUS_TASK_PRIORITY, NULL);
 	
+	// Heartbeat task, to heartbeat on CAN
+	// Rate: 10Hz
+	xTaskCreate(vHeartbeatTask, "HEART", configMINIMAL_STACK_SIZE,
+		(void *)statuses, HEARTBEAT_TASK_PRIORITY, NULL);
+		
+	
 	// ADC read task
 	// Rate: 100Hz
-	//xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
-	//	NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
+	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
+		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 		
 	// Module-specific tasks here
 	

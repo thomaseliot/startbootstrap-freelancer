@@ -14,30 +14,6 @@
 #include "assert.h"
 
 
-/************************************************************************/
-/* TO BE PLACED IN WDT FILE --- IN PROGRESS                             */
-/************************************************************************
-
-#define 
-
-// Watchdog arrays for all tasks
-static  {
-	
-}
-
-/* 
-
-/* kickExtWDT
- * Kick the external watchdog timer
- *
-void kickWDT() {
-	
-}
-
-/************************************************************************/
-/*                                                                      */
-/************************************************************************/
-
 /* MCU Status task
  * Toggles the MCU status LED, to blink at 2Hz
  * Rate: 4Hz
@@ -55,7 +31,7 @@ void vMCUStatusTask(void *pvParameters) {
 	const TickType_t xPeriod = 1000 / MCU_STATUS_TASK_RATE;		// In ticks (ms)
 	
 	// Task variables
-	bool currentValue = 0;	// false
+	bool currentValue = false;	// false
 	
 	// Setup MCU status pin as output
 	pinMode(MCU_STATUS_PORT, MCU_STATUS_CH, IO_DIR_OUTPUT);
@@ -71,22 +47,130 @@ void vMCUStatusTask(void *pvParameters) {
 	}
 }
 
+void vCoolingUpdateTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+
+	// Period
+	const TickType_t xPeriod = 1000/COOLING_UPDATE_TASK_RATE;		// In ticks (ms)
+
+	// Initialize fan enable port
+	pinMode(IO_PORTD, 1, IO_DIR_OUTPUT);
+
+	//Pump ports
+	pinMode(IO_PORTB, 3, IO_DIR_OUTPUT);
+	pinMode(IO_PORTB, 4, IO_DIR_OUTPUT);
+	
+	//Fan PWM port
+	pinMode(IO_PORTD, 3, IO_DIR_OUTPUT);
+
+	// PWM Settings
+	// Set at OCR0A, clear at TOP. Use Fast PWM Mode.
+	pwmInit(PWM_0A, PWM_CLOCK_DIV1);
+	
+	// Enable fan
+	setPin(IO_PORTD, 1, HIGH);
+	
+
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		switch(cooling_state){
+			case FAN_OFF:
+				pwmSetDutyCycle(PWM_0A, 0);
+				setPin(IO_PORTB, 3, LOW);
+				setPin(IO_PORTB, 4, LOW);
+				leftPumpStatus = LOW;
+				rightPumpStatus = LOW;
+				break;
+			case FAN_RAMP:
+				pwmSetDutyCycle(PWM_0A, fan_duty);
+				setPin(IO_PORTB, 3, HIGH);
+				setPin(IO_PORTB, 4, HIGH);
+				rightPumpStatus = HIGH;
+				leftPumpStatus = HIGH;
+				break;
+			case FAN_ON:
+				pwmSetDutyCycle(PWM_0A, 255);
+				setPin(IO_PORTB, 3, HIGH);
+				setPin(IO_PORTB, 4, HIGH);
+				rightPumpStatus = HIGH;
+				leftPumpStatus = HIGH;			
+				break;
+			default:
+				pwmSetDutyCycle(PWM_0A, 0);
+				setPin(IO_PORTB, 3, LOW);
+				setPin(IO_PORTB, 4, LOW);		
+				leftPumpStatus = LOW;
+				rightPumpStatus = LOW;									
+		}
+
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
+void vCoolingSetTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+
+	// Period
+	const TickType_t xPeriod = 1000/COOLING_SET_TASK_RATE;		// In ticks (ms)
+	
+	cooling_state = FAN_OFF;
+	fan_duty = 0;
+	
+	//Calculate the step size to achieve the desired ramp time
+	//Add for a ceiling, ensuring some ramp.
+	unsigned int speed = (256/(COOLING_SET_TASK_RATE*RAMP_LENGTH)) + 1;
+	vTaskDelayUntil(&xLastWakeTime, 2000);
+
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		switch(cooling_state){
+			case FAN_OFF:
+				cooling_state = FAN_RAMP;
+				break;
+			case FAN_RAMP:
+				if(255 - fan_duty < speed){
+					// If fan_duty is within one step of the max,
+					// set to max and change state
+					fan_duty = 255;
+					cooling_state = FAN_ON;
+				}
+				//Otherwise increment
+				else fan_duty+=speed;
+				break;
+			case FAN_ON:
+			default:
+				break;
+		}
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
 
 /* ADC sample task
  * Samples all ADC channels
  * Rate: 100Hz
- * Priority: 5 (highest)
+ * Priority: 4 
  */
 void vADCSampleTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 	
-	volatile uint16_t j;
-	
 	// Previous wake time pointer, initialized to current tick count.
 	// This gets updated by vTaskDelayUntil every time it is called
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-		
+	
 	// Period
 	const TickType_t xPeriod = 1000 / ADC_SAMPLE_TASK_RATE;		// In ticks (ms)
 	
@@ -95,176 +179,123 @@ void vADCSampleTask(void *pvParameters) {
 	
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
-		// Loop through and sample all thermistors
-		for(i = THERM1; i <= THERM8; i++) {
+		// Sample all ADC channels
+		for(i = LOWEST_ADC_CH; i <= HIGHEST_ADC_CH; i++) {
 			// Update ADC value in struct
 			updateADC(i);
 		}
 		
 		// Delay until next period
-   		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-	}
-}
-
-/* Watchdog kick task
- * Checks to make sure all tasks have run, and kicks the external watchdog
- * Rate: 2Hz
- * Priority: 5
- */
-void vWatchdogTask(void *pvParameters) {
-	// Make compiler happy
-	(void) pvParameters;
-	
-	// Function variables
-	int i;
-	
-	// Previous wake time pointer, initialized to current tick count.
-	// This gets updated by vTaskDelayUntil every time it is called
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	
-	// Period
-	const TickType_t xPeriod = 1000 / WATCHDOG_TASK_RATE;		// In ticks (ms)
-	
-	// Set watchdog kick as output
-	pinMode(EXT_WD_KICK_PORT, EXT_WD_KICK_CH, IO_DIR_OUTPUT);
-	setPin(EXT_WD_KICK_PORT, EXT_WD_KICK_CH, LOW);
-	
-	// Executes infinitely with defined period using vTaskDelayUntil
-	for(;;) {
-		// Kick the watchdog
-		setPin(EXT_WD_KICK_PORT, EXT_WD_KICK_CH, HIGH);
-		
-		// Wait a little bit
-		for(i = 0; i < 100; i++) {
-			asm("NOP");
-		}
-		
-		// Set back to low
-		setPin(EXT_WD_KICK_PORT, EXT_WD_KICK_CH, LOW);
-		
-		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }
 
-/* Thermistor Read Task
- * Reads the thermistor values and reports the max value
+/* Heartbeat task
+ * Sends node heartbeat out on the CANBus
  * Rate: 100Hz
- * Priority: 3
+ * Priority: 4
  */
-void vThermistorReadTask(void *pvParameters) {
-	// Make compiler happy
-	(void) pvParameters;
+
+void vHeartbeatTask(void *pvParameters) {
+	// Function variables
+
+	//Heartbeat message variable
+	RSMHeartbeat_t RSMHeartbeat;
+		
+	// Get status variables
+	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
 	
-	// Task variables
-	uint8_t i;
-	uint16_t thisVal, maxVal = 0;
-	
-	// Previous wake time pointer, initialized to current tick count.
-	// This gets updated by vTaskDelayUntil every time it is called
+	// Previous wake time pointer
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	
 	// Period
-	const TickType_t xPeriod = 1000 / THERMISTOR_READ_TASK_RATE;		// In ticks (ms)
+	const TickType_t xPeriod = 1000/ HEARTBEAT_TASK_RATE;		// In ticks (ms)
 	
-	// Executes infinitely with defined period using vTaskDelayUntil
-	for(;;) {
-		// Find maximum thermistor value
-		for(i = THERM1; i <= THERM8; i++) {
-			// Get current value
-			thisVal = adcVal(i);
-			// Update maxval if greater
-			if(thisVal > maxVal) maxVal = thisVal;
-		}
+	// Define CAN packet to send.
+	// Format: {ID, Length, Data};
+	static CAN_packet packet;
+	packet.id = RSM_HEARTBEAT_ID;
+	packet.length = sizeof(RSMHeartbeat_t);		
+	
+	for(;;) {	
+		// Data to send
+		RSMHeartbeat.state = cooling_state;
+		RSMHeartbeat.vbatt = adcVal(VBATT);
+		RSMHeartbeat.fanCurrent = adcVal(FAN_IS);
+		RSMHeartbeat.leftPumpStatus = leftPumpStatus;
+		RSMHeartbeat.rightPumpStatus = rightPumpStatus;	
 		
-		// Update output thermistor value
-		maxThermistorValue = maxVal;
+		//Copy data to message array
+		memcpy(packet.data, &RSMHeartbeat, sizeof(AFCHeartbeat_t));
 		
-		// Delay until next period
-		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+		// Transmit the data. 
+		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
+		can_send(&packet, get_free_mob(), 100);
+		
+		// Delay 100ms
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
 
-/* Thermistor Write Task
- * Writes out the thermistor value to the digital pots
- * Rate: 100Hz
- * Priority: 3
+
+/* Send over CAN
+ * Uses send mailboxes to send enqueued messages over CAN
+ * Currently unimplemented
  */
-void vThermistorWriteTask(void *pvParameters) {
+/*
+void vCANSendTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 	
-	// Function variables
-	volatile uint8_t valueToWrite1 = 0x1F;
-	volatile uint8_t valueToWrite2 = 0x00;
-	volatile uint8_t upperByte, lowerByte;
-	volatile uint8_t command;
-	SPISlave thermPots = spiSlaves[POT_SYNC];
 	
-	// Previous wake time pointer, initialized to current tick count.
-	// This gets updated by vTaskDelayUntil every time it is called
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	
-	// Period
-	const TickType_t xPeriod = 1000 / THERMISTOR_WRITE_TASK_RATE;		// In ticks (ms)
-	
-	// Send a bunch of zeros for good measure
-	taskENTER_CRITICAL();
-	spiSelect(thermPots);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiDeselect(thermPots);
-	taskEXIT_CRITICAL();
-	
-	// Initialize the pot
-	
-	// Enable high impedance on SDO output for daisy chain
-	taskENTER_CRITICAL();
-	spiSelect(thermPots);
-	spiWrite(0x80);
-	spiWrite(0x01);
-	spiWrite(0x00);
-	spiWrite(0x00);
-	spiDeselect(thermPots);
-	taskEXIT_CRITICAL();
-	
-	// Enable RDAC register write access
-	upperByte = 0x1C;
-	lowerByte = 0x02;
-	taskENTER_CRITICAL();
-	spiSelect(thermPots);
-	spiWrite(upperByte);
-	spiWrite(lowerByte);
-	spiWrite(upperByte);
-	spiWrite(lowerByte);
-	spiDeselect(thermPots);
-	taskEXIT_CRITICAL();
-	
-	
-	// Executes infinitely with defined period using vTaskDelayUntil
-	for(;;) {
-		// Setup bytes to write
-		command = 0x01;
-		upperByte = (command << 2) | (valueToWrite1 >> 6);
-		lowerByte = valueToWrite1 << 2;
-		
-		// Write
-		taskENTER_CRITICAL();
-		spiSelect(thermPots);
-		spiWrite(upperByte);
-		spiWrite(lowerByte);
-		upperByte = (command << 2) | (valueToWrite2 >> 6);
-		lowerByte = valueToWrite2 << 2;
-  		spiWrite(upperByte);
-		spiWrite(lowerByte);
-		spiDeselect(thermPots);
-		taskEXIT_CRITICAL();
+}
+*/
 
-		valueToWrite2++;
+
+/* Receive from CAN
+ * 
+ * 
+ * 
+ */
+void vCANReceiveTask(void *pvParameters) {
+	// Function Variables
+	volatile xQueueHandle queue;
+	CAN_packet packet;
+	uint8_t mob_num;
+	volatile uint16_t param_val;
+	
+	// Get MOB number
+	// Get status variables
+	MOB_STATUS status = *((MOB_STATUS *)pvParameters);
+	
+	mob_num = status.mob_num;
+	
+	// Make sure this is an RX mailbox
+	// assert(MOB_DIRS[status.mob_num] == RX);
+	
+	// Critical section for queue creation
+	taskENTER_CRITICAL();
+	queue = xCANQueueCreate(MOB_IDS[mob_num], MOB_MASKS[mob_num], CAN_QUEUE_LEN, mob_num);
+	taskEXIT_CRITICAL();
+	
+	// Check for failure
+	if(queue == 0) {
+		// Exit task
+		vTaskDelete(NULL);
+		return;
+	}
+	
+	for(;;) {
+		// Receive message
+		xQueueReceive(queue, &packet, portMAX_DELAY);
 		
-		// Delay until next period
-		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+		// Increment mailbox receive count
+		status.cnt++;
+		
+		// See if a callback function is defined
+		if(status.cbk != NULL) {
+			// Call function with packet as parameter
+			(*(status.cbk))(packet);
+		}
 	}
 }

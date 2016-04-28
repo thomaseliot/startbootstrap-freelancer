@@ -1,10 +1,14 @@
 /**
   ******************************************************************************
-  * File Name          : mxconstants.h
-  * Description        : This file contains the common defines of the application
+  * @file    lcd.h
+  * @author  MCD Application Team
+  * @version V4.0.1
+  * @date    21-July-2015
+  * @brief   This file contains all the functions prototypes for the LCD driver.   
   ******************************************************************************
+  * @attention
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -29,56 +33,82 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  */
-/* Includes ------------------------------------------------------------------*/
-
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private define ------------------------------------------------------------*/
-
-#define BSPD_ERR_Pin GPIO_PIN_2
-#define BSPD_ERR_GPIO_Port GPIOE
-#define BMS_ERR_Pin GPIO_PIN_3
-#define BMS_ERR_GPIO_Port GPIOE
-#define LCD_RESET_Pin GPIO_PIN_6
-#define LCD_RESET_GPIO_Port GPIOE
-#define CHECK_Pin GPIO_PIN_14
-#define CHECK_GPIO_Port GPIOC
-#define IMD_ERR_Pin GPIO_PIN_15
-#define IMD_ERR_GPIO_Port GPIOC
-#define LCD_DE_Pin GPIO_PIN_6
-#define LCD_DE_GPIO_Port GPIOF
-#define LCD_SPI_CS_Pin GPIO_PIN_8
-#define LCD_SPI_CS_GPIO_Port GPIOF
-#define BUZZER_PWM_Pin GPIO_PIN_1
-#define BUZZER_PWM_GPIO_Port GPIOA
-#define RETURN_BTN_Pin GPIO_PIN_11
-#define RETURN_BTN_GPIO_Port GPIOC
-#define UP_BTN_Pin GPIO_PIN_12
-#define UP_BTN_GPIO_Port GPIOC
-#define SELECT_BTN_Pin GPIO_PIN_4
-#define SELECT_BTN_GPIO_Port GPIOD
-#define PREV_BTN_Pin GPIO_PIN_5
-#define PREV_BTN_GPIO_Port GPIOD
-#define DOWN_BTN_Pin GPIO_PIN_7
-#define DOWN_BTN_GPIO_Port GPIOD
-#define NEXT_BTN_Pin GPIO_PIN_9
-#define NEXT_BTN_GPIO_Port GPIOG
-
-
-/* USER CODE BEGIN Private defines */
-//#define LED_DRV_OE_Pin GPIO_PIN_4
-
-/* USER CODE END Private defines */
-
-/**
-  * @}
   */ 
 
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __LCD_H
+#define __LCD_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif 
+
+/* Includes ------------------------------------------------------------------*/
+#include <stdint.h>
+   
+/** @addtogroup BSP
+  * @{
+  */
+
+/** @addtogroup Components
+  * @{
+  */
+
+/** @addtogroup LCD
+  * @{
+  */
+ 
+/** @defgroup LCD_Exported_Types
+  * @{
+  */
+
+/** @defgroup LCD_Driver_structure  LCD Driver structure
+  * @{
+  */
+typedef struct
+{
+  void     (*Init)(void);
+  uint16_t (*ReadID)(void);
+  void     (*DisplayOn)(void);
+  void     (*DisplayOff)(void);
+  void     (*SetCursor)(uint16_t, uint16_t);
+  void     (*WritePixel)(uint16_t, uint16_t, uint16_t);
+  uint16_t (*ReadPixel)(uint16_t, uint16_t);
+  
+   /* Optimized operation */
+  void     (*SetDisplayWindow)(uint16_t, uint16_t, uint16_t, uint16_t);
+  void     (*DrawHLine)(uint16_t, uint16_t, uint16_t, uint16_t);
+  void     (*DrawVLine)(uint16_t, uint16_t, uint16_t, uint16_t);
+  
+  uint16_t (*GetLcdPixelWidth)(void);
+  uint16_t (*GetLcdPixelHeight)(void);
+  void     (*DrawBitmap)(uint16_t, uint16_t, uint8_t*);
+  void     (*DrawRGBImage)(uint16_t, uint16_t, uint16_t, uint16_t, uint8_t*);
+}LCD_DrvTypeDef;    
 /**
   * @}
-*/ 
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __LCD_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

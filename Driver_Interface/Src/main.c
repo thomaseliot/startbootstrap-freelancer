@@ -33,11 +33,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
+#include "mxconstants.h"
 
 /* USER CODE BEGIN Includes */
 #include "buttons.h"
 #include "led.h"
 #include "can.h"
+#include "lcd_spi.h"
+#include "ili9341.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -107,24 +110,36 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_CAN2_Init();
   MX_DMA2D_Init();
   MX_FMC_Init();
   MX_LTDC_Init();
-  MX_SPI1_Init();
-  MX_SPI5_Init();
+//  MX_SPI1_Init();
+//  MX_SPI5_Init();
   MX_TIM2_Init();
   MX_I2C3_Init();
+
+  //SET RESET HIGH ~~ TURN ON
+      HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_SET);
+
+//  osDelay(osKernelSysTickMicroSec(1000000));
+
+  ili9341_Init();
+//  ili9341_DisplayOn();
+  volatile uint16_t lcd_id =  ili9341_ReadID();
+  lcd_id++;
+
 
   /* USER CODE BEGIN 2 */
   UserInitCan2();
   HAL_GPIO_WritePin(CHECK_GPIO_Port, CHECK_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(CHECK_GPIO_Port, CHECK_Pin, GPIO_PIN_SET);
 
-  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_SET);
+//  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_RESET);
+//  HAL_GPIO_WritePin(BMS_ERR_GPIO_Port, BMS_ERR_Pin, GPIO_PIN_SET);
 
 //  char recv_string[10] = "";
 //  HAL_SDRAM_Write_8b(&hsdram1, 0, "hi", 3);
@@ -154,8 +169,8 @@ int main(void)
 	  osThreadDef(buttonTask, vPollButtonsTask, osPriorityAboveNormal, 1, 500);
 	  buttonTaskHandle = osThreadCreate(osThread(buttonTask), NULL);
 
-//	  osThreadDef(ledTask, vLedUpdateTask, osPriorityHigh, 1, 1024);
-//	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+	  osThreadDef(ledTask, vLedUpdateTask, osPriorityHigh, 1, 1024);
+	  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
 	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);
@@ -193,45 +208,82 @@ int main(void)
 */
 void SystemClock_Config(void)
 {
+	 RCC_OscInitTypeDef RCC_OscInitStruct;
+	  RCC_ClkInitTypeDef RCC_ClkInitStruct;
+	  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
 
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
+	  __HAL_RCC_PLL_PLLM_CONFIG(15);
 
-  __HAL_RCC_PLL_PLLM_CONFIG(8);
+	  __HAL_RCC_PLL_PLLSOURCE_CONFIG(RCC_PLLSOURCE_HSE);
 
-  __HAL_RCC_PLL_PLLSOURCE_CONFIG(RCC_PLLSOURCE_HSI);
+	  __PWR_CLK_ENABLE();
 
-  __PWR_CLK_ENABLE();
+	  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+	  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+	  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+	  HAL_RCC_OscConfig(&RCC_OscInitStruct);
 
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = 16;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-  HAL_RCC_OscConfig(&RCC_OscInitStruct);
+	  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+	                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+	  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;
+	  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+	  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+	  HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0);
 
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-  HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0);
+	  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+	  PeriphClkInitStruct.PLLSAI.PLLSAIN = 72;
+	  PeriphClkInitStruct.PLLSAI.PLLSAIR = 5;
+	  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
+	  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
 
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-  PeriphClkInitStruct.PLLSAI.PLLSAIN = 50;
-  PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
-  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
-  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
+	  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
 
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+	  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 
-  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+	  /* SysTick_IRQn interrupt configuration */
+	  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 
-  /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+//  RCC_OscInitTypeDef RCC_OscInitStruct;
+//  RCC_ClkInitTypeDef RCC_ClkInitStruct;
+//  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
+//
+//  __HAL_RCC_PLL_PLLM_CONFIG(8);
+//
+//  __HAL_RCC_PLL_PLLSOURCE_CONFIG(RCC_PLLSOURCE_HSI);
+//
+//  __PWR_CLK_ENABLE();
+//
+//  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+//
+//  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+//  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+//  RCC_OscInitStruct.HSICalibrationValue = 16;
+//  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+//  HAL_RCC_OscConfig(&RCC_OscInitStruct);
+//
+//  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+//                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+//  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+//  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+//  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+//  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+//  HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0);
+//
+//  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+//  PeriphClkInitStruct.PLLSAI.PLLSAIN = 50;
+//  PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
+//  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
+//  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
+//
+//  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+//
+//  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+//
+//  /* SysTick_IRQn interrupt configuration */
+//  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 }
 
 /* CAN2 init function */
@@ -277,8 +329,19 @@ void MX_DMA2D_Init(void)
 void MX_I2C3_Init(void)
 {
 
+	/*
+	 * The following is the required sequence in master mode.
+	 *
+	 * Program the peripheral input clock in I2C_CR2 Register in order to generate correct
+	 * timings
+	 * Configure the clock control registers
+	 * Configure the rise time register
+	 * Program the I2C_CR1 register to enable the peripheral
+	 * Set the START bit in the I2C_CR1 register to generate a Start condition
+	 */
+
   hi2c3.Instance = I2C3;
-  hi2c3.Init.ClockSpeed = 200000;
+  hi2c3.Init.ClockSpeed = 100000;
   hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c3.Init.OwnAddress1 = 0;
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -473,7 +536,7 @@ void MX_GPIO_Init(void)
   __GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin|LED_DRV_OE_L_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, CHECK_Pin|IMD_ERR_Pin, GPIO_PIN_RESET);
@@ -482,7 +545,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOF, LCD_DE_Pin|LCD_SPI_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BSPD_ERR_Pin BMS_ERR_Pin LCD_RESET_Pin */
-  GPIO_InitStruct.Pin = BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin;
+  GPIO_InitStruct.Pin = BSPD_ERR_Pin|BMS_ERR_Pin|LCD_RESET_Pin|LED_DRV_OE_L_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
@@ -499,7 +562,7 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = LCD_DE_Pin|LCD_SPI_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : RETURN_BTN_Pin UP_BTN_Pin */

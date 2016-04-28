@@ -7,42 +7,42 @@
 
 #include <avr/io.h>
 #include <stdio.h>
-#include "node_tasks.h"
 
-/* Scheduler include files. */
+/* Scheduler include files */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "can_ids.h"
+
+/* Node configuration */
+#include "node_config.h"
+
+/* Task include files */
+#include "node_tasks.h"
+
+/* Library and driver include files */
+#include "cmr_64c1_lib.h"
+#include "adc.h"
 #include "frtos_can.h"
 #include "can_config.h"
 #include "can_callbacks.h"
 
-#define mainMCU_STATUS_TASK_PRIORITY	1
-#define mainHEARTBEAT_TASK_PRIORITY		2
-
 // Global status variable
 MOB_STATUS statuses[NO_MOBS];
 
-
+// Main function, runs once
 int main(void)
 {	
 	// Function variables
 	uint16_t i;
+
+	/* Initialization */
+	
+	// Initialize ADC
+	initADC();
 	
 	// Initialize CAN
 	can_init();
 	
-	// Create the MCU status task, to blink the LED
-	// Rate: 4Hz
-    xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
-		NULL, mainMCU_STATUS_TASK_PRIORITY, NULL);
-	
-	// Assign mailbox callbacks
-	statuses[0].cbk = mb1_callback;
-	statuses[1].cbk = mb2_callback;
-	statuses[2].cbk = mb3_callback;
-	statuses[3].cbk = mb4_callback;
-	
+	/* Tasks */
 	
 	// Create tasks for receive mailboxes
 	for(i = 0; i < NO_MOBS; i++) {
@@ -52,28 +52,39 @@ int main(void)
 		statuses[i].cnt = 0;
 		
 		if(MOB_DIRS[i] == RX) {
+			// Assign callback to task
+			statuses[i].cbk = MOB_CALLBACKS[i];
+			
 			// Name of task
 			char name[4];
 			sprintf(name, "RCV%d", i);
 			// Create task for this mailbox
 			xTaskCreate(vCANReceiveTask, name, configMINIMAL_STACK_SIZE,
-				(void *)i, MOB_PRIORITIES[i], NULL);
+				(void *)(&statuses[i]), MOB_PRIORITIES[i], NULL);
 		}
 	}
 	
-	// Create the heartbeat task, to transmit over CAN
+	// MCU status task, to blink the LED
+	// Rate: 4Hz
+    xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
+		NULL, MCU_STATUS_TASK_PRIORITY, NULL);
+		
+	// Heartbeat task, to heartbeat on CAN
 	// Rate: 10Hz
 	xTaskCreate(vHeartbeatTask, "HEART", configMINIMAL_STACK_SIZE,
-		statuses, mainHEARTBEAT_TASK_PRIORITY, NULL);
+		(void *)statuses, HEARTBEAT_TASK_PRIORITY, NULL);
 	
 	// ADC read task
 	// Rate: 100Hz
 	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
 		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
+		
+	// Module-specific tasks here
+	
 	
 	// Start the scheduler
 	vTaskStartScheduler();
 	
-	// Return, the scheduler handles the rest
+	// Return, the scheduler takes over from here
 	return 0;
 }

@@ -4,18 +4,18 @@
  * Copyright (c) 2016, Carnegie Mellon Racing
  */ 
 
-
 #include <avr/io.h>
 #include <string.h>
 #include <stdbool.h>
 #include "node_tasks.h"
-#include "task.h"
 #include "queue.h"
-#include "can_ids.h"
-#include "can_config.h"
 #include "cmr_64c1_lib.h"
+#include "can_ids.h"
+#include "can_structs.h"
+#include "can_callbacks.h"
+#include "can_payloads.h"
 #include "node_config.h"
-#include "frtos_can.h"
+#include "cmr_constants.h"
 #include "assert.h"
 
 /* MCU Status task
@@ -32,10 +32,10 @@ void vMCUStatusTask(void *pvParameters) {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	
 	// Period
-	const TickType_t xPeriod = 250;		// In ticks (ms)
+	const TickType_t xPeriod = 1000 / MCU_STATUS_TASK_RATE;		// In ticks (ms)
 	
 	// Task variables
-	bool currentValue = 0;	// false
+	bool currentValue = false;	// false
 	
 	// Setup MCU status pin as output
 	pinMode(MCU_STATUS_PORT, MCU_STATUS_CH, IO_DIR_OUTPUT);
@@ -52,14 +52,53 @@ void vMCUStatusTask(void *pvParameters) {
 }
 
 
+/* ADC sample task
+ * Samples all ADC channels
+ * Rate: 100Hz
+ * Priority: 5 (highest)
+ */
+void vADCSampleTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+	
+	volatile uint16_t j;
+	
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+		
+	// Period
+	const TickType_t xPeriod = 1000 / ADC_SAMPLE_TASK_RATE;		// In ticks (ms)
+	
+	// Task variables
+	unsigned i;
+	
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		// Sample all ADC channels
+		for(i = LOWEST_ADC_CH; i <= HIGHEST_ADC_CH; i++) {
+			// Update ADC value in struct
+			updateADC(i);
+		}
+		
+		// Delay until next period
+   		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
 /* Heartbeat task
- * Sends node heartbeat out on the CANBus
- * Rate: 10Hz
+ * Sends node heartbeat out on CAN
+ * Rate: 100Hz
  * Priority: 3
  */
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 	int i;
+	NodeState nextState;
+	// Current node state, initialized to GLV_ON
+	static NodeState currentState = GLV_ON;
+	// Target global state, used for state transitioning
+	static NodeState targetState = GLV_ON;
 	
 	// Get status variables
 	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
@@ -68,34 +107,50 @@ void vHeartbeatTask(void *pvParameters) {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	
 	// Period
-	const TickType_t xPeriod = 1;		// In ticks (ms)
+	const TickType_t xPeriod = 1000 / HEARTBEAT_TASK_RATE;		// In ticks (ms)
 	
-	// Data to send
-	// HeartbeatFSM data;
-	uint8_t counts[NO_MOBS];
+	// Initialize heartbeat message
+	FSMHeartbeat.state = currentState;
+	FSMHeartbeat.vbatt = adcVal(VBATT);
 	
-	// Define CAN packet to send.
-	// Format: {ID, Length, Data};
-	static CAN_packet packet = {0x300, NO_MOBS, "\0\0\0\0\0\0"};
-	
-	// Setup values
-	// data.currentState = RTD;
-	// data.someData = 10;
+	// Define CAN packet to send
+	CAN_packet packet;
+	packet.id = FSM_HEARTBEAT_ID;
+	packet.length = sizeof(FSMHeartbeat_t);
 	
 	for(;;) {
-		// Update counts
-		for(i = 0; i < NO_MOBS; i++) {
-			counts[i] = statuses[i].cnt;
-		}
+		//if (targetState > 4) {
+		//	return;
+		//}
 		
-		// Copy counts to data array
-		memcpy(packet.data, counts, NO_MOBS * sizeof(uint8_t));
+		// Update states
+		currentState = GLV_ON;
+		FSMHeartbeat.state = currentState;
 		
-		// Transmit the data. 
+		//if (targetState > 4) {
+		//	return;
+		//}
+		
+		// Update vbatt value
+		FSMHeartbeat.vbatt = adcVal(VBATT);
+		
+		// Copy heartbeat to message array
+		memcpy(packet.data, &FSMHeartbeat, sizeof(FSMHeartbeat_t));
+		
+		//if (targetState > 4) {
+		//	return;
+		//}
+		
+		
+		// Transmit the data
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
 		can_send(&packet, get_free_mob(), 100);
+
+		//if (targetState > 4) {
+		//	return;
+		//}
 		
-		// Delay 100ms
+		// Delay 10ms
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
@@ -105,12 +160,14 @@ void vHeartbeatTask(void *pvParameters) {
  * Uses send mailboxes to send enqueued messages over CAN
  * Currently unimplemented
  */
+/*
 void vCANSendTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 	
 	
 }
+*/
 
 
 /* Receive from CAN
@@ -126,8 +183,10 @@ void vCANReceiveTask(void *pvParameters) {
 	volatile uint16_t param_val;
 	
 	// Get MOB number
-	param_val = (uint16_t) pvParameters;
-	mob_num = statuses[param_val].mob_num;
+	// Get status variables
+	MOB_STATUS status = *((MOB_STATUS *)pvParameters);
+	
+	mob_num = status.mob_num;
 	
 	// Make sure this is an RX mailbox
 	// assert(MOB_DIRS[status.mob_num] == RX);
@@ -148,20 +207,17 @@ void vCANReceiveTask(void *pvParameters) {
 		// Receive message
 		xQueueReceive(queue, &packet, portMAX_DELAY);
 		
+		//taskENTER_CRITICAL();
 		// Increment mailbox receive count
-		statuses[param_val].cnt++;
+		// status.cnt++;
 		
 		// See if a callback function is defined
-		if(statuses[param_val].cbk != NULL) {
+		
+		if(status.cbk != NULL) {
 			// Call function with packet as parameter
-			(*(statuses[param_val].cbk))(packet);
+			(*(status.cbk))(packet);
 		}
+		
+		//taskEXIT_CRITICAL();
 	}
 }
-
-
-/* 
- * Tasks to add:
- *	- SW watchdog
- *	- 
- */

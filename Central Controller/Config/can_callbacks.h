@@ -10,14 +10,12 @@
 #define CAN_CALLBACKS_H_
 
 #include "cmr_constants.h"
+#include "node_tasks.h"
 #include "frtos_can.h"
+#include "can_ids.h"
+#include "can_structs.h"
 
-
-// Callback functions, one for each receive mailbox
-void mb1_callback(CAN_packet packet);
-void mb2_callback(CAN_packet packet);
-void mb3_callback(CAN_packet packet);
-void mb4_callback(CAN_packet packet);
-
+// Callback functions, bound to a receive mailbox
+void heartbeatCallback(CAN_packet packet);
 
 #endif /* CAN_CALLBACKS_H_ */

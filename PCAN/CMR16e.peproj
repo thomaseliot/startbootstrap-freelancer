@@ -5,9 +5,9 @@
     </Connections>
     <MessageFilters/>
     <TransmitList>
-        <TransmitListItem Bus="1" CanId="516" Type="0" DLC="3" Data="000001" CycleTime="10" IsPaused="0" Creator="User"/>
-        <TransmitListItem Bus="1" CanId="517" Type="0" DLC="5" Data="" CycleTime="10" IsPaused="0" Creator="User"/>
-        <TransmitListItem Bus="1" CanId="514" Type="0" DLC="3" Data="" CycleTime="10" IsPaused="0" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="516" Type="0" DLC="3" Data="000001" CycleTime="10" IsPaused="1" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="517" Type="0" DLC="5" Data="" CycleTime="10" IsPaused="1" Creator="User"/>
+        <TransmitListItem Bus="1" CanId="514" Type="0" DLC="3" Data="" CycleTime="10" IsPaused="1" Creator="User"/>
     </TransmitList>
     <Files>
         <File RelativePath="CMR16e.sym"/>

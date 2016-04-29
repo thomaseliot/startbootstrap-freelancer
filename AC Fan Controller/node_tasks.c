@@ -118,8 +118,6 @@ void vFanUpdateTask(void *pvParameters) {
 
 	// PWM Settings
 	// Set at OCR0A, clear at TOP. Use Fast PWM Mode.
-	//TCCR0A |= (1<<WGM01)|(1<<WGM00)|(1<<COM0A1);
-	//TCCR0B |= (1 << CS00);
 	pwmInit(PWM_0A, PWM_CLOCK_DIV8);
 	
 	// Enable three fans
@@ -134,7 +132,7 @@ void vFanUpdateTask(void *pvParameters) {
 			case FAN_OFF:
 				pwmSetDutyCycle(PWM_0A, 0);
 				break;
-			case FAN_RAMP:
+			case FAN_RAMP_UP:
 				pwmSetDutyCycle(PWM_0A, fan_duty);
 				break;
 			case FAN_ON:
@@ -172,9 +170,9 @@ void vFanSetTask(void *pvParameters) {
 	for(;;) {
 		switch(fan_state){
 			case FAN_OFF:
-				fan_state = FAN_RAMP;
+				fan_state = FAN_RAMP_UP;
 				break;
-			case FAN_RAMP:
+			case FAN_RAMP_UP:
 				if(MAX_DUTY - fan_duty < speed){
 					// If fan_duty is within one step of the max,
 					// set to max and change state
@@ -220,6 +218,45 @@ void vADCSampleTask(void *pvParameters) {
 			// Update ADC value in struct
 			updateADC(i);
 		}
+		
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
+void vTempSampleTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+	
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	
+	// Period
+	const TickType_t xPeriod = 1000 / TEMP_SAMPLE_TASK_RATE;		// In ticks (ms)
+	
+	// Task variables
+	int16_t temp_var;
+	SPISlave temp = spiSlaves[TEMP];
+
+	
+	taskENTER_CRITICAL();
+	spiSelect(temp);
+	spiWrite(0x00);
+	spiWrite(0x00);
+	spiDeselect(temp);
+	taskEXIT_CRITICAL();
+	
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		// Sample all ADC channels
+		taskENTER_CRITICAL();
+		spiSelect(temp);
+		temp_var = SPI_read();
+		spiDeselect(temp);
+		///taskEXIT_CRITICAL();
+		sysTemp = temp_var >> 2;
+		taskEXIT_CRITICAL();
 		
 		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);

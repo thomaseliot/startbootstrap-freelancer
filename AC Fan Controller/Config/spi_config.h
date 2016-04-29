@@ -16,7 +16,7 @@
 
 // Slave enumeration
 typedef enum SPISlaveEnum {
-	POT_SYNC
+	TEMP
 };
 
 // Struct for storing port/pin of slave
@@ -27,7 +27,7 @@ typedef struct SPISlave_t {
 
 // Slave configuration array
 static SPISlave spiSlaves[NUM_SLAVES] = {
-	{IO_PORTC, 1}	// POT Sync, Port C1
+	{IO_PORTD, 3}	// Temp, PD3
 };
 
 

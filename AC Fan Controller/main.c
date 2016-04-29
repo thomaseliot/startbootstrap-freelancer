@@ -39,11 +39,10 @@ int main(void)
 	initADC();
 	can_init();
 	// Initialize SPI
-	//spiInit();
-	// TODO: Change these for SPI temp sensor
-	//spiSetClockDivider(SPI_CLOCK_DIV64);
-	//spiSetBitOrder(SPI_MSBFIRST);
-	//spiSetDataMode(SPI_MODE1);
+	spiInit();
+	spiSetClockDivider(SPI_CLOCK_DIV16);
+	spiSetBitOrder(SPI_MSBFIRST);
+	spiSetDataMode(SPI_MODE0);
 	
 	
 	// Assign mailbox callbacks
@@ -89,6 +88,11 @@ int main(void)
 		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 		
 	// Module-specific tasks here
+	
+	//Temp read task
+	//Rate: 100Hz
+	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
+	NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 	
 	// Fan speed update task
 	// Rate: 50Hz

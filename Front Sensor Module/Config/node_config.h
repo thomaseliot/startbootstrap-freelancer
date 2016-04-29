@@ -15,8 +15,9 @@
 #define F_OSC				16000000		// 16MHz
 
 // MCU Status
-#define MCU_STATUS_PORT		IO_PORT_C
+#define MCU_STATUS_PORT		IO_PORTC
 #define MCU_STATUS_CH		0
 
+// Define the rest of your I/O configuration here
 
 #endif /* NODE_CONFIG_H_ */

@@ -7,17 +7,21 @@ enum State(0="GLV_ON", // GLV On
   2="RTD", // Ready To Drive
   3="ERROR")// Error
 enum Pump_State(1="On", 0="Off")
+enum BMS_Precharge_State(0="Error", 1="Idle", 2="Measure", 3="Precharge", 
+  4="Run", 5="Enable Pack")
+enum BMS_Precharge_Timer_State(0="Timer Not Elapsed", 1="Timer Elapsed")
 
 {SENDRECEIVE}
 
 [FSM_Heartbeat]
 ID=202h	// Front Sensor Module Heartbeat
-DLC=3
+DLC=4
 CycleTime=10
 Timeout=100
 Var=State State 0,8	// Current Module State
-Var=VBatt unsigned 8,8 /u:V
+Var=VBatt unsigned 8,8 /u:V /f:0.066666
 Var=Requested_Torque unsigned 16,8
+Var=Speed unsigned 24,8 /u:MPH
 
 [DIM_Heartbeat]
 ID=204h	// Driver Interface Module Hearbeat
@@ -26,7 +30,7 @@ CycleTime=10
 Timeout=100
 Var=State State 0,8
 Var=Requested_State State 16,8
-Var=VBatt unsigned 8,8 /u:V
+Var=VBatt unsigned 8,8 /u:V /f:0.066666
 
 [CC_Heartbeat]
 ID=201h
@@ -34,15 +38,15 @@ DLC=2
 CycleTime=10
 Timeout=100
 Var=State State 0,8
-Var=VBatt unsigned 8,8 /u:V
+Var=VBatt unsigned 8,8 /u:V /f:0.066666
 
 [AFC_Heartbeat]
 ID=205h
-DLC=5
+DLC=0
 CycleTime=10
 Timeout=100
 Var=State State 0,8
-Var=VBatt unsigned 8,8 /u:V
+Var=AFC_VBatt unsigned 8,8 /u:V /f:0.066666
 Var=Fan_1_Current unsigned 16,8 /u:A
 Var=Fan_2_Current unsigned 24,8 /u:A
 Var=Fan_3_Current unsigned 32,8 /u:A
@@ -53,7 +57,7 @@ DLC=2
 CycleTime=10
 Timeout=100
 Var=State State 0,8
-Var=VBatt unsigned 8,8 /u:V
+Var=VBatt unsigned 8,8 /u:V /f:0.066666
 
 [RSM_Heartbeat]
 ID=203h
@@ -61,7 +65,7 @@ DLC=5
 CycleTime=10
 Timeout=100
 Var=State State 0,8
-Var=VBatt unsigned 8,8
+Var=VBatt unsigned 8,8 /f:0.066666
 Var=Fan_Current unsigned 16,8 /u:A
 Var=Pump_L_Status Pump_State 24,8
 Var=Pump_R_Status Pump_State 32,8
@@ -441,99 +445,181 @@ Var=D3_Diag_Data_1 signed 16,16 /min:0
 Var=D4_Diag_Data_2 signed 32,16 /min:0
 Var=D5_Diag_Data_3 signed 48,16 /min:0
 
-[BMS_BMU_Heartbeat_Serial]
-ID=500h
+[BMS_BMU_Heartbeat_SN]
+ID=600h
 DLC=8
 Var=Device_ID unsigned 0,32
 Var=Device_Serial unsigned 32,32
 
 [BMS_Factory_Config_Calibration]
-ID=5F0h
-DLC=1
+ID=6F0h
+DLC=8
 
 [BMS_Pack_SOC]
-ID=5F4h
-DLC=1
+ID=6F4h
+DLC=8
+Var=BMS_Pack_SOC_Ah float 0,32 /u:Ah
+Var=BMS_Pack_SOC_Percent float 32,32 /u:%
 
 [BMS_Balance_SOC]
-ID=5F5h
-DLC=1
+ID=6F5h
+DLC=8
+Var=BMS_Balance_SOC_Ah float 0,32 /u:Ah
+Var=BMS_Balance_SOC_Percent float 32,32 /u:%
 
 [BMS_Charger_Control_Info]
-ID=5F6h
-DLC=1
+ID=6F6h
+DLC=8
+Var=BMS_Charging_Cell_Voltage_Error unsigned 0,16 /u:mV
+Var=BMS_Cell_Temp_Margin unsigned 16,16 /u:"1/10 C"
+Var=BMS_Discharge_Cell_Voltage_Error unsigned 32,16 /u:mV
+Var=BMS_Total_Pack_Capacity unsigned 48,16 /u:Ah
 
 [BMS_Precharge_12V_Status]
-ID=5F7h
-DLC=1
+ID=6F7h
+DLC=8
+Var=BMS_Contactor_1_Error_Status unsigned 0,1
+Var=BMS_Contactor_2_Error_Status unsigned 1,1
+Var=BMS_Contactor_1_Output_Status unsigned 2,1
+Var=BMS_Contactor_2_Output_Status unsigned 3,1
+Var=BMS_Contactor_Supply_Voltage_OK unsigned 4,1
+Var=BMS_Contactor_3_Error_Status unsigned 5,1
+Var=BMS_Contactor_3_Output_Status unsigned 6,1
+Var=BMS_Unused_1 unsigned 7,1
+Var=BMS_Precharge_State BMS_Precharge_State 8,8
+Var=BMS_12V_Contactor_Supply_Voltage unsigned 16,16 /u:mV
+Var=BMS_Unused_2 unsigned 32,16
+Var=BMS_Precharge_Timer_Status unsigned 48,8
+Var=BMS_Precharge_Timer_Counter unsigned 56,8
 
 [BMS_Min_Max_Cell_Voltage]
-ID=5F8h
-DLC=1
+ID=6F8h
+DLC=8
+Var=BMS_Min_Cell_Voltage unsigned 0,16 /u:mV
+Var=BMS_Max_Cell_Voltage unsigned 16,16 /u:mV
+Var=BMS_Min_Voltage_CMU_Num unsigned 32,8
+Var=BMS_Min_Voltage_CMU_Cell_Num unsigned 40,8
+Var=BMS_Max_Voltage_CMU_Num unsigned 48,8
+Var=BMS_Max_Voltage_CMU_Cell_Num unsigned 56,8
 
 [BMS_Min_Max_Cell_Temperature]
-ID=5F9h
-DLC=1
+ID=6F9h
+DLC=8
+Var=BMS_Min_Cell_Temp unsigned 0,16 /u:"1/10 C"
+Var=BMS_Max_Cell_Temp unsigned 16,16 /u:"1/10 C"
+Var=BMS_Min_Temp_CMU_Num unsigned 32,8
+Var=BMS_Unused_1 unsigned 40,8
+Var=BMS_Max_Temp_CMU_Num unsigned 48,8
+Var=BMS_Unused_2 unsigned 56,8
 
 [BMS_Pack_Voltage_Current]
-ID=5FAh
-DLC=1
+ID=6FAh
+DLC=8
+Var=BMU_Battery_Voltage unsigned 0,32 /u:V
+Var=BMU_Battery_Current unsigned 32,32 /u:mA
 
 [BMS_Pack_Status]
-ID=5FBh
-DLC=1
+ID=6FBh
+DLC=8
+Var=BMS_Balance_Voltage_Thresh_Rise unsigned 0,16
+Var=BMS_Balance_Voltage_Thresh_Fall unsigned 16,16
+Var=BMS_Status_Flags unsigned 32,8
+Var=BMS_CMU_Count unsigned 40,8
+Var=BMS_BMU_Firmware_Build unsigned 48,16
 
 [BMS_Fan_12V_Status]
-ID=5FCh
-DLC=1
+ID=6FCh
+DLC=8
+Var=BMS_Fan_Speed_0 unsigned 0,16 /u:RPM
+Var=BMS_Fan_Speed_1 unsigned 16,16 /u:RPM
+Var=BMS_12V_Fan_Contactor_Current unsigned 32,16 /u:mA
+Var=BMS_12V_CMU_Current unsigned 48,16 /u:mA
 
 [BMS_Extended_Pack_Status]
-ID=5FDh
-DLC=1
+ID=6FDh
+DLC=8
+Var=BMS_Cell_Over_Voltage_Flag bit 0,1
+Var=BMS_BMU_Hardware_Version unsigned 32,8
+Var=BMS_BMU_Model_ID unsigned 40,8
+Var=BMS_Status_Unused unsigned 48,16
+Var=BMS_Cell_Under_Voltage_Flag unsigned 1,1
+Var=BMS_Cell_Over_Temp_Flag unsigned 2,1
+Var=BMS_Measurement_Untrusted_Flag unsigned 3,1
+Var=BMS_CMU_Comms_Timeout_Flag unsigned 4,1
+Var=BMS_Vehicle_Comms_Timeout_Flag unsigned 5,1
+Var=BMS_BMU_Setup_Flag unsigned 6,1
+Var=BMS_CMU_CAN_PWR_Flag unsigned 7,1
+Var=BMS_Pack_Iso_Test_Fail_Flag unsigned 8,1
+Var=BMS_SOC_Meas_Invalid_Flag unsigned 9,1
+Var=BMS_CAN_12V_Low_Flag unsigned 10,1
+Var=BMS_Contactor_Stuck_Flag unsigned 11,1
+Var=BMS_CMU_Extra_Cell_Flag unsigned 12,1
 
 [BMS_Bootloader_1]
 ID=7F0h
-DLC=1
+DLC=8
 
 [BMS_Bootloader_2]
 ID=7F1h
-DLC=1
+DLC=8
 
 [BMS_Bootloader_3]
 ID=7F2h
-DLC=1
+DLC=8
 
 [BMS_Bootloader_4]
 ID=7F3h
-DLC=1
+DLC=8
 
 [BMS_Bootloader_5]
 ID=7F4h
-DLC=1
+DLC=8
 
 [BMS_CMU_1_Status]
 ID=501h
 DLC=8
+Var=BMS_CMU_1_SN unsigned 0,32
+Var=BMS_CMU_1_PCB_Temp unsigned 32,16
+Var=BMS_CMU_1_Cell_Temp unsigned 48,16
 
 [BMS_CMU_1_Low_Cells]
 ID=502h
 DLC=8
+Var=BMS_CMU_1_Cell_0_Voltage unsigned 0,16 /u:mV
+Var=BMS_CMU_1_Cell_1_Voltage unsigned 16,16 /u:mV
+Var=BMS_CMU_1_Cell_2_Voltage unsigned 32,16 /u:mV
+Var=BMS_CMU_1_Cell_3_Voltage unsigned 48,16 /u:mV
 
 [BMS_CMU_1_High_Cells]
 ID=503h
 DLC=8
+Var=BMS_CMU_1_Cell_4_Voltage unsigned 0,16
+Var=BMS_CMU_1_Cell_5_Voltage unsigned 16,16 /u:mV
+Var=BMS_CMU_1_Cell_6_Voltage unsigned 32,16 /u:mV
+Var=BMS_CMU_1_Cell_7_Voltage unsigned 48,16 /u:mV
 
 [BMS_CMU_2_Status]
 ID=504h
 DLC=8
+Var=BMS_CMU_2_SN unsigned 0,32
+Var=BMS_CMU_2_PCB_Temp unsigned 32,16
+Var=BMS_CMU_2_Cell_Temp unsigned 48,16
 
 [BMS_CMU_2_Low_Cells]
 ID=505h
-DLC=1
+DLC=7
+Var=BMS_CMU_2_Cell_0_Voltage unsigned 0,16 /u:mV
+Var=BMS_CMU_2_Cell_1_Voltage unsigned 16,16 /u:mV
+Var=BMS_CMU_2_Cell_2_Voltage unsigned 32,16 /u:mV
+Var=BMS_CMU_2_Cell_3_Voltage unsigned 48,6 /u:mV
 
 [BMS_CMU_2_High_Cells]
 ID=506h
-DLC=1
+DLC=7
+Var=BMS_CMU_2_Cell_4_Voltage unsigned 0,16
+Var=BMS_CMU_2_Cell_5_Voltage unsigned 16,16
+Var=BMS_CMU_2_Cell_6_Voltage unsigned 32,16
+Var=BMS_CMU_2_Cell_7_Voltage unsigned 48,16
 
 [BMS_CMU_3_Status]
 ID=507h

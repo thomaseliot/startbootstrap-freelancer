@@ -36,11 +36,15 @@
 #include "mxconstants.h"
 
 /* USER CODE BEGIN Includes */
-#include "buttons.h"
+
 #include "led.h"
 #include "can.h"
+#include "buttons.h"
+
 #include "lcd_spi.h"
 #include "ili9341.h"
+
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -174,6 +178,7 @@ int main(void)
 
 	  osThreadDef(canTask, vCanTask, osPriorityAboveNormal, 1, 500);
 	  canTaskHandle = osThreadCreate(osThread(canTask), NULL);
+
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -187,6 +192,10 @@ int main(void)
  
 
   /* Start scheduler */
+
+
+
+
   osKernelStart();
   
   /* We should never get here as control is now taken by the scheduler */

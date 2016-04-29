@@ -121,8 +121,8 @@ int get_free_mob() {
 	
 	// Find free mailbox
 	for(mob = 0; mob < NO_MOBS; ++mob) {
-		// Break if this mailbox is free
-		if(channels[mob] == 0) {
+		// Break if this mailbox is free and a transmit mailbox
+		if(channels[mob] == 0 && MOB_DIRS[mob] == TX) {
 			break;
 		}
 	}
@@ -144,7 +144,7 @@ int get_free_mob() {
  * @return TRUE on successful transmission, FALSE on timeout.
  */	
 portBASE_TYPE can_send(CAN_packet *p, unsigned mob, portTickType xTicksToWait) {
-	// Function varaible, default return value of failure
+	// Function variable, default return value of failure
 	char retv = false;
 
 	// Make sure the specified mailbox is vacated

@@ -8,6 +8,9 @@
 #include "task.h"
 #include "adc.h"
 
+// Channel data storage
+static ADCMeta adcChannels[NUM_ADC_CH];
+
 /* ititAdc
  * Initialize the ADC
  */

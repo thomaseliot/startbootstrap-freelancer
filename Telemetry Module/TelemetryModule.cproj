@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{501ccfe7-d298-4e35-a4fe-65af2059db9b}</ProjectGuid>
+    <ProjectGuid>{dce6c7e3-ee26-4d79-826b-08594b9ad897}</ProjectGuid>
     <avrdevice>ATmega64C1</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -39,8 +39,8 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
-    <avrtoolserialnumber>J30200029093</avrtoolserialnumber>
+    <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
+    <avrtoolserialnumber>J41800049304</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9686</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_jtagice3plus>
       <ToolOptions>
@@ -109,6 +109,17 @@
       <ApplicationOutput30>String</ApplicationOutput30>
       <ApplicationOutput31>String</ApplicationOutput31>
     </PercepioTrace>
+    <com_atmel_avrdbg_tool_atmelice>
+      <ToolOptions>
+        <InterfaceProperties>
+          <IspClock>125000</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>debugWIRE</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
+      <ToolNumber>J41800049304</ToolNumber>
+      <ToolName>Atmel-ICE</ToolName>
+    </com_atmel_avrdbg_tool_atmelice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -141,7 +152,6 @@
             <Value>../Drivers/ADC</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>False</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
         <avrgcc.compiler.optimization.PrepareDataForGarbageCollection>False</avrgcc.compiler.optimization.PrepareDataForGarbageCollection>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
@@ -192,7 +202,8 @@
             <Value>../Source/portable/GCC/ATMega323</Value>
             <Value>../Source/portable/MemMang</Value>
             <Value>..</Value>
-            <Value>../../../Library/Library</Value>
+            <Value>../../Library</Value>
+            <Value>../Drivers/ADC</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -211,10 +222,19 @@
     <Compile Include="Config\can_callbacks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Config\can_config.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Config\can_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\can_callbacks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\can_payloads.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\can_payloads.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\FreeRTOSConfig.h">
@@ -242,6 +262,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="node_tasks.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Source\include\croutine.h">
@@ -301,9 +324,6 @@
     <Compile Include="Source\tasks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="node_tasks.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="node_tasks.h">
       <SubType>compile</SubType>
     </Compile>
@@ -321,9 +341,6 @@
     <Folder Include="Source\portable\MemMang" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="makefile">
-      <SubType>compile</SubType>
-    </None>
     <None Include="Source\include\stdint.readme">
       <SubType>compile</SubType>
     </None>

@@ -43,7 +43,7 @@ extern CanRxMsgTypeDef RxMessage;
 
 void UserInitCan2();
 void vCanTask(void * pvParameters);
-void CAN1SendMessage(uint8_t length, uint8_t *data);
+void CAN2SendMessage(uint8_t length, uint8_t *data);
 NodeState nextState(NodeState DIstate);
 NodeState prevState(NodeState DIstate);
 NodeState getSafetyModuleStateCAN();

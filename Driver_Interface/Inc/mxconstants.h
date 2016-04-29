@@ -42,6 +42,8 @@
 #define BSPD_ERR_GPIO_Port GPIOE
 #define BMS_ERR_Pin GPIO_PIN_3
 #define BMS_ERR_GPIO_Port GPIOE
+#define LED_DRV_OE_L_Pin GPIO_PIN_4
+#define LED_DRV_OE_L_GPIO_Port GPIOE
 #define LCD_RESET_Pin GPIO_PIN_6
 #define LCD_RESET_GPIO_Port GPIOE
 #define CHECK_Pin GPIO_PIN_14
@@ -66,10 +68,7 @@
 #define DOWN_BTN_GPIO_Port GPIOD
 #define NEXT_BTN_Pin GPIO_PIN_9
 #define NEXT_BTN_GPIO_Port GPIOG
-
-
 /* USER CODE BEGIN Private defines */
-//#define LED_DRV_OE_Pin GPIO_PIN_4
 
 /* USER CODE END Private defines */
 

@@ -120,7 +120,7 @@ void vFanUpdateTask(void *pvParameters) {
 	// Set at OCR0A, clear at TOP. Use Fast PWM Mode.
 	//TCCR0A |= (1<<WGM01)|(1<<WGM00)|(1<<COM0A1);
 	//TCCR0B |= (1 << CS00);
-	pwmInit(PWM_0A, PWM_CLOCK_DIV1);
+	pwmInit(PWM_0A, PWM_CLOCK_DIV8);
 	
 	// Enable three fans
 	setPin(IO_PORTC, 0, HIGH);

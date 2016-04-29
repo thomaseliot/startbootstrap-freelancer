@@ -24,6 +24,7 @@
 #include "frtos_can.h"
 #include "can_config.h"
 #include "can_callbacks.h"
+#include "can_payloads.h"
 
 // Global status variable
 MOB_STATUS statuses[NO_MOBS];
@@ -78,9 +79,20 @@ int main(void)
 	// Rate: 100Hz
 	xTaskCreate(vADCSampleTask, "ADC", configMINIMAL_STACK_SIZE,
 		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
-		
+	
+	// CAN state sequencer
+	xTaskCreate(vCANStateSequenceTask, "STATE", configMINIMAL_STACK_SIZE,
+		NULL, STATE_SEQUENCE_TASK_PRIORITY, NULL);
+	
+	// CAN timeout monitor
+	xTaskCreate(vCANTimeoutMonitorTask, "CANMON", configMINIMAL_STACK_SIZE,
+		NULL, TIMEOUT_MONITOR_TASK_PRIORITY, NULL);		
+
 	// Module-specific tasks here
 	
+	// Initialize tasks and payloads
+	initTasks();
+	initPayloads();
 	
 	// Start the scheduler
 	vTaskStartScheduler();

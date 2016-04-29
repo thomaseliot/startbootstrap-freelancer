@@ -9,14 +9,24 @@
 #include <stdbool.h>
 #include "node_tasks.h"
 #include "queue.h"
-#include "cmr_64c1_lib.h"
 #include "can_ids.h"
 #include "can_structs.h"
 #include "can_callbacks.h"
 #include "can_payloads.h"
 #include "node_config.h"
-#include "cmr_constants.h"
 #include "assert.h"
+
+// Current and target state variable storage
+static NodeState currentState = GLV_ON;
+static NodeState targetState = GLV_ON;
+
+/* Initialize tasks
+ */
+void initTasks() {
+	// Initialize state variables
+	currentState = GLV_ON;
+	targetState = GLV_ON;
+}
 
 /* MCU Status task
  * Toggles the MCU status LED, to blink at 2Hz
@@ -94,11 +104,6 @@ void vADCSampleTask(void *pvParameters) {
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 	int i;
-	NodeState nextState;
-	// Current node state, initialized to GLV_ON
-	static NodeState currentState = GLV_ON;
-	// Target global state, used for state transitioning
-	static NodeState targetState = GLV_ON;
 	
 	// Get status variables
 	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
@@ -113,6 +118,18 @@ void vHeartbeatTask(void *pvParameters) {
 	SMHeartbeat.state = currentState;
 	SMHeartbeat.targetState = targetState;
 	SMHeartbeat.vbatt = adcVal(VBATT);
+	SMHeartbeat.nodeHeartbeatStatus = CCHeartbeatReceiveMeta.timeoutFlag
+		| (FSMHeartbeatReceiveMeta.timeoutFlag << 1)
+		| (RSMHeartbeatReceiveMeta.timeoutFlag << 2)
+		| (DIMHeartbeatReceiveMeta.timeoutFlag << 3)
+		| (AFCHeartbeatReceiveMeta.timeoutFlag << 4)
+		| (TMHeartbeatReceiveMeta.timeoutFlag << 5);
+	SMHeartbeat.nodeStateStatus = CCHeartbeatReceiveMeta.wrongStateFlag
+		| (FSMHeartbeatReceiveMeta.wrongStateFlag << 1)
+		| (RSMHeartbeatReceiveMeta.wrongStateFlag << 2)
+		| (DIMHeartbeatReceiveMeta.wrongStateFlag << 3)
+		| (AFCHeartbeatReceiveMeta.wrongStateFlag << 4)
+		| (TMHeartbeatReceiveMeta.wrongStateFlag << 5);
 	
 	// Define CAN packet to send
 	CAN_packet packet;
@@ -120,62 +137,438 @@ void vHeartbeatTask(void *pvParameters) {
 	packet.length = sizeof(SMHeartbeat_t);
 	
 	for(;;) {
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
-		// Update target state to DIM's requested state, if present
-		if(DIMHeartbeat.requestedState != NULL) {
-			targetState = DIMHeartbeat.requestedState;
-		}
-		
-		// Update states
-		currentState = GLV_ON;
+		// Update fields
 		SMHeartbeat.state = currentState;
 		SMHeartbeat.targetState = targetState;
-		
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
-		// Update vbatt value
 		SMHeartbeat.vbatt = adcVal(VBATT);
+		SMHeartbeat.nodeHeartbeatStatus = CCHeartbeatReceiveMeta.timeoutFlag
+			| (FSMHeartbeatReceiveMeta.timeoutFlag << 1)
+			| (RSMHeartbeatReceiveMeta.timeoutFlag << 2)
+			| (DIMHeartbeatReceiveMeta.timeoutFlag << 3)
+			| (AFCHeartbeatReceiveMeta.timeoutFlag << 4)
+			| (TMHeartbeatReceiveMeta.timeoutFlag << 5);
+		SMHeartbeat.nodeStateStatus = CCHeartbeatReceiveMeta.wrongStateFlag
+		| (FSMHeartbeatReceiveMeta.wrongStateFlag << 1)
+		| (RSMHeartbeatReceiveMeta.wrongStateFlag << 2)
+		| (DIMHeartbeatReceiveMeta.wrongStateFlag << 3)
+		| (AFCHeartbeatReceiveMeta.wrongStateFlag << 4)
+		| (TMHeartbeatReceiveMeta.wrongStateFlag << 5);
 		
 		// Copy heartbeat to message array
 		memcpy(packet.data, &SMHeartbeat, sizeof(SMHeartbeat_t));
 		
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
-		
 		// Transmit the data
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
 		can_send(&packet, get_free_mob(), 100);
-
-		//if (targetState > 4) {
-		//	return;
-		//}
 		
 		// Delay 10ms
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
 }
 
-
-/* Send over CAN
- * Uses send mailboxes to send enqueued messages over CAN
- * Currently unimplemented
+/* CAN State Sequencing Task
+ * Manages state of the whole system
+ * Rate: 100Hz
+ * Priority: 4
  */
-/*
-void vCANSendTask(void *pvParameters) {
+void vCANStateSequenceTask(void *pvParameters) {	
+	// Function variables
+	NodeState nextState;
+	
 	// Make compiler happy
 	(void) pvParameters;
 	
+	// Previous wake time pointer
+	TickType_t xLastWakeTime = xTaskGetTickCount();
 	
+	// Period
+	const TickType_t xPeriod = 1000 / STATE_SEQUENCE_TASK_RATE;		// In ticks (ms)
+	
+	for(;;) {
+		// Update requested state from driver interface
+		if(!DIMHeartbeatReceiveMeta.timeoutFlag 
+			&& ((abs(DIMHeartbeat.requestedState - currentState) <= 1))				// Allow any adjacent state
+			|| DIMHeartbeat.requestedState == GLV_ON && currentState == ERROR)		// Allow ERROR -> GLV_ON transition
+		{
+			// If valid state requested, update target state
+			targetState = DIMHeartbeat.requestedState;
+		} 
+		else {
+			// If invalid, target the current state
+			targetState = currentState;
+		}
+		
+		// No state transition by default
+		nextState = currentState;
+		
+		// Error transitions
+		// If any critical heartbeats timed out, go to error state
+		if(AFCHeartbeatReceiveMeta.timeoutFlag
+			// || RSMHeartbeatReceiveMeta.timeoutFlag				// broken right now, uncomment later
+			|| FSMHeartbeatReceiveMeta.timeoutFlag
+			|| DIMHeartbeatReceiveMeta.timeoutFlag
+			|| CCHeartbeatReceiveMeta.timeoutFlag) 
+		{
+			// Transition to error state
+			nextState = ERROR;
+		}
+		
+		// If any nodes are in the error state, go to the error state
+		if(AFCHeartbeat.state == ERROR
+			// || RSMHeartbeat.state == ERROR						// broken right now, uncomment later
+			|| FSMHeartbeat.state == ERROR
+			|| DIMHeartbeat.state == ERROR
+			|| CCHeartbeat.state == ERROR) 
+		{
+			nextState = ERROR;
+		}
+		
+		// Current state actions
+		switch(currentState) {
+			case GLV_ON:
+				// State actions
+				
+				// State transitions
+				// GLV_ON -> HV_EN
+				if(targetState == HV_EN && nextState != ERROR) {
+					if(CCHeartbeat.state == currentState						// Make sure everything is in GLV_ON
+						&& FSMHeartbeat.state == currentState
+						&& RSMHeartbeat.state == currentState
+						&& AFCHeartbeat.state == currentState
+						&& DIMHeartbeat.state == currentState
+						&& AFCHeartbeat.fan1Status == FAN_ON					// Make sure all fans/pumps turned on
+						&& AFCHeartbeat.fan2Status == FAN_ON
+						&& AFCHeartbeat.fan3Status == FAN_ON
+						&& RSMHeartbeat.radiatorFanStatus == FAN_ON
+						&& RSMHeartbeat.leftPumpStatus == PUMP_ON
+						&& RSMHeartbeat.rightPumpStatus == PUMP_ON)
+					{
+						nextState = HV_EN;
+					}
+				}
+				break;
+				
+			case HV_EN:
+				// State actions
+			
+				// State transitions
+				// HV_EN -> ERROR
+				if(!(AFCHeartbeat.fan1Status == FAN_ON							// Transition if any fan/pump is not on
+					&& AFCHeartbeat.fan2Status == FAN_ON
+					&& AFCHeartbeat.fan3Status == FAN_ON
+					&& RSMHeartbeat.radiatorFanStatus == FAN_ON
+					&& RSMHeartbeat.leftPumpStatus == PUMP_ON
+					&& RSMHeartbeat.rightPumpStatus == PUMP_ON)) 
+				{
+					nextState = ERROR;
+				}
+				
+				// HV_EN -> GLV_ON
+				else if(targetState == GLV_ON && nextState != ERROR) {
+					nextState = GLV_ON;
+				}
+				
+				// HV_EN -> RTD
+				else if(targetState == RTD && nextState != ERROR) {
+					if(CCHeartbeat.state == currentState
+						&& FSMHeartbeat.state == currentState
+						&& RSMHeartbeat.state == currentState
+						&& AFCHeartbeat.state == currentState
+						&& DIMHeartbeat.state == currentState) 
+						//&& adcVal(BPRES) > BRAKE_THRESH) 			// Brake pressed, removed for testing
+					{
+						nextState = RTD;
+					}
+				}
+				break;
+				
+			case RTD:
+				// State actions
+				
+				// 
+				if(targetState == HV_EN && nextState != ERROR) {
+					if(CCHeartbeat.state == currentState
+						&& FSMHeartbeat.state == currentState
+						&& RSMHeartbeat.state == currentState
+						&& AFCHeartbeat.state == currentState
+						&& DIMHeartbeat.state == currentState) {
+						nextState = HV_EN;
+					}
+				}
+				break;
+				
+			case ERROR:
+			case UNKNOWN:
+				if(targetState == GLV_ON) {
+					// DIM is trying to reset target state. Make sure it is safe to do so.
+					if(!(AFCHeartbeatReceiveMeta.timeoutFlag			// Check that nothing is timing out
+						|| RSMHeartbeatReceiveMeta.timeoutFlag
+						|| FSMHeartbeatReceiveMeta.timeoutFlag
+						|| DIMHeartbeatReceiveMeta.timeoutFlag
+						|| CCHeartbeatReceiveMeta.timeoutFlag)
+						&& CCHeartbeat.state == ERROR					// Check that all nodes are in error state
+						&& FSMHeartbeat.state == ERROR
+						&& RSMHeartbeat.state == ERROR
+						&& AFCHeartbeat.state == ERROR
+						&& DIMHeartbeat.state == ERROR
+						&& AFCHeartbeat.fan1Status != FAN_ERROR			// Check that no fans have errors
+						&& AFCHeartbeat.fan2Status != FAN_ERROR			
+						&& AFCHeartbeat.fan3Status != FAN_ERROR
+						&& RSMHeartbeat.radiatorFanStatus != FAN_ERROR
+						) 
+					{
+						nextState = GLV_ON;
+					}
+				}
+				break;
+		}
+		
+		// Transition state
+		currentState = nextState;
+		
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
+	}
 }
-*/
 
+
+/* Check for receive message timeouts
+ * 
+ */
+void vCANTimeoutMonitorTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+	
+	// Previous wake time pointer
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	
+	// Period
+	const TickType_t xPeriod = 1000 / TIMEOUT_MONITOR_TASK_RATE;		// In ticks (ms)
+	
+	for(;;) {
+		
+		/************************************************************************/
+		/* Central Controller                                                   */
+		/************************************************************************/		
+		
+		// Central Controller Stale Check
+		if(CCHeartbeatReceiveMeta.staleFlag && !CCHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment miss count if stale and not timed out
+			CCHeartbeatReceiveMeta.missCount++;
+		} else if (!CCHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			CCHeartbeatReceiveMeta.missCount = 0;
+			CCHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Central Controller State Check
+		if(CCHeartbeat.state != currentState && !CCHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			CCHeartbeatReceiveMeta.differentStateCount++;
+		} else if(CCHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			CCHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Central Controller Hearbeat Timeout
+		if(CCHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			// Set timeout if above timeout threshold
+			CCHeartbeatReceiveMeta.timeoutFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			CCHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Central Controller State Timeout
+		if(CCHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			CCHeartbeatReceiveMeta.wrongStateFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			CCHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+		
+		/************************************************************************/
+		/* Front Sensor Module                                                  */
+		/************************************************************************/		
+		
+		// Front Sensor Module Stale Check
+		if(FSMHeartbeatReceiveMeta.staleFlag && !FSMHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			FSMHeartbeatReceiveMeta.missCount++;
+		} else if (!FSMHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			FSMHeartbeatReceiveMeta.missCount = 0;
+			FSMHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Front Sensor Module State Check
+		if(FSMHeartbeat.state != currentState && !FSMHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			FSMHeartbeatReceiveMeta.differentStateCount++;
+		} else if(FSMHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			FSMHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Front Sensor Module Timeout
+		if(FSMHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			FSMHeartbeatReceiveMeta.timeoutFlag = 1;
+		} else {
+			FSMHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Front Sensor Module State Timeout
+		if(FSMHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			FSMHeartbeatReceiveMeta.wrongStateFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			FSMHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+		
+		/************************************************************************/
+		/* Rear Sensor Module                                                   */
+		/************************************************************************/
+		
+		// Rear Sensor Module Stale Check
+		if(RSMHeartbeatReceiveMeta.staleFlag && !RSMHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			RSMHeartbeatReceiveMeta.missCount++;
+		} else if (!RSMHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			RSMHeartbeatReceiveMeta.missCount = 0;
+			RSMHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Rear Sensor Module State Check
+		if(RSMHeartbeat.state != currentState && !RSMHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			RSMHeartbeatReceiveMeta.differentStateCount++;
+		} else if(RSMHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			RSMHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Rear Sensor Module Timeout
+		if(RSMHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			RSMHeartbeatReceiveMeta.timeoutFlag = 1;
+		} else {
+			RSMHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Rear Sensor Module State Timeout
+		if(RSMHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			RSMHeartbeatReceiveMeta.wrongStateFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			RSMHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+		
+		/************************************************************************/
+		/* Driver Interface Module                                              */
+		/************************************************************************/
+		
+		// Driver Interface Module Stale Check
+		if(DIMHeartbeatReceiveMeta.staleFlag && !DIMHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			DIMHeartbeatReceiveMeta.missCount++;
+		} else if (!DIMHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			DIMHeartbeatReceiveMeta.missCount = 0;
+			DIMHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Driver Interface Module State Check
+		if(DIMHeartbeat.state != currentState && !DIMHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			DIMHeartbeatReceiveMeta.differentStateCount++;
+		} else if(DIMHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			DIMHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Driver Interface Module Timeout
+		if(DIMHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			DIMHeartbeatReceiveMeta.timeoutFlag = 1;
+		} else {
+			DIMHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Driver Interface Module State Timeout
+		if(DIMHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			DIMHeartbeatReceiveMeta.wrongStateFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			DIMHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+		
+		/************************************************************************/
+		/* Accumulator Fan Controller                                           */
+		/************************************************************************/
+		
+		// Accumulator Fan Controller Stale Check
+		if(AFCHeartbeatReceiveMeta.staleFlag && !AFCHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			AFCHeartbeatReceiveMeta.missCount++;
+		} else if (!AFCHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			AFCHeartbeatReceiveMeta.missCount = 0;
+			AFCHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Accumulator Fan Controller State Check
+		if(AFCHeartbeat.state != currentState && !AFCHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			AFCHeartbeatReceiveMeta.differentStateCount++;
+		} else if(AFCHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			AFCHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Accumulator Fan Controller Timeout
+		if(AFCHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			AFCHeartbeatReceiveMeta.timeoutFlag = 1;
+		} else {
+			AFCHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Accumulator Fan Controller State Timeout
+		if(AFCHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			AFCHeartbeatReceiveMeta.wrongStateFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			AFCHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+		
+		/************************************************************************/
+		/* Telemetry Module                                                     */
+		/************************************************************************/
+		
+		// Telemetry Module Stale Check
+		if(TMHeartbeatReceiveMeta.staleFlag && !TMHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			TMHeartbeatReceiveMeta.missCount++;
+		} else if (!TMHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			TMHeartbeatReceiveMeta.missCount = 0;
+			TMHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Telemetry Module State Check
+		if(TMHeartbeat.state != currentState && !TMHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			TMHeartbeatReceiveMeta.differentStateCount++;
+		} else if(TMHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			TMHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Telemetry Module Timeout
+		if(TMHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			TMHeartbeatReceiveMeta.timeoutFlag = 1;
+		} else {
+			TMHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Telemetry Module State Timeout
+		if(TMHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			TMHeartbeatReceiveMeta.wrongStateFlag = 1;
+		} else {
+			// Reset timeout flag if not timed out
+			TMHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+		
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod); 
+	}
+}
 
 /* Receive from CAN
  * 
@@ -214,17 +607,10 @@ void vCANReceiveTask(void *pvParameters) {
 		// Receive message
 		xQueueReceive(queue, &packet, portMAX_DELAY);
 		
-		//taskENTER_CRITICAL();
-		// Increment mailbox receive count
-		// status.cnt++;
-		
 		// See if a callback function is defined
-		
 		if(status.cbk != NULL) {
 			// Call function with packet as parameter
 			(*(status.cbk))(packet);
 		}
-		
-		//taskEXIT_CRITICAL();
 	}
 }

@@ -13,7 +13,18 @@
 // Node state, for main state machine run on all nodes.
 typedef enum {GLV_ON, HV_EN, RTD, ERROR, UNKNOWN} NodeState;
 
+// Status for pumps
+typedef enum {PUMP_OFF, PUMP_ON} PumpState;
+// Status for fans
+typedef enum {FAN_OFF, FAN_RAMPING, FAN_ON, FAN_ERROR} FanState;
+
+
 // System-wide definitions
-#define BRAKE_THRESH	20
+// Brake pressure threshold
+#define BRAKE_THRESH		20
+// Heartbeat timeout	
+#define HEARTBEAT_TIMEOUT	50		// Periods of 10ms
+// State timeout
+#define STATE_TIMEOUT		20		// Periods of 10ms
 
 #endif /* CMR_CONSTANTS_H_ */

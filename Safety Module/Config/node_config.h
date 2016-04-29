@@ -18,6 +18,18 @@
 #define MCU_STATUS_PORT		IO_PORTC
 #define MCU_STATUS_CH		0
 
+// BSPD and IMD errors
+#define BSPD_ERR_PORT		IO_PORTB
+#define BSPD_ERR_CH			1
+#define IMD_ERR_PORT		IO_PORTD
+#define IMD_ERR_CH			1
+
+// DC/DC faults
+#define DCDC1_FAULT_PORT	IO_PORTB
+#define DCDC1_FAULT_CH		6
+#define DCDC2_FAULT_PORT	IO_PORTB
+#define DCDC2_FAULT_CH		5
+
 // Define the rest of your I/O configuration here
 
 #endif /* NODE_CONFIG_H_ */

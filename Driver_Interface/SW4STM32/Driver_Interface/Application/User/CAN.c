@@ -2,8 +2,9 @@
 //#include "cmsis_os.h"
 //#include "stm32f4xx_hal_gpio.h"
 #include "stm32f4xx_hal_can.h"
-#include "can_structs.h"
 #include "can_ids.h"
+
+#include "can_structs.h"
 
 
 //http://eraycanli.com/2015/09/28/stm32f4-discovery-can-bus-communication/

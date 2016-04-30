@@ -161,6 +161,8 @@ void vHeartbeatTask(void *pvParameters) {
 	// Initialize heartbeat message
 	FSMHeartbeat.state = currentState;
 	FSMHeartbeat.vbatt = adcVal(VBATT);
+	FSMHeartbeat.speed = (100 * adcVal(TPOS_R) / 255);
+	FSMHeartbeat.requestedTorque = 0;
 	
 	// Define CAN packet to send
 	CAN_packet packet;
@@ -172,8 +174,10 @@ void vHeartbeatTask(void *pvParameters) {
 		// Update state
 		FSMHeartbeat.state = currentState;
 	
-		// Update vbatt value
+		// Update values
 		FSMHeartbeat.vbatt = adcVal(VBATT);
+		FSMHeartbeat.speed = (100 * adcVal(TPOS_R) / 255);
+		FSMHeartbeat.requestedTorque = 0;
 		
 		// Copy heartbeat to message array
 		memcpy(packet.data, &FSMHeartbeat, sizeof(FSMHeartbeat_t));

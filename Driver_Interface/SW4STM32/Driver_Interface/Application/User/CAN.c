@@ -3,7 +3,6 @@
 //#include "stm32f4xx_hal_gpio.h"
 #include "stm32f4xx_hal_can.h"
 #include "can_ids.h"
-
 #include "can_structs.h"
 
 
@@ -18,13 +17,15 @@ CanRxMsgTypeDef RxMessage; /* Rx message struct */
 osPoolDef (CanData_Pool, 256, CanMessage);
 osPoolId (CanData_Pool_id);
 CanMessage * CanData;
+NodeState DIstate;
+NodeState requestedState;
+
+
 
 
 
 void vCanTask(void * pvParameters) {
 	portTickType xLastWakeTime;
-	NodeState DIstate;
-	NodeState requestedState;
 	osEvent recvdMessage;
 	ButtonObject recvdButton;
 	DIMHeartbeat_t DIM_heartbeat;
@@ -56,13 +57,14 @@ void vCanTask(void * pvParameters) {
 		}while(recvdMessage.status == osEventMessage);
 
 		//On timeout, stop requesting state change
-		if(timeoutTick >= timeoutPeriod){
+		if(timeoutTick >= CAN_REQUEST_TIMEOUT_PERIOD){
 			requestedState = DIstate;
 		}
 
 
 		//Change DASH state if safety module has initiated state change on CAN
 		DIstate = getSafetyModuleStateCAN();
+
 
 
 		//TODO change to heartbeat
@@ -73,7 +75,7 @@ void vCanTask(void * pvParameters) {
 
 		timeoutTick++;
 		HAL_CAN_Receive_IT(&hcan2, CAN_FIFO0);
-		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(period) ) );
+		osDelayUntil( &xLastWakeTime, ( osKernelSysTickMicroSec(CAN_TASK_PERIOD) ) );
 	}
 }
 
@@ -84,7 +86,7 @@ NodeState nextState(NodeState DIstate) {
 		case STATE_UNKNOWN:
 			return STATE_UNKNOWN;
 		case STATE_ERROR:
-			return STATE_GLV_ON;
+			return STATE_CLEAR_ERROR;
 		case STATE_GLV_ON:
 			return STATE_HV_EN;
 		case STATE_HV_EN:
@@ -105,7 +107,7 @@ NodeState prevState(NodeState DIstate) {
 		case STATE_GLV_ON:
 			return STATE_GLV_ON;
 		case STATE_HV_EN:
-			return STATE_RTD;
+			return STATE_GLV_ON;
 		case STATE_RTD:
 			return STATE_HV_EN;
 		default:

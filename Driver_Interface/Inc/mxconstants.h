@@ -69,7 +69,8 @@
 #define NEXT_BTN_Pin GPIO_PIN_9
 #define NEXT_BTN_GPIO_Port GPIOG
 /* USER CODE BEGIN Private defines */
-
+#define EGRESS_Pin GPIO_PIN_5
+#define EGRESS_GPIO_Port GPIOE
 /* USER CODE END Private defines */
 
 /**

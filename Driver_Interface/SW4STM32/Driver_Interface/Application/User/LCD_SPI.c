@@ -221,10 +221,7 @@ void LCD_IO_Init(void)
 
     SPIx_Init();
 
-    HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_RESET);
-	 LCD_Delay(200);
-	 HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_SET);
-	 LCD_Delay(200);
+
 
   }
 }

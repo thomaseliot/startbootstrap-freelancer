@@ -32,8 +32,8 @@ void vCanTask(void * pvParameters) {
 
 	xLastWakeTime = osKernelSysTick();
 	int timeoutTick = 0;
-	DIstate = STATE_UNKNOWN;
-	requestedState = STATE_UNKNOWN;
+	DIstate = STATE_GLV_ON;
+	requestedState = STATE_GLV_ON;
 
 
 	for( ;; ) {
@@ -57,13 +57,15 @@ void vCanTask(void * pvParameters) {
 		}while(recvdMessage.status == osEventMessage);
 
 		//On timeout, stop requesting state change
-		if(timeoutTick >= CAN_REQUEST_TIMEOUT_PERIOD){
-			requestedState = DIstate;
-		}
-
-
-		//Change DASH state if safety module has initiated state change on CAN
+//		if(timeoutTick >= CAN_REQUEST_TIMEOUT_PERIOD){
+//			requestedState = DIstate;
+//		}
+		if(DIstate == STATE_ERROR && requestedState != STATE_ERROR && requestedState != STATE_GLV_ON)
+			requestedState = STATE_ERROR;
 		DIstate = getSafetyModuleStateCAN();
+
+//		if(DIState == STATE_ERROR && (requestedState != STATE_ERROR || requestedState != STATE_CLEAR_ERROR))
+		//Change DASH state if safety module has initiated state change on CAN
 
 
 
@@ -86,7 +88,7 @@ NodeState nextState(NodeState DIstate) {
 		case STATE_UNKNOWN:
 			return STATE_UNKNOWN;
 		case STATE_ERROR:
-			return STATE_CLEAR_ERROR;
+			return STATE_GLV_ON;
 		case STATE_GLV_ON:
 			return STATE_HV_EN;
 		case STATE_HV_EN:

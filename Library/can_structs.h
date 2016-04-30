@@ -16,6 +16,7 @@
 /* GLV NODE HEARTBEATS                                                  */
 /************************************************************************/
 
+
 // Safety Module
 typedef struct SMHeartbeat_t {
 	uint8_t state;
@@ -23,7 +24,15 @@ typedef struct SMHeartbeat_t {
 	uint8_t targetState;
 	uint8_t nodeHeartbeatStatus;			// Bit field, see PCAN
 	uint8_t nodeStateStatus;				// Bit field, see PCAN
+	uint8_t errorMatrix;                    // Bit field, see PCAN
 } SMHeartbeat_t;
+
+// Safety Module errorType fields
+#define ERROR_IMD(e) (e&0x1)
+#define ERROR_BMS(e) ((e&0x2)>>1)
+#define ERROR_BSPD(e) ((e&0x4)>>2)
+#define ERROR_Check(e) ((e&0x8)>>3)
+#define ERROR_Egress(e) ((e&0x10)>>4)
 
 // Central Controller
 typedef struct CCHeartbeat_t {
@@ -221,7 +230,7 @@ typedef struct MCReadWriteParamResponse_t {
 
 
 /************************************************************************/
-/* BMS                                                                  */
+/*                                                                   */
 /************************************************************************/
 
 typedef struct BMSBMUHeartbeat_t {

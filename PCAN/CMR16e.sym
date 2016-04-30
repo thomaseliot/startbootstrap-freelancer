@@ -28,7 +28,7 @@ Var=Speed unsigned 24,8 /u:MPH
 ID=204h	// Driver Interface Module Hearbeat
 DLC=3
 CycleTime=10
-Timeout=100
+Timeout=11
 Var=DIM_State State 0,8
 Var=Requested_State State 16,8
 Var=DIM_VBatt unsigned 8,8 /u:V /f:0.066666
@@ -77,7 +77,7 @@ Var=Radiator_Fan_State Fan_State 16,8
 
 [SM_Heartbeat]
 ID=200h
-DLC=5
+DLC=6
 CycleTime=10
 Timeout=100
 Var=SM_State State 0,8
@@ -95,6 +95,11 @@ Var=RSM_State_Timed_Out unsigned 34,1
 Var=DIM_State_Timed_Out unsigned 35,1
 Var=AFC_State_Timed_Out unsigned 36,1
 Var=TM_State_Timed_Out unsigned 37,1
+Var=IMD_Error bit 40,1
+Var=BMS_Error bit 41,1
+Var=BSPD_ERROR unsigned 42,1
+Var=Check bit 43,1
+Var=Egress bit 44,1
 
 [MC_L_Modulation_And_Flux_Info]
 ID=3ADh
@@ -476,7 +481,7 @@ DLC=8
 ID=5F4h
 DLC=8
 Var=BMS_Pack_SOC_Ah float 0,32 /u:Ah
-Var=BMS_Pack_SOC_Percent float 32,32 /u:%
+Var=BMS_Pack_SOC_Percent unsigned 32,32 /u:%
 
 [BMS_Balance_SOC]
 ID=5F5h

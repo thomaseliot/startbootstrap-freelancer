@@ -12,6 +12,12 @@
 #include "cmr_64c1_lib.h"
 #include "node_config.h"
 #include "assert.h"
+#include "can_payloads.h"
+
+//File globals
+static uint8_t fan_duty;
+static FanState fanTarget_state, fan1_state, fan2_state, fan3_state;
+static NodeState currentState = GLV_ON;
 
 
 /* MCU Status task
@@ -46,57 +52,6 @@ void vMCUStatusTask(void *pvParameters) {
 		vTaskDelayUntil(&xLastWakeTime, xPeriod); 
 	}
 }
-/*
-void vFanTestTask(void *pvParameters) {
-	// Make compiler happy
-	(void) pvParameters;
-
-	// Previous wake time pointer, initialized to current tick count.
-	// This gets updated by vTaskDelayUntil every time it is called
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-
-	// Period
-	const TickType_t xPeriod = FAN_TEST_TASK_PERIOD;		// In ticks (ms)
-
-	// Initialize IO ports
-	pinMode(IO_PORTC, 0, IO_DIR_OUTPUT);
-	pinMode(IO_PORTD, 0, IO_DIR_OUTPUT);
-	pinMode(IO_PORTD, 1, IO_DIR_OUTPUT);
-
-	// All On
-	pinMode(IO_PORTD, 3, IO_DIR_OUTPUT);
-
-	// PWM Settings
-	// Set at OCR0A, clear at TOP. Use Fast PWM Mode. Clock Prescaler of 8.
-	//TCCR0A |= (1<<WGM01)|(1<<WGM00)|(1<<COM0A1);
-	//CCR0B |= (1 << CS00);
-
-	// Task variables
-	uint8_t fanState = 0;
-	uint8_t testPWMs[8] = {63, 127, 191, 255, 191, 127, 63, 0};
-	//uint8_t testPWMs[8] = {31,  63,  95, 127,  95,  63, 31, 0};
-
-	// Enable three fans
-	setPin(IO_PORTC, 0, HIGH);
-	setPin(IO_PORTD, 0, HIGH);
-	setPin(IO_PORTD, 1, HIGH);
-	
-
-	// Executes infinitely with defined period using vTaskDelayUntil
-	for(;;) {
-		
-		// Load the PWM duty cycle and move to the next index, with wrap-around
-		//OCR0A = testPWMs[(fanState++) & (0x07)];
-		setPin(IO_PORTD, 3, HIGH);
-
-		//taskYIELD();
-		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-	}
-	
-	// Delay until next period
-}
-*/
 
 void vFanUpdateTask(void *pvParameters) {
 	// Make compiler happy
@@ -118,7 +73,7 @@ void vFanUpdateTask(void *pvParameters) {
 
 	// PWM Settings
 	// Set at OCR0A, clear at TOP. Use Fast PWM Mode.
-	pwmInit(PWM_0A, PWM_CLOCK_DIV8);
+	pwmInit(PWM_0A, PWM_CLOCK_DIV1);
 	
 	// Enable three fans
 	setPin(IO_PORTC, 0, HIGH);
@@ -128,26 +83,29 @@ void vFanUpdateTask(void *pvParameters) {
 
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
-		switch(fan_state){
-			case FAN_OFF:
-				pwmSetDutyCycle(PWM_0A, 0);
-				break;
-			case FAN_RAMP_UP:
-				pwmSetDutyCycle(PWM_0A, fan_duty);
-				break;
-			case FAN_ON:
-				pwmSetDutyCycle(PWM_0A, MAX_DUTY);			
-				break;
-			default:
-				pwmSetDutyCycle(PWM_0A, 0);			
-		}
+		
+			switch(fanTarget_state){
+				case FAN_ERROR:
+				case FAN_OFF:
+					pwmSetDutyCycle(PWM_0A, 0);
+					break;
+				case FAN_RAMPING:
+				case FAN_ON:
+					pwmSetDutyCycle(PWM_0A, fan_duty);
+					break;
+				default:
+					pwmSetDutyCycle(PWM_0A, 0);			
+			}
+			
+			//pwmSetDutyCycle(PWM_0A, fan_duty);
+
 
 		// Delay until next period
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }
 
-void vFanSetTask(void *pvParameters) {
+void vFanSetStateTask(void *pvParameters) {
 	// Make compiler happy
 	(void) pvParameters;
 
@@ -156,34 +114,93 @@ void vFanSetTask(void *pvParameters) {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 
 	// Period
-	const TickType_t xPeriod = 1000/FAN_SET_TASK_RATE;		// In ticks (ms)
+	const TickType_t xPeriod = 1000/FAN_SET_STATE_TASK_RATE;		// In ticks (ms)
 	
-	fan_state = FAN_OFF;
+	fanTarget_state = FAN_OFF;
 	fan_duty = 0;
 	
 	//Calculate the step size to achieve the desired ramp time
 	//Add for a ceiling, ensuring some ramp.
-	unsigned int speed = (256/(FAN_SET_TASK_RATE*RAMP_LENGTH)) + 1;
-	vTaskDelayUntil(&xLastWakeTime, 2000);
-
+	unsigned int speed = (256/(FAN_SET_STATE_TASK_RATE*RAMP_LENGTH)) + 1;
+	
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
-		switch(fan_state){
-			case FAN_OFF:
-				fan_state = FAN_RAMP_UP;
+		currentState = SMHeartbeat.state;
+		switch(currentState){
+			case GLV_ON:
+				switch(SMHeartbeat.targetState){
+					case GLV_ON:
+						fanTarget_state = FAN_OFF;
+						break;
+					case HV_EN:
+					case RTD:
+						fanTarget_state = FAN_ON;
+					default:
+						break;
+				}
 				break;
-			case FAN_RAMP_UP:
-				if(MAX_DUTY - fan_duty < speed){
+			case HV_EN:
+			case RTD:
+				switch(SMHeartbeat.targetState){
+					case HV_EN:
+					case RTD:
+						fanTarget_state = FAN_ON;
+						if(adcVal(FAN1_IS) == 0) {
+							fan1_state = FAN_ERROR;
+						}
+						if(adcVal(FAN2_IS) == 0) {
+							fan2_state = FAN_ERROR;
+						}
+						if(adcVal(FAN3_IS) == 0) {
+							fan3_state = FAN_ERROR;
+						}
+						break;
+					case GLV_ON:
+					default:
+						fanTarget_state = FAN_OFF;
+						break;
+				}
+				break;
+			case ERROR:
+				fanTarget_state = FAN_ERROR;
+			default:
+				fanTarget_state = FAN_OFF;
+				break;
+		}
+		
+		switch(fanTarget_state){
+			case FAN_RAMPING:
+			case FAN_ON:
+				if(MAX_DUTY - fan_duty <= speed){
 					// If fan_duty is within one step of the max,
 					// set to max and change state
 					fan_duty = MAX_DUTY;
-					fan_state = FAN_ON;
+					fan1_state = FAN_ON;
+					fan2_state = FAN_ON;
+					fan3_state = FAN_ON;
+								
 				}
 				//Otherwise increment
-				else fan_duty+=speed;
+				else { 
+					fan_duty+=speed;
+					fan1_state = FAN_RAMPING;
+					fan2_state = FAN_RAMPING;
+					fan3_state = FAN_RAMPING;
+				}
 				break;
-			case FAN_ON:
+			case FAN_ERROR:
+				fan1_state = FAN_ERROR;
+				fan2_state = FAN_ERROR;
+				fan3_state = FAN_ERROR;
+				fan_duty = 0;
+				break;
+
+			case FAN_OFF:
 			default:
+				fan1_state = FAN_OFF;
+				fan2_state = FAN_OFF;
+				fan3_state = FAN_OFF;
+				fan_duty = 0;
 				break;
 		}
 		// Delay until next period
@@ -254,7 +271,6 @@ void vTempSampleTask(void *pvParameters) {
 		spiSelect(temp);
 		temp_var = SPI_read();
 		spiDeselect(temp);
-		///taskEXIT_CRITICAL();
 		sysTemp = temp_var >> 2;
 		taskEXIT_CRITICAL();
 		
@@ -273,7 +289,7 @@ void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 
 	//Heartbeat message variable
-	AFCHeartbeat_t AFCHeartbeat;
+	//AFCHeartbeat_t AFCHeartbeat;
 		
 	// Get status variables
 	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
@@ -290,24 +306,26 @@ void vHeartbeatTask(void *pvParameters) {
 	// Define CAN packet to send.
 	// Format: {ID, Length, Data};
 	static CAN_packet packet;
-	packet.id = 0x205;
+	packet.id = AFC_HEARTBEAT_ID;
 	packet.length = sizeof(AFCHeartbeat_t);		
 	
 	for(;;) {	
 		// Data to send
-		AFCHeartbeat.state = fan_state;
+		AFCHeartbeat.state = currentState;
 		AFCHeartbeat.vbatt = adcVal(VBATT);
 		AFCHeartbeat.fan1Current = adcVal(FAN1_IS);
+		AFCHeartbeat.fan1Status  = fan1_state;
 		AFCHeartbeat.fan2Current = adcVal(FAN2_IS);
+		AFCHeartbeat.fan2Status  = fan2_state;
 		AFCHeartbeat.fan3Current = adcVal(FAN3_IS);	
+		AFCHeartbeat.fan3Status  = fan3_state;
 		
 		//Copy data to message array
 		memcpy(packet.data, &AFCHeartbeat, sizeof(AFCHeartbeat_t));
 		
 		// Transmit the data. 
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
-		//int mob = get_free_mob();
-		can_send(&packet, 3, 100);
+		can_send(&packet, get_free_mob(), 100);
 		
 		// Delay 100ms
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
@@ -366,13 +384,68 @@ void vCANReceiveTask(void *pvParameters) {
 		// Receive message
 		xQueueReceive(queue, &packet, portMAX_DELAY);
 		
-		// Increment mailbox receive count
-		status.cnt++;
-		
 		// See if a callback function is defined
 		if(status.cbk != NULL) {
 			// Call function with packet as parameter
 			(*(status.cbk))(packet);
 		}
+	}
+}
+
+
+/* Check for receive message timeouts
+ * 
+ */
+
+void vCANTimeoutMonitorTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+	
+	// Previous wake time pointer
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	
+	// Period
+	const TickType_t xPeriod = 1000 / TIMEOUT_MONITOR_TASK_RATE;		// In ticks (ms)
+	
+	for(;;) {
+		
+		/************************************************************************/
+		/* Driver Interface Module                                              */
+		/************************************************************************/
+		
+		// Driver Interface Module Stale Check
+		if(SMHeartbeatReceiveMeta.staleFlag && !SMHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			SMHeartbeatReceiveMeta.missCount++;
+			} else if (!SMHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			SMHeartbeatReceiveMeta.missCount = 0;
+			SMHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Driver Interface Module State Check
+		if(SMHeartbeat.state != currentState && !SMHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			SMHeartbeatReceiveMeta.differentStateCount++;
+			} else if(SMHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			SMHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Driver Interface Module Timeout
+		if(SMHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			SMHeartbeatReceiveMeta.timeoutFlag = 1;
+			} else {
+			SMHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Driver Interface Module State Timeout
+		if(SMHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			SMHeartbeatReceiveMeta.wrongStateFlag = 1;
+			} else {
+			// Reset timeout flag if not timed out
+			SMHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+				
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }

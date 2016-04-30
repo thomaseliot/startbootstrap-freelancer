@@ -27,7 +27,7 @@ typedef struct SPISlave_t {
 
 // Slave configuration array
 static SPISlave spiSlaves[NUM_SLAVES] = {
-	{IO_PORTD, 3}	// Temp, PD3
+	{IO_PORTC, 1}	// Temp, PC1
 };
 
 

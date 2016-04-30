@@ -39,8 +39,8 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
-    <avrtoolserialnumber>J30200027839</avrtoolserialnumber>
+    <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
+    <avrtoolserialnumber>J41800049222</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9686</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_jtagice3plus>
       <ToolOptions>
@@ -109,6 +109,16 @@
       <ApplicationOutput30>String</ApplicationOutput30>
       <ApplicationOutput31>String</ApplicationOutput31>
     </PercepioTrace>
+    <com_atmel_avrdbg_tool_atmelice>
+      <ToolOptions>
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>debugWIRE</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
+      <ToolNumber>J41800049222</ToolNumber>
+      <ToolName>Atmel-ICE</ToolName>
+    </com_atmel_avrdbg_tool_atmelice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -217,10 +227,19 @@
     <Compile Include="Config\can_callbacks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Config\can_config.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Config\can_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\can_callbacks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\can_payloads.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\can_payloads.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Config\FreeRTOSConfig.h">

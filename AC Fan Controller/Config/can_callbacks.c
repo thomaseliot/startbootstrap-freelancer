@@ -6,35 +6,27 @@
  * Copyright (c) Carnegie Mellon Racing 2016
  */ 
 
+#include <string.h>
 
 #include "can_callbacks.h"
+#include "can_payloads.h"
 
-// Create these based on CAN configuration. They are bound to 
-// receive mailboxes manually in the main function.
-
-// Mailbox 1 callback function
-void mb1_callback(CAN_packet packet) {
-	volatile int i, j;
-	i = j;
-}
-
-
-// Mailbox 2 callback function
-void mb2_callback(CAN_packet packet) {
-	volatile int i, j;
-	j = i;
-}
-
-
-// Mailbox 3 callback function
-void mb3_callback(CAN_packet packet) {
-	volatile int i, j;
-	i = j;
-}
-
-
-// Mailbox 4 callback function
-void mb4_callback(CAN_packet packet) {
-	volatile int i, j;
-	i = j;
+// This mailbox receives all heartbeats
+void heartbeatCallback(CAN_packet packet) {
+	// Switch on the packet ID
+	switch(packet.id) {
+		// Safety Module
+		case SM_HEARTBEAT_ID:
+			// Make sure data length matches struct size
+			if(packet.length != sizeof(SMHeartbeat_t)) {
+				return;
+			}
+			memcpy(&SMHeartbeat, packet.data, sizeof(SMHeartbeat_t));
+			// Set stale flag off
+			SMHeartbeatReceiveMeta.staleFlag = 0;
+			break;
+			
+		// Default, don't do anything
+		default: break;
+	}
 }

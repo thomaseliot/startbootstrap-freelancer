@@ -44,7 +44,6 @@ int main(void)
 	
 	/* Tasks */
 	
-	// Create tasks for receive mailboxes
 	for(i = 0; i < NO_MOBS; i++) {
 		
 		// Initialize mailbox status
@@ -64,6 +63,7 @@ int main(void)
 		}
 	}
 	
+	
 	// MCU status task, to blink the LED
 	// Rate: 4Hz
     xTaskCreate(vMCUStatusTask, "STATUS", configMINIMAL_STACK_SIZE, 
@@ -81,7 +81,14 @@ int main(void)
 		
 	// Module-specific tasks here
 	
-	
+	// State update task
+	// Rate: 20Hz
+	xTaskCreate(vSetStateTask, "STATE", configMINIMAL_STACK_SIZE,
+		NULL, SET_STATE_TASK_PRIORITY, NULL);
+		
+	xTaskCreate(vCANTimeoutMonitorTask, "CANMON", configMINIMAL_STACK_SIZE,
+		NULL, TIMEOUT_MONITOR_TASK_PRIORITY, NULL);
+		
 	// Start the scheduler
 	vTaskStartScheduler();
 	

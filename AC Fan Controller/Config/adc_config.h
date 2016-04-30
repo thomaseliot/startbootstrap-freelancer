@@ -11,33 +11,28 @@
 #define ADC_CONFIG_H_
 
 // Number of ADC channels to read
-#define NUM_ADC_CH			8
+#define NUM_ADC_CH			4
 
 // Channel enumeration
 // Change these for this node
 typedef enum ADCChannels {
-	THERM1, THERM2, THERM3, THERM4,
-	THERM5, THERM6, THERM7, THERM8
+	FAN1_IS, FAN2_IS, FAN3_IS, VBATT
 } ADCChannel;
 
 // Lowest and highest channels, used for loops
 // Change these for this node
-#define LOWEST_ADC_CH		THERM1
-#define HIGHEST_ADC_CH		THERM8
+#define LOWEST_ADC_CH		FAN1_IS
+#define HIGHEST_ADC_CH		VBATT
 
 // Channel mapping, symbol to physical ADC channel
 // in order of the above enumeration
 // TODO: Putting static variables in header files is apparently bad style
 // Change these for this node
 static ADCChannel adcChannelMap[NUM_ADC_CH] = {
-	2,		// THERM1
-	3,		// THERM2
-	5,		// THERM3
-	6,		// THERM4
-	7,		// THERM5
-	8,		// THERM6
-	9,		// THERM7
-	10		// THERM8
+	7,  // FAN1_IS
+	8,  // FAN2_IS
+	9,  // FAN3_IS
+	10, // VBATT
 };
 
 

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{dbf35b7a-802d-487e-8ffc-7a449d0cc54d}</ProjectGuid>
+    <ProjectGuid>{dce6c7e3-ee26-4d79-826b-08594b9ad897}</ProjectGuid>
     <avrdevice>ATmega64C1</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -13,12 +13,12 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>FrontSensorModule</AssemblyName>
-    <Name>FrontSensorModule</Name>
+    <Name>RearSensorModule</Name>
     <RootNamespace>FrontSensorModule</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <CacheFlash>true</CacheFlash>
+    <CacheFlash>false</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
@@ -40,7 +40,7 @@
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
-    <avrtoolserialnumber>J30200029093</avrtoolserialnumber>
+    <avrtoolserialnumber>J30200027839</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9686</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_jtagice3plus>
       <ToolOptions>
@@ -50,7 +50,7 @@
         <InterfaceName>debugWIRE</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.jtagice3plus</ToolType>
-      <ToolNumber>J30200029093</ToolNumber>
+      <ToolNumber>J30200027839</ToolNumber>
       <ToolName>JTAGICE3</ToolName>
     </com_atmel_avrdbg_tool_jtagice3plus>
     <avrtoolinterface>debugWIRE</avrtoolinterface>
@@ -137,11 +137,12 @@
             <Value>../Source/portable/GCC/ATmega64c1</Value>
             <Value>../Config</Value>
             <Value>../Drivers/CAN</Value>
-            <Value>../../Library</Value>
             <Value>../Drivers/ADC</Value>
+            <Value>../Drivers/SPI</Value>
+            <Value>../Drivers/PWM</Value>
+            <Value>../../Library</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>False</avrgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
         <avrgcc.compiler.optimization.PrepareDataForGarbageCollection>False</avrgcc.compiler.optimization.PrepareDataForGarbageCollection>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
@@ -193,6 +194,11 @@
             <Value>../Source/portable/MemMang</Value>
             <Value>..</Value>
             <Value>../../../Library/Library</Value>
+            <Value>../Drivers/CAN</Value>
+            <Value>../Config</Value>
+            <Value>../../Library</Value>
+            <Value>../Drivers/ADC</Value>
+            <Value>../../Library/Drivers/SPI</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -239,6 +245,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Drivers\CAN\frtos_can.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\PWM\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\PWM\pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\SPI\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\SPI\spi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -313,6 +331,8 @@
     <Folder Include="Drivers\" />
     <Folder Include="Drivers\ADC\" />
     <Folder Include="Drivers\CAN\" />
+    <Folder Include="Drivers\PWM\" />
+    <Folder Include="Drivers\SPI\" />
     <Folder Include="Source" />
     <Folder Include="Source\include" />
     <Folder Include="Source\portable" />
@@ -321,9 +341,6 @@
     <Folder Include="Source\portable\MemMang" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="makefile">
-      <SubType>compile</SubType>
-    </None>
     <None Include="Source\include\stdint.readme">
       <SubType>compile</SubType>
     </None>

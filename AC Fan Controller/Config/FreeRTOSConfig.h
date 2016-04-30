@@ -90,8 +90,8 @@
 #define configCPU_CLOCK_HZ			( ( unsigned long ) 16000000 )
 #define configTICK_RATE_HZ			( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES		( 6 )
-#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 100 )
-#define configTOTAL_HEAP_SIZE		( (size_t ) ( 3000 ) )
+#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 150 )
+#define configTOTAL_HEAP_SIZE		( (size_t ) ( 2500 ) )
 #define configMAX_TASK_NAME_LEN		( 8 )
 #define configUSE_TRACE_FACILITY	0
 #define configUSE_16_BIT_TICKS		1

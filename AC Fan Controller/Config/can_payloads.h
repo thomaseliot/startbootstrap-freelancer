@@ -24,7 +24,7 @@ typedef struct ReceiveMeta_t {
 
 // Heartbeat payload structs
 extern SMHeartbeat_t SMHeartbeat;			// Safety Module (self)
-extern CCHeartbeat_t CCHeartbeat;			// Accumulator Fan Controller
+extern AFCHeartbeat_t AFCHeartbeat;			// Accumulator Fan Controller
 
 
 extern ReceiveMeta_t SMHeartbeatReceiveMeta;

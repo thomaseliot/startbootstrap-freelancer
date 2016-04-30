@@ -29,7 +29,7 @@ typedef enum ADCChannels {
 // TODO: Putting static variables in header files is apparently bad style
 // Change these for this node
 static ADCChannel adcChannelMap[NUM_ADC_CH] = {
-	10,		// VBATT
+	7		// VBATT
 };
 
 

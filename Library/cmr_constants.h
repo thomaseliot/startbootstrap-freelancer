@@ -11,12 +11,12 @@
 #define CMR_CONSTANTS_H_
 
 // Node state, for main state machine run on all nodes.
-typedef enum {GLV_ON, HV_EN, RTD, ERROR, UNKNOWN} NodeState;
+typedef enum {GLV_ON, HV_EN, RTD, ERROR, CLEAR_ERROR, UNKNOWN} NodeState;
 
 // Status for pumps
 typedef enum {PUMP_OFF, PUMP_ON} PumpState;
 // Status for fans
-typedef enum {FAN_OFF, FAN_RAMPING, FAN_ON, FAN_ERROR} FanState;
+typedef enum {FAN_OFF, FAN_RAMPING, FAN_LOW, FAN_HIGH, FAN_ERROR} FanState;
 
 
 // System-wide definitions
@@ -25,6 +25,6 @@ typedef enum {FAN_OFF, FAN_RAMPING, FAN_ON, FAN_ERROR} FanState;
 // Heartbeat timeout	
 #define HEARTBEAT_TIMEOUT	50		// Periods of 10ms
 // State timeout
-#define STATE_TIMEOUT		20		// Periods of 10ms
+#define STATE_TIMEOUT		500		// Periods of 10ms
 
 #endif /* CMR_CONSTANTS_H_ */

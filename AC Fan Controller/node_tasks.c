@@ -93,7 +93,8 @@ void vFanUpdateTask(void *pvParameters) {
 					pwmSetDutyCycle(PWM_0A, 0);
 					break;
 				case FAN_RAMPING:
-				case FAN_ON:
+				case FAN_LOW:
+				case FAN_HIGH:
 					setPin(IO_PORTC, 0, HIGH);
 					setPin(IO_PORTD, 0, HIGH);
 					setPin(IO_PORTD, 1, HIGH);
@@ -130,10 +131,10 @@ void vFanSetStateTask(void *pvParameters) {
 	
 	//Calculate the step size to achieve the desired ramp time
 	//Add for a ceiling, ensuring some ramp.
-	unsigned int speed = (256/(FAN_SET_STATE_TASK_RATE*RAMP_LENGTH)) + 1;
-	
+	unsigned int speed = (255/(FAN_SET_STATE_TASK_RATE*RAMP_LENGTH)) + 1;
 	// Executes infinitely with defined period using vTaskDelayUntil
 	for(;;) {
+		
 		currentState = SMHeartbeat.state;
 		switch(currentState){
 			case GLV_ON:
@@ -142,37 +143,68 @@ void vFanSetStateTask(void *pvParameters) {
 						fanTarget_state = FAN_OFF;
 						break;
 					case HV_EN:
+						fanTarget_state = FAN_LOW;
+						break;
 					case RTD:
-						fanTarget_state = FAN_ON;
+						fanTarget_state = FAN_HIGH;
 						break;
 					default:
 						break;
 				}
 				break;
 			case HV_EN:
-			case RTD:
 				switch(SMHeartbeat.targetState){
-					case HV_EN:
-					case RTD:
-						fanTarget_state = FAN_ON;
-						if(adcVal(FAN1_IS) == 0) {
-							fan1_state = FAN_ERROR;
-						}
-						if(adcVal(FAN2_IS) == 0) {
-							fan2_state = FAN_ERROR;
-						}
-						if(adcVal(FAN3_IS) == 0) {
-							fan3_state = FAN_ERROR;
-						}
-						break;
 					case GLV_ON:
+						fanTarget_state = FAN_OFF;
+						break;
+					case HV_EN:
+						fanTarget_state = FAN_LOW;
+						break;
+					case RTD:
+						fanTarget_state = FAN_HIGH;
+						break;
 					default:
 						fanTarget_state = FAN_OFF;
 						break;
 				}
+				if(adcVal(FAN1_IS) == 0) {
+					fan1_state = FAN_ERROR;
+				}
+				if(adcVal(FAN2_IS) == 0) {
+					fan2_state = FAN_ERROR;
+				}
+				if(adcVal(FAN3_IS) == 0) {
+					fan3_state = FAN_ERROR;
+				}
+				break;
+			case RTD:
+				switch(SMHeartbeat.targetState){
+					case GLV_ON:
+						fanTarget_state = FAN_OFF;
+						break;
+					case HV_EN:
+						fanTarget_state = FAN_LOW;
+						break;
+					case RTD:
+						fanTarget_state = FAN_HIGH;
+						break;
+					default:
+						fanTarget_state = FAN_OFF;
+						break;
+				}
+				if(adcVal(FAN1_IS) == 0) {
+					fan1_state = FAN_ERROR;
+				}
+				if(adcVal(FAN2_IS) == 0) {
+					fan2_state = FAN_ERROR;
+				}
+				if(adcVal(FAN3_IS) == 0) {
+					fan3_state = FAN_ERROR;
+				}
 				break;
 			case ERROR:
 				fanTarget_state = FAN_ERROR;
+				break;
 			default:
 				fanTarget_state = FAN_OFF;
 				break;
@@ -180,22 +212,76 @@ void vFanSetStateTask(void *pvParameters) {
 		
 		switch(fanTarget_state){
 			case FAN_RAMPING:
-			case FAN_ON:
-				if(MAX_DUTY - fan_duty <= speed){
-					// If fan_duty is within one step of the max,
-					// set to max and change state
-					fan_duty = MAX_DUTY;
-					fan1_state = FAN_ON;
-					fan2_state = FAN_ON;
-					fan3_state = FAN_ON;
-								
+			case FAN_LOW:
+				if(fan_duty <= LOW_DUTY){
+					if(LOW_DUTY - fan_duty < speed){
+						// If fan_duty is within one step of the max,
+						// set to max and change state
+						fan_duty = LOW_DUTY;
+						fan1_state = FAN_LOW;
+						fan2_state = FAN_LOW;
+						fan3_state = FAN_LOW;
+					
+					}
+					//Otherwise increment
+					else {
+						fan_duty+=speed;
+						fan1_state = FAN_RAMPING;
+						fan2_state = FAN_RAMPING;
+						fan3_state = FAN_RAMPING;
+					}
+				} else {
+					if(fan_duty - LOW_DUTY < speed){
+						// If fan_duty is within one step of the max,
+						// set to max and change state
+						fan_duty = LOW_DUTY;
+						fan1_state = FAN_LOW;
+						fan2_state = FAN_LOW;
+						fan3_state = FAN_LOW;
+					}
+					//Otherwise increment
+					else {
+						fan_duty-=speed;
+						fan1_state = FAN_RAMPING;
+						fan2_state = FAN_RAMPING;
+						fan3_state = FAN_RAMPING;
+					}
 				}
-				//Otherwise increment
-				else { 
-					fan_duty+=speed;
-					fan1_state = FAN_RAMPING;
-					fan2_state = FAN_RAMPING;
-					fan3_state = FAN_RAMPING;
+				break;
+			case FAN_HIGH:
+				if(fan_duty <= HIGH_DUTY){
+					if(HIGH_DUTY - fan_duty < speed){
+						// If fan_duty is within one step of the max,
+						// set to max and change state
+						fan_duty = HIGH_DUTY;
+						fan1_state = FAN_HIGH;
+						fan2_state = FAN_HIGH;
+						fan3_state = FAN_HIGH;
+								
+					}
+					//Otherwise increment
+					else { 
+						fan_duty+=speed;
+						fan1_state = FAN_RAMPING;
+						fan2_state = FAN_RAMPING;
+						fan3_state = FAN_RAMPING;
+					}
+				} else {
+					if(fan_duty - HIGH_DUTY < speed){
+						// If fan_duty is within one step of the max,
+						// set to max and change state
+						fan_duty = HIGH_DUTY;
+						fan1_state = FAN_HIGH;
+						fan2_state = FAN_HIGH;
+						fan3_state = FAN_HIGH;
+					}
+					//Otherwise increment
+					else {
+						fan_duty-=speed;
+						fan1_state = FAN_RAMPING;
+						fan2_state = FAN_RAMPING;
+						fan3_state = FAN_RAMPING;
+					}
 				}
 				break;
 			case FAN_ERROR:
@@ -204,7 +290,6 @@ void vFanSetStateTask(void *pvParameters) {
 				fan3_state = FAN_ERROR;
 				fan_duty = 0;
 				break;
-
 			case FAN_OFF:
 			default:
 				fan1_state = FAN_OFF;

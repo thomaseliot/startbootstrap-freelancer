@@ -39,8 +39,8 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J41800049222</avrtoolserialnumber>
+    <avrtool>com.atmel.avrdbg.tool.jtagice3plus</avrtool>
+    <avrtoolserialnumber>J30200027839</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9686</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_jtagice3plus>
       <ToolOptions>

@@ -16,7 +16,7 @@ typedef enum {GLV_ON, HV_EN, RTD, ERROR, CLEAR_ERROR, UNKNOWN} NodeState;
 // Status for pumps
 typedef enum {PUMP_OFF, PUMP_ON} PumpState;
 // Status for fans
-typedef enum {FAN_OFF, FAN_RAMPING, FAN_ON, FAN_ERROR} FanState;
+typedef enum {FAN_OFF, FAN_RAMPING, FAN_LOW, FAN_HIGH, FAN_ERROR} FanState;
 
 
 // System-wide definitions

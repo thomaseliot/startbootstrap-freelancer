@@ -48,8 +48,14 @@
 //Length of ramp in seconds; max is 13s.
 #define RAMP_LENGTH						10
 
-#define MAX_DUTY						200
-
+#define LOW_DUTY						75
+#define HIGH_DUTY						150
+#define MAX_DUTY						255
+/*
+const uint8_t LOW_DUTY	= 75;
+const uint8_t HIGH_DUTY = 150;
+const uint8_t MAX_DUTY = 255;
+*/
 // Task functions
 void vMCUStatusTask(void *pvParameters);
 void vADCSampleTask(void *pvParameters);

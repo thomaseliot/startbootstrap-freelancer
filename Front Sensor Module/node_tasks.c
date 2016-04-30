@@ -17,6 +17,9 @@
 #include "node_config.h"
 #include "cmr_constants.h"
 #include "assert.h"
+#include "can_payloads.h"
+
+static NodeState currentState = GLV_ON;
 
 /* MCU Status task
  * Toggles the MCU status LED, to blink at 2Hz
@@ -51,6 +54,57 @@ void vMCUStatusTask(void *pvParameters) {
 	}
 }
 
+
+
+void vSetStateTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+
+	// Previous wake time pointer, initialized to current tick count.
+	// This gets updated by vTaskDelayUntil every time it is called
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+
+	// Period
+	const TickType_t xPeriod = 1000/SET_STATE_TASK_RATE;		// In ticks (ms)
+	
+	// Executes infinitely with defined period using vTaskDelayUntil
+	for(;;) {
+		currentState = SMHeartbeat.state;
+		switch(currentState){
+			case GLV_ON:
+				switch(SMHeartbeat.targetState){
+					case GLV_ON:
+					case HV_EN:
+					case RTD:
+					default:
+					currentState = currentState;
+						break;
+				}
+				break;
+			case HV_EN:
+				switch(SMHeartbeat.targetState){
+					case GLV_ON:
+					case HV_EN:
+					case RTD:
+					default:
+					break;
+				}
+			case RTD:
+				switch(SMHeartbeat.targetState){
+					case GLV_ON:
+					case HV_EN:
+					case RTD:
+					default:
+						break;
+				}
+				break;
+			case ERROR:
+			default:
+				break;
+		}
+	}
+}
+		
 
 /* ADC sample task
  * Samples all ADC channels
@@ -94,12 +148,7 @@ void vADCSampleTask(void *pvParameters) {
 void vHeartbeatTask(void *pvParameters) {
 	// Function variables
 	int i;
-	NodeState nextState;
-	// Current node state, initialized to GLV_ON
-	static NodeState currentState = GLV_ON;
-	// Target global state, used for state transitioning
-	static NodeState targetState = GLV_ON;
-	
+
 	// Get status variables
 	MOB_STATUS *statuses = (MOB_STATUS*)pvParameters;
 	
@@ -119,37 +168,21 @@ void vHeartbeatTask(void *pvParameters) {
 	packet.length = sizeof(FSMHeartbeat_t);
 	
 	for(;;) {
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
-		// Update states
-		currentState = GLV_ON;
+
+		// Update state
 		FSMHeartbeat.state = currentState;
-		
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
+	
 		// Update vbatt value
 		FSMHeartbeat.vbatt = adcVal(VBATT);
 		
 		// Copy heartbeat to message array
 		memcpy(packet.data, &FSMHeartbeat, sizeof(FSMHeartbeat_t));
 		
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
 		
 		// Transmit the data
 		// Format: (Packet Pointer, Mailbox, Timeout (in ticks));
 		can_send(&packet, get_free_mob(), 100);
 
-		//if (targetState > 4) {
-		//	return;
-		//}
-		
 		// Delay 10ms
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);  
 	}
@@ -170,54 +203,106 @@ void vCANSendTask(void *pvParameters) {
 */
 
 
+
+/* Check for receive message timeouts
+ * 
+ */
+
+void vCANTimeoutMonitorTask(void *pvParameters) {
+	// Make compiler happy
+	(void) pvParameters;
+	
+	// Previous wake time pointer
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	
+	// Period
+	const TickType_t xPeriod = 1000 / TIMEOUT_MONITOR_TASK_RATE;		// In ticks (ms)
+	
+	for(;;) {
+		
+		/************************************************************************/
+		/* Driver Interface Module                                              */
+		/************************************************************************/
+		
+		// Driver Interface Module Stale Check
+		if(SMHeartbeatReceiveMeta.staleFlag && !SMHeartbeatReceiveMeta.timeoutFlag) {
+			// Only increment if stale and not timed out
+			SMHeartbeatReceiveMeta.missCount++;
+			} else if (!SMHeartbeatReceiveMeta.staleFlag) {
+			// If not stale, reset miss count and set back to stale
+			SMHeartbeatReceiveMeta.missCount = 0;
+			SMHeartbeatReceiveMeta.staleFlag = 1;
+		}
+		// Driver Interface Module State Check
+		if(SMHeartbeat.state != currentState && !SMHeartbeatReceiveMeta.wrongStateFlag) {
+			// Increment miss count if not the same and not timed out
+			SMHeartbeatReceiveMeta.differentStateCount++;
+			} else if(SMHeartbeat.state == currentState) {
+			// Reset miss count if state matches
+			SMHeartbeatReceiveMeta.differentStateCount = 0;
+		}
+		// Driver Interface Module Timeout
+		if(SMHeartbeatReceiveMeta.missCount > HEARTBEAT_TIMEOUT) {
+			SMHeartbeatReceiveMeta.timeoutFlag = 1;
+			} else {
+			SMHeartbeatReceiveMeta.timeoutFlag = 0;
+		}
+		// Driver Interface Module State Timeout
+		if(SMHeartbeatReceiveMeta.differentStateCount > STATE_TIMEOUT) {
+			// Set state timeout if above state timeout threshold
+			SMHeartbeatReceiveMeta.wrongStateFlag = 1;
+			} else {
+			// Reset timeout flag if not timed out
+			SMHeartbeatReceiveMeta.wrongStateFlag = 0;
+		}
+				
+		// Delay until next period
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
+
 /* Receive from CAN
  * 
  * 
  * 
  */
-void vCANReceiveTask(void *pvParameters) {
-	// Function Variables
-	volatile xQueueHandle queue;
-	CAN_packet packet;
-	uint8_t mob_num;
-	volatile uint16_t param_val;
-	
-	// Get MOB number
-	// Get status variables
-	MOB_STATUS status = *((MOB_STATUS *)pvParameters);
-	
-	mob_num = status.mob_num;
-	
-	// Make sure this is an RX mailbox
-	// assert(MOB_DIRS[status.mob_num] == RX);
-	
-	// Critical section for queue creation
-	taskENTER_CRITICAL();
-	queue = xCANQueueCreate(MOB_IDS[mob_num], MOB_MASKS[mob_num], CAN_QUEUE_LEN, mob_num);
-	taskEXIT_CRITICAL();
-	
-	// Check for failure
+ void vCANReceiveTask(void *pvParameters) {
+	 // Function Variables
+	 volatile xQueueHandle queue;
+	 CAN_packet packet;
+	 uint8_t mob_num;
+	 volatile uint16_t param_val;
+ 
+	 // Get MOB number
+	 // Get status variables
+	 MOB_STATUS status = *((MOB_STATUS *)pvParameters);
+ 
+	 mob_num = status.mob_num;
+ 
+	 // Make sure this is an RX mailbox
+	 // assert(MOB_DIRS[status.mob_num] == RX);
+
+	 // Critical section for queue creation
+	 taskENTER_CRITICAL();
+	 queue = xCANQueueCreate(MOB_IDS[mob_num], MOB_MASKS[mob_num], CAN_QUEUE_LEN, mob_num);
+	 taskEXIT_CRITICAL();
+ 
+	 // Check for failure
 	if(queue == 0) {
 		// Exit task
 		vTaskDelete(NULL);
 		return;
 	}
-	
+ 
 	for(;;) {
-		// Receive message
-		xQueueReceive(queue, &packet, portMAX_DELAY);
-		
-		//taskENTER_CRITICAL();
-		// Increment mailbox receive count
-		// status.cnt++;
-		
-		// See if a callback function is defined
-		
-		if(status.cbk != NULL) {
-			// Call function with packet as parameter
-			(*(status.cbk))(packet);
-		}
-		
-		//taskEXIT_CRITICAL();
-	}
-}
+		 // Receive message
+		 xQueueReceive(queue, &packet, portMAX_DELAY);
+ 
+		 // See if a callback function is defined
+		 if(status.cbk != NULL) {
+		 // Call function with packet as parameter
+		 (*(status.cbk))(packet);
+		 }
+	 }
+ }

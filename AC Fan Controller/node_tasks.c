@@ -135,6 +135,7 @@ void vFanSetStateTask(void *pvParameters) {
 					case HV_EN:
 					case RTD:
 						fanTarget_state = FAN_ON;
+						break;
 					default:
 						break;
 				}

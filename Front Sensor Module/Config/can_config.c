@@ -27,7 +27,7 @@ uint16_t MOB_IDS[NO_MOBS] = {
 //	0x30F							// Match all but middle four bits [11:8, 3:0]
 //	0x0FF							// Match lower 8 bits [7:0]
 uint16_t MOB_MASKS[NO_MOBS] = {
-	0x300,							// Match upper two bits (all 0x200 range)
+	0x3FF,							// Match upper two bits (all 0x200 range)
 	NO_MASK, NO_MASK, NO_MASK,
 	NO_MASK, NO_MASK				// TX Mailboxes
 };

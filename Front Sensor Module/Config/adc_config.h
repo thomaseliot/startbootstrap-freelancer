@@ -11,7 +11,7 @@
 #define ADC_CONFIG_H_
 
 // Number of ADC channels to read
-#define NUM_ADC_CH			3
+#define NUM_ADC_CH			1
 
 // Channel enumeration
 // Change these for this node

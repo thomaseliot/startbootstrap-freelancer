@@ -102,8 +102,8 @@ int main(void)
 		NULL, FAN_UPDATE_TASK_PRIORITY, NULL);
 		
 
-	//xTaskCreate(vCANTimeoutMonitorTask, "CANMON", configMINIMAL_STACK_SIZE,
-	//	NULL, TIMEOUT_MONITOR_TASK_PRIORITY, NULL);
+	xTaskCreate(vCANTimeoutMonitorTask, "CANMON", configMINIMAL_STACK_SIZE,
+		NULL, TIMEOUT_MONITOR_TASK_PRIORITY, NULL);
 			
 	
 	// Start the scheduler

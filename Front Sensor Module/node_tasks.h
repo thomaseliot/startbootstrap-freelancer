@@ -31,9 +31,9 @@
 
 // Task rates, in Hz
 #define MCU_STATUS_TASK_RATE			4
-#define SET_STATE_TASK_RATE				20
 #define ADC_SAMPLE_TASK_RATE			20
 #define HEARTBEAT_TASK_RATE				100
+#define SET_STATE_TASK_RATE				20
 #define TIMEOUT_MONITOR_TASK_RATE		100
 
 

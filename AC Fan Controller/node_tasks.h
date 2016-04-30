@@ -60,6 +60,8 @@ void vCANReceiveTask(void *pvParameters);
 void vFanTestTask(void *pvParameters);
 void vFanSetStateTask(void *pvParameters);
 void vFanUpdateTask(void *pvParameters);
+void vCANTimeoutMonitorTask(void *pvParameters);
+
 
 //Fan globals
 

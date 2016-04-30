@@ -87,13 +87,22 @@ void vFanUpdateTask(void *pvParameters) {
 			switch(fanTarget_state){
 				case FAN_ERROR:
 				case FAN_OFF:
+					setPin(IO_PORTC, 0, LOW);
+					setPin(IO_PORTD, 0, LOW);
+					setPin(IO_PORTD, 1, LOW);
 					pwmSetDutyCycle(PWM_0A, 0);
 					break;
 				case FAN_RAMPING:
 				case FAN_ON:
+					setPin(IO_PORTC, 0, HIGH);
+					setPin(IO_PORTD, 0, HIGH);
+					setPin(IO_PORTD, 1, HIGH);
 					pwmSetDutyCycle(PWM_0A, fan_duty);
 					break;
 				default:
+					setPin(IO_PORTC, 0, LOW);
+					setPin(IO_PORTD, 0, LOW);
+					setPin(IO_PORTD, 1, LOW);
 					pwmSetDutyCycle(PWM_0A, 0);			
 			}
 			

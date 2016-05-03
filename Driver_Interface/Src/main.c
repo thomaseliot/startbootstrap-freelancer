@@ -127,19 +127,17 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C3_Init();
 
-  //SET RESET HIGH ~~ TURN ON
-//  HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_RESET);
-//  LCD_Delay(200);
-//
-//  HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_SET);
+//  SET RESET HIGH ~~ TURN ON
+  HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_RESET);
+  LCD_Delay(200);
 
+  HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_SET);
 
-//  osDelay(osKernelSysTickMicroSec(1000000));
-////  LCD_Delay(200);
-////  ili9341_Init();
-////  ili9341_DisplayOn();
-//  volatile uint16_t lcd_id =  ili9341_ReadID();
-//  lcd_id++;
+    LCD_Delay(200);
+    ili9341_Init();
+    ili9341_DisplayOn();
+  volatile uint16_t lcd_id =  ili9341_ReadID();
+  lcd_id++;
 
   /* USER CODE BEGIN 2 */
   UserInitCan2();

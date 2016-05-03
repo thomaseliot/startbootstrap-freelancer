@@ -257,7 +257,7 @@ uint16_t ili9341_ReadID(void)
 {
 //  LCD_IO_Init();
 //  return ((uint16_t)ili9341_ReadData(LCD_READ_ID4, LCD_READ_ID4_SIZE));
-  return ((uint16_t)ili9341_ReadData(LCD_RDDST, 4));
+  return ((uint16_t)ili9341_ReadData(0x09, 4));
 }
 
 /**

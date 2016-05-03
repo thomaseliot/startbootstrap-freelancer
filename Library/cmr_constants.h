@@ -11,7 +11,7 @@
 #define CMR_CONSTANTS_H_
 
 // Node state, for main state machine run on all nodes.
-typedef enum {GLV_ON, HV_EN, RTD, ERROR, CLEAR_ERROR, UNKNOWN} NodeState;
+typedef enum {STATE_GLV_ON, STATE_HV_EN, STATE_RTD, STATE_ERROR, STATE_CLEAR_ERROR, STATE_UNKNOWN} NodeState;
 
 // Status for pumps
 typedef enum {PUMP_OFF, PUMP_ON} PumpState;

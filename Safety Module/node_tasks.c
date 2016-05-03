@@ -187,8 +187,9 @@ void vCANStateSequenceTask(void *pvParameters) {
 	for(;;) {
 		// Update requested state from driver interface
 		if(!DIMHeartbeatReceiveMeta.timeoutFlag 
-			&& ((abs(DIMHeartbeat.requestedState - currentState) <= 1))				// Allow any adjacent state
-			|| DIMHeartbeat.requestedState == GLV_ON && currentState == ERROR)		// Allow ERROR -> GLV_ON transition
+			&& ((abs(DIMHeartbeat.requestedState - currentState) <= 1))					// Allow any adjacent state
+			|| DIMHeartbeat.requestedState == GLV_ON && currentState == ERROR			// Allow ERROR -> GLV_ON transition
+			|| DIMHeartbeat.requestedState == GLV_ON && currentState == CLEAR_ERROR)	// Allow CLEAR_ERROR -> GLV_ON transition
 		{
 			// If valid state requested, update target state
 			targetState = DIMHeartbeat.requestedState;
@@ -214,11 +215,12 @@ void vCANStateSequenceTask(void *pvParameters) {
 		}
 		
 		// If any nodes are in the error state, go to the error state
-		if(AFCHeartbeat.state == ERROR
+		if((AFCHeartbeat.state == ERROR
 			// || RSMHeartbeat.state == ERROR						// broken right now, uncomment later
 			|| FSMHeartbeat.state == ERROR
 			|| DIMHeartbeat.state == ERROR
-			|| CCHeartbeat.state == ERROR) 
+			|| CCHeartbeat.state == ERROR)
+			&& currentState != CLEAR_ERROR) 
 		{
 			nextState = ERROR;
 		}
@@ -233,15 +235,16 @@ void vCANStateSequenceTask(void *pvParameters) {
 				if(targetState == HV_EN && nextState != ERROR) {
 					if(CCHeartbeat.state == currentState						// Make sure everything is in GLV_ON
 						&& FSMHeartbeat.state == currentState
-						&& RSMHeartbeat.state == currentState
+						// && RSMHeartbeat.state == currentState
 						&& AFCHeartbeat.state == currentState
-						&& DIMHeartbeat.state == currentState
-						&& AFCHeartbeat.fan1Status == FAN_ON					// Make sure all fans/pumps turned on
-						&& AFCHeartbeat.fan2Status == FAN_ON
-						&& AFCHeartbeat.fan3Status == FAN_ON
-						&& RSMHeartbeat.radiatorFanStatus == FAN_ON
-						&& RSMHeartbeat.leftPumpStatus == PUMP_ON
-						&& RSMHeartbeat.rightPumpStatus == PUMP_ON)
+						// && DIMHeartbeat.state == currentState
+						&& AFCHeartbeat.fan1Status == FAN_LOW					// Make sure all fans/pumps turned on
+						&& AFCHeartbeat.fan2Status == FAN_LOW
+						&& AFCHeartbeat.fan3Status == FAN_LOW
+						// && RSMHeartbeat.radiatorFanStatus == FAN_ON
+						// && RSMHeartbeat.leftPumpStatus == PUMP_ON
+						// && RSMHeartbeat.rightPumpStatus == PUMP_ON
+						)
 					{
 						nextState = HV_EN;
 					}
@@ -253,12 +256,13 @@ void vCANStateSequenceTask(void *pvParameters) {
 			
 				// State transitions
 				// HV_EN -> ERROR
-				if(!(AFCHeartbeat.fan1Status == FAN_ON							// Transition if any fan/pump is not on
-					&& AFCHeartbeat.fan2Status == FAN_ON
-					&& AFCHeartbeat.fan3Status == FAN_ON
-					&& RSMHeartbeat.radiatorFanStatus == FAN_ON
-					&& RSMHeartbeat.leftPumpStatus == PUMP_ON
-					&& RSMHeartbeat.rightPumpStatus == PUMP_ON)) 
+				if(AFCHeartbeat.fan1Status == FAN_ERROR							// Transition if any fan/pump is not on
+					|| AFCHeartbeat.fan2Status == FAN_ERROR
+					|| AFCHeartbeat.fan3Status == FAN_ERROR
+					// && RSMHeartbeat.radiatorFanStatus == FAN_ON
+					// && RSMHeartbeat.leftPumpStatus == PUMP_ON
+					// && RSMHeartbeat.rightPumpStatus == PUMP_ON
+					) 
 				{
 					nextState = ERROR;
 				}
@@ -272,9 +276,13 @@ void vCANStateSequenceTask(void *pvParameters) {
 				else if(targetState == RTD && nextState != ERROR) {
 					if(CCHeartbeat.state == currentState
 						&& FSMHeartbeat.state == currentState
-						&& RSMHeartbeat.state == currentState
+						//&& RSMHeartbeat.state == currentState
 						&& AFCHeartbeat.state == currentState
-						&& DIMHeartbeat.state == currentState) 
+						// && DIMHeartbeat.state == currentState
+						&& AFCHeartbeat.fan1Status == FAN_HIGH					// Make sure all fans/pumps turned on to high
+						&& AFCHeartbeat.fan2Status == FAN_HIGH
+						&& AFCHeartbeat.fan3Status == FAN_HIGH
+						) 
 						//&& adcVal(BPRES) > BRAKE_THRESH) 			// Brake pressed, removed for testing
 					{
 						nextState = RTD;
@@ -285,13 +293,17 @@ void vCANStateSequenceTask(void *pvParameters) {
 			case RTD:
 				// State actions
 				
-				// 
+				// RTD -> HV_EN
 				if(targetState == HV_EN && nextState != ERROR) {
 					if(CCHeartbeat.state == currentState
 						&& FSMHeartbeat.state == currentState
-						&& RSMHeartbeat.state == currentState
+						//&& RSMHeartbeat.state == currentState
 						&& AFCHeartbeat.state == currentState
-						&& DIMHeartbeat.state == currentState) {
+						// && DIMHeartbeat.state == currentState
+						&& AFCHeartbeat.fan1Status == FAN_LOW					// Make sure all fans/pumps are set back to low
+						&& AFCHeartbeat.fan2Status == FAN_LOW
+						&& AFCHeartbeat.fan3Status == FAN_LOW
+						) {
 						nextState = HV_EN;
 					}
 				}
@@ -302,20 +314,34 @@ void vCANStateSequenceTask(void *pvParameters) {
 				if(targetState == GLV_ON) {
 					// DIM is trying to reset target state. Make sure it is safe to do so.
 					if(!(AFCHeartbeatReceiveMeta.timeoutFlag			// Check that nothing is timing out
-						|| RSMHeartbeatReceiveMeta.timeoutFlag
+						// || RSMHeartbeatReceiveMeta.timeoutFlag
 						|| FSMHeartbeatReceiveMeta.timeoutFlag
 						|| DIMHeartbeatReceiveMeta.timeoutFlag
 						|| CCHeartbeatReceiveMeta.timeoutFlag)
 						&& CCHeartbeat.state == ERROR					// Check that all nodes are in error state
 						&& FSMHeartbeat.state == ERROR
-						&& RSMHeartbeat.state == ERROR
+						// && RSMHeartbeat.state == ERROR
 						&& AFCHeartbeat.state == ERROR
-						&& DIMHeartbeat.state == ERROR
+						// && DIMHeartbeat.state == ERROR
 						&& AFCHeartbeat.fan1Status != FAN_ERROR			// Check that no fans have errors
 						&& AFCHeartbeat.fan2Status != FAN_ERROR			
 						&& AFCHeartbeat.fan3Status != FAN_ERROR
-						&& RSMHeartbeat.radiatorFanStatus != FAN_ERROR
+						// && RSMHeartbeat.radiatorFanStatus != FAN_ERROR
 						) 
+					{
+						nextState = CLEAR_ERROR;
+					}
+				}
+				break;
+				
+			case CLEAR_ERROR:
+				if(targetState == GLV_ON) {
+					// Make sure everything is in the clear error state before transioning back to GLV_ON
+					if(CCHeartbeat.state == CLEAR_ERROR
+						&& FSMHeartbeat.state == CLEAR_ERROR
+						// && RSMHeartbeat.state == CLEAR_ERROR
+						&& DIMHeartbeat.state == CLEAR_ERROR
+						&& AFCHeartbeat.state == CLEAR_ERROR)
 					{
 						nextState = GLV_ON;
 					}

@@ -5,12 +5,14 @@ Title="CMR16e"
 enum State(0="GLV_ON", // GLV On
   1="HV_EN", // HV Enable
   2="RTD", // Ready To Drive
-  3="ERROR")// Error
+  3="ERROR", // Error
+  4="CLEAR_ERROR")
 enum Pump_State(1="PUMP_ON", 0="PUMP_OFF")
 enum BMS_Precharge_State(0="Error", 1="Idle", 2="Measure", 3="Precharge", 
   4="Run", 5="Enable Pack")
 enum BMS_Precharge_Timer_State(0="Timer Not Elapsed", 1="Timer Elapsed")
-enum Fan_State(0="FAN_OFF", 1="FAN_RAMPING", 2="FAN_ON", 3="FAN_ERROR")
+enum Fan_State(0="FAN_OFF", 1="FAN_RAMPING", 2="FAN_LOW", 3="FAN_HIGH", 
+  4="FAN_ERROR")
 
 {SENDRECEIVE}
 
@@ -28,7 +30,7 @@ Var=Speed unsigned 24,8 /u:MPH
 ID=204h	// Driver Interface Module Hearbeat
 DLC=3
 CycleTime=10
-Timeout=11
+Timeout=100
 Var=DIM_State State 0,8
 Var=Requested_State State 16,8
 Var=DIM_VBatt unsigned 8,8 /u:V /f:0.066666
@@ -95,11 +97,7 @@ Var=RSM_State_Timed_Out unsigned 34,1
 Var=DIM_State_Timed_Out unsigned 35,1
 Var=AFC_State_Timed_Out unsigned 36,1
 Var=TM_State_Timed_Out unsigned 37,1
-Var=IMD_Error bit 40,1
-Var=BMS_Error bit 41,1
-Var=BSPD_ERROR unsigned 42,1
-Var=Check bit 43,1
-Var=Egress bit 44,1
+Var=BS unsigned 40,8
 
 [MC_L_Modulation_And_Flux_Info]
 ID=3ADh
@@ -481,7 +479,7 @@ DLC=8
 ID=5F4h
 DLC=8
 Var=BMS_Pack_SOC_Ah float 0,32 /u:Ah
-Var=BMS_Pack_SOC_Percent unsigned 32,32 /u:%
+Var=BMS_Pack_SOC_Percent float 32,32 /u:%
 
 [BMS_Balance_SOC]
 ID=5F5h

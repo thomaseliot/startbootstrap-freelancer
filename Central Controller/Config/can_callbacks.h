@@ -9,7 +9,7 @@
 #ifndef CAN_CALLBACKS_H_
 #define CAN_CALLBACKS_H_
 
-#include "cmr_constants.h"
+#include "cmr_64c1_lib.h"
 #include "node_tasks.h"
 #include "frtos_can.h"
 #include "can_ids.h"

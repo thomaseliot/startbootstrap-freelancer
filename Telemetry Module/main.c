@@ -60,9 +60,10 @@ int main(void)
 			sprintf(name, "RCV%d", i);
 			// Create task for this mailbox
 			xTaskCreate(vCANReceiveTask, name, configMINIMAL_STACK_SIZE,
-				(void *)(&statuses[i]), MOB_PRIORITIES[i], NULL);
+			(void *)(&statuses[i]), MOB_PRIORITIES[i], NULL);
 		}
 	}
+	
 	
 	// MCU status task, to blink the LED
 	// Rate: 4Hz
@@ -80,6 +81,14 @@ int main(void)
 		NULL, ADC_SAMPLE_TASK_PRIORITY, NULL);
 		
 	// Module-specific tasks here
+	
+	// State update task
+	// Rate: 20Hz
+	xTaskCreate(vSetStateTask, "STATE", configMINIMAL_STACK_SIZE,
+	NULL, SET_STATE_TASK_PRIORITY, NULL);
+	
+	xTaskCreate(vCANTimeoutMonitorTask, "CANMON", configMINIMAL_STACK_SIZE,
+	NULL, TIMEOUT_MONITOR_TASK_PRIORITY, NULL);
 	
 	
 	// Start the scheduler

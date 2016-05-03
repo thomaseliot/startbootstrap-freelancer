@@ -10,9 +10,26 @@
 
 // Heartbeat payload structs
 SMHeartbeat_t SMHeartbeat;			// Safety Module (self)
-CCHeartbeat_t CCHeartbeat;			// Central Controller
-FSMHeartbeat_t FSMHeartbeat;		// Front Sensor Module
-RSMHeartbeat_t RSMHeartbeat;		// Rear Sensor Module
-DIMHeartbeat_t DIMHeartbeat;		// Driver Interface Module
-AFCHeartbeat_t AFCHeartbeat;		// Accumulator Fan Controller
-TMHeartbeat_t TMHeartbeat;			// Telemetry Module
+CCHeartbeat_t CCHeartbeat;		// Front Sensor Module
+
+// Metadata for receive messages
+ReceiveMeta_t SMHeartbeatReceiveMeta;
+
+
+/* Initialize payloads
+ */
+void initPayloads(void) {
+	// Safety Module Heartbeat
+	SMHeartbeat.state = GLV_ON;
+	SMHeartbeat.targetState = GLV_ON;
+	SMHeartbeat.vbatt = 0;
+	SMHeartbeatReceiveMeta.missCount = 0;
+	SMHeartbeatReceiveMeta.timeoutFlag = 0;
+	SMHeartbeatReceiveMeta.staleFlag = 1;
+	SMHeartbeatReceiveMeta.differentStateCount = 0;
+	SMHeartbeatReceiveMeta.wrongStateFlag = 0;
+	
+	// Central Controller Heartbeat
+	CCHeartbeat.state = UNKNOWN;
+	CCHeartbeat.vbatt = 0;	
+}

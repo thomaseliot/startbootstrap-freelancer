@@ -37,6 +37,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "ili9341.h"
+#include "stm32f4xx_hal.h"
 
 
 /** @addtogroup BSP
@@ -117,6 +118,56 @@ LCD_DrvTypeDef   ili9341_drv =
   * @param  None
   * @retval None
   */
+
+
+
+void ILI9341Init(void)
+{
+	  HAL_GPIO_WritePin(GPIOF, LCD_DE_Pin, GPIO_PIN_SET);
+
+     LCD_IO_Init();
+	 //Hardware reset
+     LCDResetLow();
+	 LCD_Delay(200);
+	 LCDResetHigh();
+	 LCD_Delay(200);
+
+	 //Software Reset
+	 WriteCommand(0x01);
+	 LCD_Delay(200);
+
+	 //RGB
+	 WriteCommand(0xB0);
+	 //RCM is 10 = 18bit.  Bypass mode is memory.
+	 WriteParameter(0xC2);
+
+	 //Interface control
+	 WriteCommand(0xF6);
+	 //Memory write control
+	 WriteParameter(0x01);
+	 //Method of display data transferring
+	 WriteParameter(0x00);
+	 //
+	 WriteParameter(0x06);
+
+	 //Pixel format
+	 WriteCommand(0x3A);
+	 //DPI = 18 bit (110). DBI = 110 (18 bit for parallel, doesn't matter)
+	 WriteParameter(0x66);
+
+	 // Memory Access Control
+	 WriteCommand(0x36);
+	 //BGR, column address order
+	     WriteParameter(0x48);     // Row-Col Exch, BGR color direction
+
+	 // Sleep Out
+	 WriteCommand(0x11);
+	 LCD_Delay(200);
+
+	 //Display On
+	     WriteCommand(0x29);
+
+}
 void ili9341_Init(void)
 {
   /* Initialize ILI9341 low level bus layer ----------------------------------*/

@@ -90,6 +90,7 @@
 #if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
     #include <stdint.h>
     #include "mxconstants.h" 
+	#include "stm32f429xx.h"
     extern uint32_t SystemCoreClock;
 #endif
 

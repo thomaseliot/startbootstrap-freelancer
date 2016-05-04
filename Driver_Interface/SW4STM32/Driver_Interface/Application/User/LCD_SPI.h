@@ -22,6 +22,12 @@ static void LCD_CS_HIGH();
 static void LCD_WRX_LOW();
 static void LCD_WRX_HIGH();
 void LCD_Delay(uint32_t Delay);
+void WriteParameter(int16_t value);
+void WriteCommand(int16_t value);
+void LCDResetLow(void);
+void LCDResetHigh(void);
+
+
 
 
 #define LCD_SPI_SCL_Pin GPIO_PIN_7

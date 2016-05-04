@@ -287,6 +287,40 @@ uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize)
   return readvalue;
 }
 
+
+void WriteParameter(int16_t value) {
+	  /* Set WRX to send data */
+	  LCD_WRX_HIGH();
+
+	  /* Reset LCD control line(/CS) and Send data */
+	  LCD_CS_LOW();
+	  SPIx_Write(value);
+
+	  /* Deselect: Chip Select high */
+	  LCD_CS_HIGH();
+}
+
+void WriteCommand(int16_t value) {
+	  /* Reset WRX to send command */
+	  LCD_WRX_LOW();
+
+	  /* Reset LCD control line(/CS) and Send command */
+	  LCD_CS_LOW();
+	  SPIx_Write(value);
+
+	  /* Deselect: Chip Select high */
+	  LCD_CS_HIGH();
+}
+
+void LCDResetLow(void) {
+    HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_RESET);
+}
+
+void LCDResetHigh(void) {
+    HAL_GPIO_WritePin(LCD_RESET_Port, LCD_RESET_Pin, GPIO_PIN_SET);
+}
+
+
 /**
   * @brief  Wait for loop in ms.
   * @param  Delay in ms.

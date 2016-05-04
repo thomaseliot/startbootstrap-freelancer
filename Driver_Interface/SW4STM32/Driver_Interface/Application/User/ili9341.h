@@ -73,6 +73,7 @@
 /** 
   * @brief ILI9341 chip IDs  
   */ 
+
 #define ILI9341_ID                  0x9341
 
 /** 
@@ -213,17 +214,11 @@ void     ili9341_DisplayOn(void);
 void     ili9341_DisplayOff(void);
 uint16_t ili9341_GetLcdPixelWidth(void);
 uint16_t ili9341_GetLcdPixelHeight(void);
+void ILI9341Init(void);
 
 /* LCD driver structure */
 extern LCD_DrvTypeDef   ili9341_drv;
 
-/* LCD IO functions */
-void     LCD_IO_Init(void);
-void     LCD_IO_WriteData(uint16_t RegValue);
-void     LCD_IO_WriteReg(uint8_t Reg);
-uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize);
-void     LCD_Delay (uint32_t delay);
-      
 #ifdef __cplusplus
 }
 #endif

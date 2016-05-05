@@ -13,6 +13,8 @@ static color_t	RIGHT_BAR_DEFAULT[] = {COLOR_BLUE,COLOR_BLUE,COLOR_WHITE,COLOR_WH
 		COLOR_WHITE,COLOR_WHITE,COLOR_RED,COLOR_RED};
 static color_t led_right_color[8];
 static color_t led_left_color[8];
+uint8_t led_brightness = LED_BRIGHTNESS;
+
 
 
 //b_addr, b_pin, g_addr, g_pin, r_addr, r_pin
@@ -70,6 +72,7 @@ void vLedUpdateTask(void * pvParameters) {
 
 
 		for(;;) {
+	    led_brightness = getLedBrightnessCan();
 		UpdateLedBars();
 		UpdateErrorLeds();
 //		func_tick = func_tick+1;
@@ -160,18 +163,23 @@ void UpdateLedBars() {
 			LedSetBarPercent(100,led_right_color, LED_RIGHT_LEN);
 	}
 
+	 hltdc.Init.Backcolor.Blue = get_blue(state_color);
+	 hltdc.Init.Backcolor.Green = get_green(state_color);
+	  hltdc.Init.Backcolor.Red = get_red(state_color);
+	  HAL_LTDC_Init(&hltdc);
+
 	I2C_update_leds();
 }
 
 void I2C_update_leds() {
 	for(int i = 0; i < LED_TOP_LEN; i++) {
-		set_led(led_top_id[i], led_top_color[i], LED_BRIGHTNESS);
+		set_led(led_top_id[i], led_top_color[i], led_brightness);
 	}
 	for(int i = 0; i < LED_LEFT_LEN; i++) {
-			set_led(led_left_id[i], led_left_color[i], LED_BRIGHTNESS);
+			set_led(led_left_id[i], led_left_color[i], led_brightness);
 	}
 	for(int i = 0; i < LED_RIGHT_LEN; i++) {
-			set_led(led_right_id[i], led_right_color[i], LED_BRIGHTNESS);
+			set_led(led_right_id[i], led_right_color[i], led_brightness);
 	}
 }
 
@@ -189,9 +197,9 @@ void UpdateErrorLeds() {
 		LedOff(CHECK_GPIO_Port, CHECK_Pin);
 
 	if(ERROR_BMS(error_matrix))
-		LedOn(BMS_ERR_GPIO_Port, BMS_ERR_GPIO_Port);
+		LedOn(BMS_ERR_GPIO_Port, BMS_ERR_Pin);
 	else
-		LedOff(BMS_ERR_GPIO_Port, BMS_ERR_GPIO_Port);
+		LedOff(BMS_ERR_GPIO_Port, BMS_ERR_Pin);
 
 	if(ERROR_BSPD(error_matrix))
 		LedOn(BSPD_ERR_GPIO_Port, BSPD_ERR_Pin);
@@ -203,6 +211,14 @@ void UpdateErrorLeds() {
 		else
 			LedOff(EGRESS_GPIO_Port, EGRESS_Pin);
 
+}
+
+int8_t getLedBrightnessCan() {
+	CanMessage brightness_msg = CanData[CanData_idx(0x6ff)];
+	if(brightness_msg.length) {
+		return brightness_msg.data;
+	}
+	else return LED_BRIGHTNESS;
 }
 
 int32_t getSOCCAN() {

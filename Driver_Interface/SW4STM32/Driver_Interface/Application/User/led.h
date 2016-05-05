@@ -40,6 +40,9 @@ typedef struct {
 
 typedef uint32_t portTickType;
 
+extern LTDC_HandleTypeDef hltdc;
+
+
 #define I2C_TIMEOUT 1
 
 #define LED_DRV_OE_L_Pin GPIO_PIN_4
@@ -84,6 +87,7 @@ HAL_StatusTypeDef ledInit(int8_t led_addr);
 int32_t map_val(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t out_max);
 int32_t getSpeedCAN();
 int32_t getSOCCAN();
+int8_t getLedBrightnessCan();
 int32_t getMaxBattTempCAN();
 void I2C_update_leds();
 void LedOn(GPIO_TypeDef * Port, uint16_t Pin);

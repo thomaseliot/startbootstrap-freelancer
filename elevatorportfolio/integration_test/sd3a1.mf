@@ -1,0 +1,56 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 3A Integration Test
+
+#INCLUDE defines.mf
+
+;Preconditions
+
+;Doors are closed
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;Drive is stopped, elevator has just arrived
+0s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+
+;Elevator is at floor 2
+0s I 0s N CAR_POSITION_CAN_ID Integer = 2
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+;Hall Call 2 is true
+0.0s I 0s N HALL_CALL_[2][BACK][UP]_CAN_ID HallCall 2 BACK UP = true
+
+;#arc '3A/1a'
+;Doors open
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+;#arc '3A/2a'
+; Dispatcher sets CountDown to DelayTime
+
+;#arc '3A/3a'
+; Passenger enters elevator and presses carcall for floor g
+2s I 0s N CAR_CALL_[1][FRONT]_CAN_ID CarCall 1 FRONT = true
+
+;#arc '3A/4a'
+;Doors close
+2s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+2s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;#arc '3A/4b'
+; Dispatcher decrements countdown
+
+;#arc '3A/5a'
+; Dispatcher sees that CountDown == 0
+
+;#arc '3A/5b'
+; Dispatcher sets it's CurrentDirection to d

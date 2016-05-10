@@ -1,0 +1,86 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 5B Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+; Initialize DoorControl
+
+; mAtFloor[2][BACK] = true
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+
+; mDesiredDwell = 2s
+0s I 0s N DESIRED_DWELL_CAN_ID DesiredDwell = 2 2
+
+; mDoorClosed = false
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+; mDoorOpened = false
+0s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = false
+0s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = false
+
+; ------------------
+; Start Sequence
+; ------------------
+
+;#arc '5B/1a'
+; Dwell time expires
+
+;#arc '5B/1b'
+1s A F DoorMotor BACK LEFT : command == CLOSE
+1s A F DoorMotor BACK RIGHT : command == CLOSE
+
+;#arc '5B/2a'
+; Passenger enters elevator
+
+;#arc '5B/2b'
+1.2s I 0s N DOOR_REVERSAL_SENSOR_[BACK][LEFT]_CAN_ID DoorReversal BACK LEFT = true
+1.2s I 0s N DOOR_REVERSAL_SENSOR_[BACK][RIGHT]_CAN_ID DoorReversal BACK RIGHT = true
+
+;#arc '5B/2c'
+; DoorControl's state variable DoorHasReversed is set to true
+
+;#arc '5B/3a'
+1.4s A F DoorMotor BACK LEFT : command == OPEN
+1.4s A F DoorMotor BACK RIGHT : command == OPEN
+
+;#arc '5B/3b'
+2s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = true
+2s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = true
+
+;#arc '5B/3c'
+2.2s A F DoorMotor BACK LEFT : command == STOP
+2.2s A F DoorMotor BACK RIGHT : command == STOP
+
+;#arc '5B/4a'
+; Dwell time expires
+
+;#arc '5B/4b'
+4.5s A F DoorMotor BACK LEFT : command == NUDGE
+4.5s A F DoorMotor BACK RIGHT : command == NUDGE
+
+;#arc '5B/5a'
+5s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+5s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;#arc '5B/5b'
+5.2s A F DoorMotor BACK LEFT : command == STOP
+5.2s A F DoorMotor BACK RIGHT : command == STOP
+
+;#arc '5B/5c'
+; DoorControl's state variable DoorHasReversed set to false

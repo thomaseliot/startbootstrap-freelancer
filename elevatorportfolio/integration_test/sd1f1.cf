@@ -1,0 +1,13 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 1F Integration Test Configuration
+
+HallButtonControl 1 FRONT UP 100ms true
+Dispatcher 8 50ms true

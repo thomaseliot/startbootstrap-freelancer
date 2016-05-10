@@ -1,0 +1,31 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; sd2b1 Integration Test
+
+Simulator Parameters:
+Command line = -cf ../integration_test/sd2b1.cf -mf ../integration_test/sd2b1.mf
+RandomSeed = 1450220655880
+CanNetworkBitTime = 0 ns
+Effective Can Bitrate = Infinity
+Run Time = null
+Real time rate = null
+Message File = ../integration_test/sd2b1.mf
+Controller File = ../integration_test/sd2b1.cf
+
+Assertion Results:
+@1.5s:  PASSED simulator.payloads.CarLightPayload$ReadableCarLightPayload@60e53b93 :: lighted ?== false PASSED
+@1.5s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@1d44bcfa :: getValue ?== false PASSED
+
+
+******************Summary******************
+Passed:  2
+Failed:  0
+Total :  2
+

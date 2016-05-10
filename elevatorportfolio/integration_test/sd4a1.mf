@@ -1,0 +1,79 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 4a integration test
+
+#INCLUDE defines.mf
+
+
+;Initialize Preconditions
+; All doors closed
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; Set CarCall true
+0.0s I 0s N CAR_CALL_[1][FRONT]_CAN_ID CarCall 1 FRONT = true
+
+
+0s I 0s F DriveSpeed = STOP 0
+
+; Set AtFloor[1,*] to true so dispatcher / drive dont freak out
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+0s I 0s N AT_FLOOR_[1][BACK]_CAN_ID AtFloor 1 BACK = true
+
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+
+;Initialize level sensors to True
+0s I 0s N LEVEL_SENSOR_[UP]_CAN_ID Leveling UP = true
+0s I 0s N LEVEL_SENSOR_[DOWN]_CAN_ID Leveling DOWN = true
+
+;#arc 4A/1a
+; Check mCarPosition
+0.5s A N CAR_POSITION_CAN_ID Integer : getValue == 1
+
+;#arc 4A/1b
+1.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == FRONT
+1.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 1
+
+;#arc 4A/2a
+1.5s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+1.5s I 0s N AT_FLOOR_[1][BACK]_CAN_ID AtFloor 1 BACK = true
+
+;#arc 4A/2b
+1.8s A F Drive : speed == STOP
+1.8s A F Drive : direction == STOP
+
+;#arc 4A/2c
+1.8s A N DRIVE_CAN_ID Drive : getSensorDirection == STOP
+1.8s A N DRIVE_CAN_ID Drive : getSensorSpeed == 0
+
+;#arc 4A/3a
+; DoorMotor[b,*] = OPEN
+2.0s A F DoorMotor FRONT LEFT : command == OPEN
+2.0s A F DoorMotor FRONT RIGHT : command == OPEN
+
+
+; first make the doors not closed
+2.1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+2.1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = false
+; make doors open
+;#arc 4A/3b
+2.2s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+2.2s I 0s N DOOR_OPEN_SENSOR_[FRONT][RIGHT]_CAN_ID DoorOpened FRONT RIGHT = true
+
+;#arc 4A/3c
+2.3s A F DoorMotor FRONT LEFT : command == STOP
+2.3s A F DoorMotor FRONT RIGHT : command == STOP
+
+
+;#arc 4A/4a
+; passenger exits car

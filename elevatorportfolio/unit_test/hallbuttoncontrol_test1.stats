@@ -1,0 +1,37 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; hallbuttoncontrol_test1 Unit Test
+
+Simulator Parameters:
+Command line = -cf ../unit_test/hallbuttoncontrol.cf -mf ../unit_test/hallbuttoncontrol_test1.mf
+RandomSeed = 1450220629723
+CanNetworkBitTime = 0 ns
+Effective Can Bitrate = Infinity
+Run Time = null
+Real time rate = null
+Message File = ../unit_test/hallbuttoncontrol_test1.mf
+Controller File = ../unit_test/hallbuttoncontrol.cf
+
+Assertion Results:
+@0.5s:  PASSED simulator.payloads.HallLightPayload$ReadableHallLightPayload@63947c6b :: lighted ?== false PASSED
+@0.5s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@355da254 :: getValue ?== false PASSED
+@1.5s:  PASSED simulator.payloads.HallLightPayload$ReadableHallLightPayload@d716361 :: lighted ?== true PASSED
+@1.5s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@3764951d :: getValue ?== true PASSED
+@2.5s:  PASSED simulator.payloads.HallLightPayload$ReadableHallLightPayload@4d7e1886 :: lighted ?== true PASSED
+@2.5s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@2f0e140b :: getValue ?== false PASSED
+@3.5s:  PASSED simulator.payloads.HallLightPayload$ReadableHallLightPayload@49476842 :: lighted ?== false PASSED
+@3.5s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@27c170f0 :: getValue ?== false PASSED
+
+
+******************Summary******************
+Passed:  8
+Failed:  0
+Total :  8
+

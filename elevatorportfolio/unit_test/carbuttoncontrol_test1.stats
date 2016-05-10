@@ -1,0 +1,37 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; carbuttoncontrol_test1 Unit Test
+
+Simulator Parameters:
+Command line = -cf ../unit_test/carbuttoncontrol.cf -mf ../unit_test/carbuttoncontrol_test1.mf
+RandomSeed = 1450220627833
+CanNetworkBitTime = 0 ns
+Effective Can Bitrate = Infinity
+Run Time = null
+Real time rate = null
+Message File = ../unit_test/carbuttoncontrol_test1.mf
+Controller File = ../unit_test/carbuttoncontrol.cf
+
+Assertion Results:
+@0.21s:  PASSED simulator.payloads.CarLightPayload$ReadableCarLightPayload@511d50c0 :: lighted ?== false PASSED
+@0.21s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@5e2de80c :: getValue ?== false PASSED
+@0.72s:  PASSED simulator.payloads.CarLightPayload$ReadableCarLightPayload@266474c2 :: lighted ?== true PASSED
+@0.72s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@5e481248 :: getValue ?== true PASSED
+@1.02s:  PASSED simulator.payloads.CarLightPayload$ReadableCarLightPayload@63947c6b :: lighted ?== true PASSED
+@1.02s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@355da254 :: getValue ?== true PASSED
+@2.51s:  PASSED simulator.payloads.CarLightPayload$ReadableCarLightPayload@d716361 :: lighted ?== false PASSED
+@2.51s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@3764951d :: getValue ?== false PASSED
+
+
+******************Summary******************
+Passed:  8
+Failed:  0
+Total :  8
+

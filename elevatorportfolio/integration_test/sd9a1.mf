@@ -1,0 +1,80 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 9a integration test
+
+#INCLUDE defines.mf
+
+; Initialize using preconditions
+; Set DriveSpeed to Stop
+0s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+; Set AtFloor[1,*] to true
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+0s I 0s N AT_FLOOR_[1][BACK]_CAN_ID AtFloor 1 BACK = true
+; Set Carposition for dispatcher
+0s I 0s N CAR_POSITION_CAN_ID Integer = 1
+; Set DoorClosed to true for all doors
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+; There is a hall call on the first floor
+0s I 0s N HALL_CALL_[1][FRONT][UP]_CAN_ID HallCall 1 FRONT UP = true
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+
+
+
+;#arc '9A/1a'
+; mDwellTime[*] = dwellTime (2s)
+1.0s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+1.0s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellBack == 4
+1.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == FRONT
+1.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 1
+1.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+
+;#arc '9A/1b'
+; DoorMotor[*,*] = Open
+1.0s A F DoorMotor FRONT LEFT : command == OPEN
+1.0s A F DoorMotor FRONT RIGHT : command == OPEN
+1.0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+1.0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = false
+
+;#arc '9A/1c'
+1.1s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+1.1s I 0s N DOOR_OPEN_SENSOR_[FRONT][RIGHT]_CAN_ID DoorOpened FRONT RIGHT = true
+1.1s I 0s N HALL_CALL_[1][FRONT][UP]_CAN_ID HallCall 1 FRONT UP = false
+
+;#arc '9A/1d'
+; DoorMotor[b,*] = STOP
+1.3s A F DoorMotor FRONT LEFT : command == STOP
+1.3s A F DoorMotor FRONT RIGHT : command == STOP
+
+;#arc '9A/2a'
+; passengers gets on elevator
+
+;#arc '9A/3a'
+; dwelltime expires (internal state variable)
+
+;#arc '9A/3b'
+; DoorMotor[b,*] = Close
+10.5s A F DoorMotor FRONT LEFT : command == CLOSE
+10.5s A F DoorMotor FRONT RIGHT : command == CLOSE
+; open sensor turns off when doors begin to close
+10.6s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = false
+10.6s I 0s N DOOR_OPEN_SENSOR_[FRONT][RIGHT]_CAN_ID DoorOpened FRONT RIGHT = false
+
+;#arc '9A/3c'
+10.8s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+10.8s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+
+;#arc '9A/3d'
+; DoorMotor[b,*] = STOP
+11.5s A F DoorMotor FRONT LEFT : command == STOP
+11.5s A F DoorMotor FRONT RIGHT : command == STOP

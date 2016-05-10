@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>18649 - Network Schedule</title>
+</head>
+<body>
+<h1 style="text-align: center;">18649 - Network Schedule<br>
+</h1>
+<hr style="width: 100%; height: 2px;">18649 Fall 2015<br>
+Group 12 - Tom Eliot (tke), Shepard Emerson (semerson), Daniel Gorziglia (dgorzigl), Daniel Haddox (dhaddox)<br><br>
+<hr style="width: 100%; height: 2px;">
+<h2>CAN Message Dictionary<br>
+</h2>
+List of all messages in the system<br>
+<br>
+Add you message dictionary table here<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">Sender Node Name<br>
+      </td>
+      <td style="vertical-align: top;">Message Name<br>
+      </td>
+      <td style="vertical-align: top;">Deadline (ms)<br>
+      </td>
+      <td style="vertical-align: top;">Message ID<br>
+      </td>
+      <td style="vertical-align: top;">Sender Node Type<br>
+      </td>
+      <td style="vertical-align: top;">Replication Type<br>
+      </td>
+      <td style="vertical-align: top;">Base CAN ID<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Level Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Level_Sensor(Leveling_Base)<br>
+      </td>
+      <td style="vertical-align: top;">10<br>
+      </td>
+      <td style="vertical-align: top;">1000<br>
+      </td>
+      <td style="vertical-align: top;">20<br>
+      </td>
+      <td style="vertical-align: top;">direction<br>
+      </td>
+      <td style="vertical-align: top;">0x0BE81400<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Drive Control<br>
+      </td>
+      <td style="vertical-align: top;">Drive_Speed_and_Command<br>
+      </td>
+      <td style="vertical-align: top;">10<br>
+      </td>
+      <td style="vertical-align: top;">1010<br>
+      </td>
+      <td style="vertical-align: top;">181<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0BF2B500<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Door Control<br>
+      </td>
+      <td style="vertical-align: top;">Door_Motor_Command(Door_Motor_Command_Base)<br>
+      </td>
+      <td style="vertical-align: top;">10<br>
+      </td>
+      <td style="vertical-align: top;">1020<br>
+      </td>
+      <td style="vertical-align: top;">184<br>
+      </td>
+      <td style="vertical-align: top;">hall, side<br>
+      </td>
+      <td style="vertical-align: top;">0x0BFCB800<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Door Reversal Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Door_Reversal_Sensor(Door_Reversal_Sensor_Base)<br>
+      </td>
+      <td style="vertical-align: top;">10<br>
+      </td>
+      <td style="vertical-align: top;">1030<br>
+      </td>
+      <td style="vertical-align: top;">100<br>
+      </td>
+      <td style="vertical-align: top;">hall, side<br>
+      </td>
+      <td style="vertical-align: top;">0x0C066400<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Safety Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Emergency_Brake<br>
+      </td>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">1040<br>
+      </td>
+      <td style="vertical-align: top;">20<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C101400<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">At Floor Sensor<br>
+      </td>
+      <td style="vertical-align: top;">At_Floor(At_Floor_Base)<br>
+      </td>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">1050<br>
+      </td>
+      <td style="vertical-align: top;">40<br>
+      </td>
+      <td style="vertical-align: top;">floor, hall<br>
+      </td>
+      <td style="vertical-align: top;">0x0C1A2800<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Dispatcher<br>
+      </td>
+      <td style="vertical-align: top;">Desired_Floor<br>
+      </td>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">1060<br>
+      </td>
+      <td style="vertical-align: top;">182<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C24B600<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Dispatcher<br>
+      </td>
+      <td style="vertical-align: top;">Desired_Dwell(Desired_Dwell_Base)<br>
+      </td>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">1070<br>
+      </td>
+      <td style="vertical-align: top;">182<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C2EB600<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Car Position Control<br>
+      </td>
+      <td style="vertical-align: top;">Car_Position<br>
+      </td>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">1080<br>
+      </td>
+      <td style="vertical-align: top;">183<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C38B700<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">CarLevelPosition Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Car_Level_Position<br>
+      </td>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">1090<br>
+      </td>
+      <td style="vertical-align: top;">60<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C423C00<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Hall Button Control<br>
+      </td>
+      <td style="vertical-align: top;">Hall_Call(Hall_Call_Base)<br>
+      </td>
+      <td style="vertical-align: top;">100<br>
+      </td>
+      <td style="vertical-align: top;">1100<br>
+      </td>
+      <td style="vertical-align: top;">185<br>
+      </td>
+      <td style="vertical-align: top;">floor, hall, direction<br>
+      </td>
+      <td style="vertical-align: top;">0x0C4CB900<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Door Closed Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Door_Closed_Sensor(Door_Closed_Sensor_Base)<br>
+      </td>
+      <td style="vertical-align: top;">100<br>
+      </td>
+      <td style="vertical-align: top;">1110<br>
+      </td>
+      <td style="vertical-align: top;">80<br>
+      </td>
+      <td style="vertical-align: top;">hall, side<br>
+      </td>
+      <td style="vertical-align: top;">0x0C565000<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Car Button Control<br>
+      </td>
+      <td style="vertical-align: top;">Car_Call(Car_Call_Base)<br>
+      </td>
+      <td style="vertical-align: top;">100<br>
+      </td>
+      <td style="vertical-align: top;">1120<br>
+      </td>
+      <td style="vertical-align: top;">186<br>
+      </td>
+      <td style="vertical-align: top;">floor, hall<br>
+      </td>
+      <td style="vertical-align: top;">0x0C60BA00<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Hoistway Limit Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Hoistway_Limit(Hoistway_Limit_Base)<br>
+      </td>
+      <td style="vertical-align: top;">200<br>
+      </td>
+      <td style="vertical-align: top;">1130<br>
+      </td>
+      <td style="vertical-align: top;">180<br>
+      </td>
+      <td style="vertical-align: top;">direction<br>
+      </td>
+      <td style="vertical-align: top;">0x0C6AB400<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Door Opened Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Door_Opened_Sensor(Door_Opened_Sensor_Base)<br>
+      </td>
+      <td style="vertical-align: top;">200<br>
+      </td>
+      <td style="vertical-align: top;">1140<br>
+      </td>
+      <td style="vertical-align: top;">160<br>
+      </td>
+      <td style="vertical-align: top;">hall, side<br>
+      </td>
+      <td style="vertical-align: top;">0x0C74A000<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Lantern Control<br>
+      </td>
+      <td style="vertical-align: top;">Car_Lantern(Car_Lantern_Base)<br>
+      </td>
+      <td style="vertical-align: top;">200<br>
+      </td>
+      <td style="vertical-align: top;">1150<br>
+      </td>
+      <td style="vertical-align: top;">187<br>
+      </td>
+      <td style="vertical-align: top;">direction<br>
+      </td>
+      <td style="vertical-align: top;">0x0C7EBB00<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Weight Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Car_Weight_Alarm<br>
+      </td>
+      <td style="vertical-align: top;">200<br>
+      </td>
+      <td style="vertical-align: top;">1160<br>
+      </td>
+      <td style="vertical-align: top;">140<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C888C00<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Weight Sensor<br>
+      </td>
+      <td style="vertical-align: top;">Car_Weight<br>
+      </td>
+      <td style="vertical-align: top;">200<br>
+      </td>
+      <td style="vertical-align: top;">1170<br>
+      </td>
+      <td style="vertical-align: top;">120<br>
+      </td>
+      <td style="vertical-align: top;">none<br>
+      </td>
+      <td style="vertical-align: top;">0x0C927800<br>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+<br>
+<h2>Network Schedule Analaysis</h2>
+<br>
+Analysis of network usage<br>
+<br>
+<table class="tg" style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tr>
+    <th class="tg-yw4l">Message Dictionary</th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l">Field 1</th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l">Field 2</th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l">Field 3</th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l">Field 4</th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l">Total Payload Bit Len</th>
+    <th class="tg-yw4l">Total Payload Byte Len</th>
+    <th class="tg-yw4l">Best Case Msg Len</th>
+    <th class="tg-yw4l">Worst Case Msg Len</th>
+    <th class="tg-yw4l">Best Case BW (bits/sec)</th>
+    <th class="tg-yw4l">Worst Case BW each (bits/sec)</th>
+  </tr>
+  <tr style="font-weight: bold;">
+    <td class="tg-yw4l">Sender Node Name</td>
+    <td class="tg-yw4l">Message Name</td>
+    <td class="tg-yw4l">Base CAN ID</td>
+    <td class="tg-yw4l">Replication Count</td>
+    <td class="tg-yw4l">Deadline (ms)</td>
+    <td class="tg-yw4l">Desc</td>
+    <td class="tg-yw4l">Type</td>
+    <td class="tg-yw4l">Bit Len</td>
+    <td class="tg-yw4l">Desc</td>
+    <td class="tg-yw4l">Type</td>
+    <td class="tg-yw4l">Bit Len</td>
+    <td class="tg-yw4l">Desc</td>
+    <td class="tg-yw4l">Type</td>
+    <td class="tg-yw4l">Bit Len</td>
+    <td class="tg-yw4l">Desc</td>
+    <td class="tg-yw4l">Type</td>
+    <td class="tg-yw4l">Bit Len</td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Level Sensor</td>
+    <td class="tg-yw4l">Level_Sensor(Leveling_Base)</td>
+    <td class="tg-yw4l">0x0BE81400</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">10</td>
+    <td class="tg-yw4l">Ebrake</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">15000</td>
+    <td class="tg-yw4l">18000</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Drive Control</td>
+    <td class="tg-yw4l">Drive_Speed_and_Command</td>
+    <td class="tg-yw4l">0x0BF2B500</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">10</td>
+    <td class="tg-yw4l">Sensor Speed</td>
+    <td class="tg-yw4l">float</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">Sensor Direction</td>
+    <td class="tg-yw4l">Direction</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">Commanded Speed</td>
+    <td class="tg-yw4l">Speed</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">Commanded Direction</td>
+    <td class="tg-yw4l">Direction</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">36</td>
+    <td class="tg-yw4l">5</td>
+    <td class="tg-yw4l">107</td>
+    <td class="tg-yw4l">130</td>
+    <td class="tg-yw4l">10700</td>
+    <td class="tg-yw4l">13000</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Door Control</td>
+    <td class="tg-yw4l">Door_Motor_Command(Door_Motor_Command_Base)</td>
+    <td class="tg-yw4l">0x0BFCB800</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">10</td>
+    <td class="tg-yw4l">Door Command</td>
+    <td class="tg-yw4l">DoorCommand</td>
+    <td class="tg-yw4l">8</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">8</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">30000</td>
+    <td class="tg-yw4l">36000</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Door Reversal Sensor</td>
+    <td class="tg-yw4l">Door_Reversal_Sensor(Door_Reversal_Sensor_Base)</td>
+    <td class="tg-yw4l">0x0C066400</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">10</td>
+    <td class="tg-yw4l">Door Reversed</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">30000</td>
+    <td class="tg-yw4l">36000</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Safety Sensor</td>
+    <td class="tg-yw4l">Emergency_Brake</td>
+    <td class="tg-yw4l">0x0C101400</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">50</td>
+    <td class="tg-yw4l">Brake Deployed</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">1500</td>
+    <td class="tg-yw4l">1800</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">At Floor Sensor</td>
+    <td class="tg-yw4l">At_Floor(At_Floor_Base)</td>
+    <td class="tg-yw4l">0x0C1A2800</td>
+    <td class="tg-yw4l">16</td>
+    <td class="tg-yw4l">50</td>
+    <td class="tg-yw4l">AtFloor</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">24000</td>
+    <td class="tg-yw4l">28800</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Dispatcher</td>
+    <td class="tg-yw4l">Desired_Floor</td>
+    <td class="tg-yw4l">0x0C24B600</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">50</td>
+    <td class="tg-yw4l">Floor</td>
+    <td class="tg-yw4l">int</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">Hallway</td>
+    <td class="tg-yw4l">Hallway</td>
+    <td class="tg-yw4l">16</td>
+    <td class="tg-yw4l">Direction</td>
+    <td class="tg-yw4l">Direction</td>
+    <td class="tg-yw4l">16</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">64</td>
+    <td class="tg-yw4l">8</td>
+    <td class="tg-yw4l">131</td>
+    <td class="tg-yw4l">160</td>
+    <td class="tg-yw4l">2620</td>
+    <td class="tg-yw4l">3200</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Dispatcher</td>
+    <td class="tg-yw4l">Desired_Dwell(Desired_Dwell_Base)</td>
+    <td class="tg-yw4l">0x0C2EB600</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">50</td>
+    <td class="tg-yw4l">Dwelltime front</td>
+    <td class="tg-yw4l">byte</td>
+    <td class="tg-yw4l">8</td>
+    <td class="tg-yw4l">Dwelltime back</td>
+    <td class="tg-yw4l">byte</td>
+    <td class="tg-yw4l">8</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">16</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">83</td>
+    <td class="tg-yw4l">100</td>
+    <td class="tg-yw4l">1660</td>
+    <td class="tg-yw4l">2000</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Car Position Control</td>
+    <td class="tg-yw4l">Car_Position</td>
+    <td class="tg-yw4l">0x0C38B700</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">50</td>
+    <td class="tg-yw4l">CarPositionIndicator</td>
+    <td class="tg-yw4l">int</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">99</td>
+    <td class="tg-yw4l">120</td>
+    <td class="tg-yw4l">1980</td>
+    <td class="tg-yw4l">2400</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">CarLevelPosition Sensor</td>
+    <td class="tg-yw4l">Car_Level_Position</td>
+    <td class="tg-yw4l">0x0C423C00</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">50</td>
+    <td class="tg-yw4l">CarLevelPosition</td>
+    <td class="tg-yw4l">int</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">99</td>
+    <td class="tg-yw4l">120</td>
+    <td class="tg-yw4l">1980</td>
+    <td class="tg-yw4l">2400</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Hall Button Control</td>
+    <td class="tg-yw4l">Hall_Call(Hall_Call_Base)</td>
+    <td class="tg-yw4l">0x0C4CB900</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">100</td>
+    <td class="tg-yw4l">HallCall</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">24000</td>
+    <td class="tg-yw4l">28800</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Door Closed Sensor</td>
+    <td class="tg-yw4l">Door_Closed_Sensor(Door_Closed_Sensor_Base)</td>
+    <td class="tg-yw4l">0x0C565000</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">100</td>
+    <td class="tg-yw4l">DoorClosed</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">3000</td>
+    <td class="tg-yw4l">3600</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Car Button Control</td>
+    <td class="tg-yw4l">Car_Call(Car_Call_Base)</td>
+    <td class="tg-yw4l">0x0C60BA00</td>
+    <td class="tg-yw4l">16</td>
+    <td class="tg-yw4l">100</td>
+    <td class="tg-yw4l">CarCall</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">12000</td>
+    <td class="tg-yw4l">14400</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Hoistway Limit Sensor</td>
+    <td class="tg-yw4l">Hoistway_Limit(Hoistway_Limit_Base)</td>
+    <td class="tg-yw4l">0x0C6AB400</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">200</td>
+    <td class="tg-yw4l">HoistwayLimit</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">750</td>
+    <td class="tg-yw4l">900</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Door Opened Sensor</td>
+    <td class="tg-yw4l">Door_Opened_Sensor(Door_Opened_Sensor_Base)</td>
+    <td class="tg-yw4l">0x0C74A000</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">200</td>
+    <td class="tg-yw4l">DoorOpen</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">1500</td>
+    <td class="tg-yw4l">1800</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Lantern Control</td>
+    <td class="tg-yw4l">Car_Lantern(Car_Lantern_Base)</td>
+    <td class="tg-yw4l">0x0C7EBB00</td>
+    <td class="tg-yw4l">2</td>
+    <td class="tg-yw4l">200</td>
+    <td class="tg-yw4l">Lantern</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">750</td>
+    <td class="tg-yw4l">900</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Weight Sensor</td>
+    <td class="tg-yw4l">Car_Weight_Alarm</td>
+    <td class="tg-yw4l">0x0C888C00</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">200</td>
+    <td class="tg-yw4l">CarWeightAlarm</td>
+    <td class="tg-yw4l">boolean</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">75</td>
+    <td class="tg-yw4l">90</td>
+    <td class="tg-yw4l">375</td>
+    <td class="tg-yw4l">450</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Weight Sensor</td>
+    <td class="tg-yw4l">Car_Weight</td>
+    <td class="tg-yw4l">0x0C927800</td>
+    <td class="tg-yw4l">1</td>
+    <td class="tg-yw4l">200</td>
+    <td class="tg-yw4l">Weight</td>
+    <td class="tg-yw4l">int</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">n/a</td>
+    <td class="tg-yw4l">0</td>
+    <td class="tg-yw4l">32</td>
+    <td class="tg-yw4l">4</td>
+    <td class="tg-yw4l">99</td>
+    <td class="tg-yw4l">120</td>
+    <td class="tg-yw4l">495</td>
+    <td class="tg-yw4l">600</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l">Total bw</td>
+    <td class="tg-yw4l">162310</td>
+    <td class="tg-yw4l">195050</td>
+  </tr>
+</table>
+<br>
+<br>
+<a href="group12-network-schedule.xls">group12-network-schedule.xls</a><br>
+<br>
+<h2>Simulation Analysis</h2>
+<br>
+The simulation results show an average network usage of about 86.04% at 200 kbits/sec, or approximately 172 kbits/sec. This is well within our lower and upper bounds of approximately 162 kbits/sec to 195 kbits/sec. Factors in the simulation that may cause the results to differ from our analysis include delay in the framework before messages make it out on the bus, as well as delays in the framework before messages are received by a controller. <br> <br>
+
+Simulation Results: <br>
+Passenger Delivery Summary <br>
+Delivered: 18 <br>
+Stranded: 0<br>
+Total: 18<br>
+
+Deliver Stats (lower is better):<br>
+Average_delivery_time: 30.130<br>
+Maximum_delivery_time:  38.494<br>
+Delivery_performance_score:  159.014<br>
+
+Satisfaction Stats (higher is better):
+Average_satisfaction_score: 100.000<br>
+Min_satisfaction_score:  100.000<br>
+Satisfaction_performance_score:  500.000<br>
+
+Network Utilization Summary:<br>
+Recent: 86.04 % Max: 86.04 %  Overall:  86.04 %<br>
+<a href="200kbaud.stats">200kbaud.stats</a><br>
+
+<br>
+</body>
+</html>

@@ -1,0 +1,71 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; drivecontrol_test1 Unit Test
+
+Simulator Parameters:
+Command line = -cf ../unit_test/drivecontrol.cf -mf ../unit_test/drivecontrol_test1.mf
+RandomSeed = 1450220630065
+CanNetworkBitTime = 0 ns
+Effective Can Bitrate = Infinity
+Run Time = null
+Real time rate = null
+Message File = ../unit_test/drivecontrol_test1.mf
+Controller File = ../unit_test/drivecontrol.cf
+
+Assertion Results:
+@0.3s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@5acf9800 :: speed ?== STOP PASSED
+@0.3s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@36baf30c :: direction ?== STOP PASSED
+@0.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@5ca881b5 :: getCommandDirection ?== STOP PASSED
+@0.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@4517d9a3 :: getCommandSpeed ?== STOP PASSED
+@0.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@2f92e0f4 :: getSensorDirection ?== STOP PASSED
+@0.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@5305068a :: getSensorSpeed ?== 0.0 PASSED
+@1.0s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@279f2327 :: speed ?== LEVEL PASSED
+@1.0s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@54bedef2 :: direction ?== UP PASSED
+@1.0s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@27716f4 :: getCommandSpeed ?== LEVEL PASSED
+@1.0s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@2a84aee7 :: getCommandDirection ?== UP PASSED
+@1.1s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@30f39991 :: getSensorDirection ?== UP PASSED
+@1.1s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@4a574795 :: getSensorSpeed ?== 0.01 PASSED
+@1.2s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@23fc625e :: speed ?== SLOW PASSED
+@1.2s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@4f023edb :: direction ?== UP PASSED
+@1.2s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@7adf9f5f :: getCommandSpeed ?== SLOW PASSED
+@1.2s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@5674cd4d :: getCommandDirection ?== UP PASSED
+@1.2s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@65b54208 :: getSensorDirection ?== UP PASSED
+@1.2s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@6b884d57 :: getSensorSpeed ?== 0.05 PASSED
+@1.3s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@77459877 :: speed ?== FAST PASSED
+@1.3s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@72ea2f77 :: direction ?== UP PASSED
+@1.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@681a9515 :: getCommandSpeed ?== FAST PASSED
+@1.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@19469ea2 :: getCommandDirection ?== UP PASSED
+@1.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@2f2c9b19 :: getSensorDirection ?== UP PASSED
+@1.3s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@1c20c684 :: getSensorSpeed ?== 0.25 PASSED
+@1.35s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@548c4f57 :: speed ?== SLOW PASSED
+@1.35s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@816f27d :: direction ?== UP PASSED
+@1.35s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@3e3abc88 :: getCommandSpeed ?== SLOW PASSED
+@1.35s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@53d8d10a :: getCommandDirection ?== UP PASSED
+@1.35s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@65ab7765 :: getSensorDirection ?== UP PASSED
+@1.35s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@eed1f14 :: getSensorSpeed ?== 0.3 PASSED
+@1.42s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@4c873330 :: speed ?== LEVEL PASSED
+@1.42s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@776ec8df :: direction ?== UP PASSED
+@1.42s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@3b07d329 :: getCommandSpeed ?== LEVEL PASSED
+@1.42s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@404b9385 :: getCommandDirection ?== UP PASSED
+@1.42s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@682a0b20 :: getSensorDirection ?== UP PASSED
+@1.42s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@214c265e :: getSensorSpeed ?== 0.25 PASSED
+@1.7s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@7cca494b :: speed ?== STOP PASSED
+@1.7s:  PASSED simulator.payloads.DrivePayload$ReadableDrivePayload@3b9a45b3 :: direction ?== STOP PASSED
+@1.7s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@58372a00 :: getCommandDirection ?== STOP PASSED
+@1.7s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@6d03e736 :: getCommandSpeed ?== STOP PASSED
+@1.7s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@378bf509 :: getSensorDirection ?== STOP PASSED
+@1.7s:  PASSED simulator.payloads.CanMailbox$ReadableCanMailbox@2d98a335 :: getSensorSpeed ?== 0.0 PASSED
+
+
+******************Summary******************
+Passed:  42
+Failed:  0
+Total :  42
+

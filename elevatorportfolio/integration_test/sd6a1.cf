@@ -1,0 +1,15 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 6a integration test
+
+CarPositionControl 50ms true;
+
+
+

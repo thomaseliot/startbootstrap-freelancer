@@ -1,0 +1,3 @@
+proj12acceptance1.pass
+proj12acceptance2.pass
+proj12acceptance3.pass

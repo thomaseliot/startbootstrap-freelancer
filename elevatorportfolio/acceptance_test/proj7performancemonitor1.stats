@@ -1,0 +1,107 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Project 7 Performance Monitor Results, Acceptance Test 1
+
+Simulator Parameters:
+Command line = -pf ../portfolio/acceptance_test/proj7acceptance1.pass -seed 8675309 -monitor Proj7RuntimeMonitor
+RandomSeed = 8675309
+CanNetworkBitTime = 0 ns
+Effective Can Bitrate = Infinity
+Run Time = null
+Real time rate = null
+Acceptance Test File = ../portfolio/acceptance_test/proj7acceptance1.pass
+Monitors: Proj7RuntimeMonitor  
+
+STATISTICS FOR ELEVATOR SIMULATION PASSENGER DELIVERY
+-----------------------------------------------------
+
+
+These passengers were delivered:
+Passenger 2: INJECTED AT 974.6s and DELIVERED in 601.735s
+  Satisfaction score: 50.0
+    @1398.050000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 3: INJECTED AT 1531.4s and DELIVERED in 481.846s
+  Satisfaction score: 100.0
+Passenger 0: INJECTED AT 600.0s and DELIVERED in 1844.322s
+  Satisfaction score: 50.0
+    @2396.750000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 5: INJECTED AT 2217.5s and DELIVERED in 451.757s
+  Satisfaction score: 100.0
+Passenger 6: INJECTED AT 2805.4s and DELIVERED in 778.48s
+  Satisfaction score: 50.0
+    @3276.250000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 1: INJECTED AT 905.7s and DELIVERED in 3067.091s
+  Satisfaction score: 25.0
+    @3539.191000000: 0.50 After the car came by 5 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+    @3795.350000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 9: INJECTED AT 4204.2s and DELIVERED in 383.434s
+  Satisfaction score: 100.0
+Passenger 4: INJECTED AT 2082.0s and DELIVERED in 2714.632s
+  Satisfaction score: 50.0
+    @4362.032000000: 0.50 After the car came by 4 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+Passenger 13: INJECTED AT 5553.4s and DELIVERED in 245.786s
+  Satisfaction score: 100.0
+Passenger 14: INJECTED AT 5713.7s and DELIVERED in 311.78s
+  Satisfaction score: 100.0
+Passenger 8: INJECTED AT 3705.3s and DELIVERED in 2618.55s
+  Satisfaction score: 25.0
+    @5979.370000000: 0.50 After the car came by 4 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+    @6210.450000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 15: INJECTED AT 6184.5s and DELIVERED in 141.09s
+  Satisfaction score: 100.0
+Passenger 7: INJECTED AT 3269.2s and DELIVERED in 3443.467s
+  Satisfaction score: 50.0
+    @6413.667000000: 0.50 After the car came by 6 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+Passenger 16: INJECTED AT 6407.5s and DELIVERED in 618.665s
+  Satisfaction score: 100.0
+Passenger 17: INJECTED AT 6866.1s and DELIVERED in 413.876s
+  Satisfaction score: 12.5
+    @7168.150000000: 0.50 Car passed passenger's destination floor without servicing it
+    @7212.720000000: 0.50 Expected to move DOWN but moved UP
+    @7257.620000000: 0.50 Expected to move DOWN but moved UP
+Passenger 11: INJECTED AT 4917.5s and DELIVERED in 2453.876s
+  Satisfaction score: 25.0
+    @6982.496000000: 0.50 After the car came by 4 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+    @7128.150000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 10: INJECTED AT 4487.2s and DELIVERED in 3273.409s
+  Satisfaction score: 25.0
+    @7325.969000000: 0.50 After the car came by 5 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+    @7647.250000000: 0.50 Car passed passenger's destination floor without servicing it
+Passenger 12: INJECTED AT 5104.0s and DELIVERED in 3225.195s
+  Satisfaction score: 25.0
+    @7939.995000000: 0.50 After the car came by 5 times without showing arrows compatible with DOWN, finally gave up and got on anyway.
+    @8086.750000000: 0.50 Car passed passenger's destination floor without servicing it
+
+Passenger Delivery Summary
+Delivered: 18
+Stranded: 0
+Total: 18
+
+Deliver Stats (lower is better):
+Average_delivery_time: 1503.833
+Maximum_delivery_time:  3443.467
+Delivery_performance_score:  9458.798
+
+Satisfaction Stats (higher is better):
+Average_satisfaction_score: 60.417
+Min_satisfaction_score:  12.500
+Satisfaction_performance_score:  254.167
+
+
+
+
+Monitors Warning Results: 
+RuntimeMonitor generated 0 warnings.
+
+Monitors Summmary Results: 
+Overweight Count = 0
+Wasted Openings = 143
+Time spent dealing with doorReversals = 0.0 seconds
+

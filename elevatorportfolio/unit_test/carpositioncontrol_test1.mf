@@ -1,0 +1,64 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Car Position Control Unit Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+0s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP UP
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+0s I 0s N AT_FLOOR_[1][BACK]_CAN_ID AtFloor 1 BACK = true
+
+
+; ------------------
+; State 10.S.1
+; ------------------
+; Should be in reached floor state
+; Check that CarPositionIndicator is 1
+;#state '10.S.1'
+0.21s A F CarPositionIndicator : floor == 1
+; Check that mCarPositionIndicator is 1
+0.21s A N CAR_POSITION_CAN_ID Integer : getValue == 1
+
+; ------------------
+; 10.T.1
+; ------------------
+
+; Set conditions for 10.T.1
+;#transition '10.T.1'
+0.4s I 0s N DRIVE_CAN_ID Drive = 0.3 UP FAST UP
+
+;Set physical state for commit point calculation
+0.4s I 0s N CAR_LEVEL_POSITION_CAN_ID Integer = 03000
+
+; ------------------
+; State 10.S.2
+; ------------------
+; Check that CarPositionIndicator is 2
+;#state '10.S.2'
+0.71s A F CarPositionIndicator : floor == 2
+0.71s A N CAR_POSITION_CAN_ID Integer : getValue == 2
+
+; ------------------
+; 10.T.2
+; ------------------
+
+; Set conditions for 10.T.2
+;#transition '10.T.2'
+1.0s I 0s N DRIVE_CAN_ID Drive = 0.01 UP SLOW UP
+
+; Check that CarPositionIndicator is 1
+;#state '10.S.1'
+1.31s A F CarPositionIndicator : floor == 1
+1.31s A N CAR_POSITION_CAN_ID Integer : getValue == 1
+

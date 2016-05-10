@@ -1,0 +1,6 @@
+;Project 12 acceptance test 1				
+;Time	Start Floor	Start Hallway	End Floor	End Hallway
+10s		1	FRONT	5	FRONT
+28.0s	4	FRONT	7	FRONT
+40.0s	8	FRONT	1 	FRONT
+49.0s	3	FRONT	7	FRONT

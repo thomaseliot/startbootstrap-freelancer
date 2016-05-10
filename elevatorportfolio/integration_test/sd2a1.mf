@@ -1,0 +1,31 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 2A Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Start Sequence
+; ------------------
+
+;#arc '2A/1a'
+; Passenger presses car call button
+
+;#arc '2A/1b'
+0s I 0s F CarCall 2 BACK = true
+
+;#arc '2A/1c'
+1s A N CAR_CALL_[2][BACK]_CAN_ID CarCall 2 BACK : getValue == true
+
+;#arc '2A/2a'
+1s A F CarLight 2 BACK : lighted == true
+
+;#arc '2A/2b'
+; Passenger notices car light is on

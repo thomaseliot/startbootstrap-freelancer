@@ -1,0 +1,63 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 3b Integration Test
+
+#INCLUDE defines.mf
+
+;Doors are open
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = false
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+0s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+0s I 0s N DOOR_OPEN_SENSOR_[FRONT][RIGHT]_CAN_ID DoorOpened FRONT RIGHT = true
+0s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = true
+0s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = true
+
+;Drive is stopped, elevator has just arrived
+0s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+
+;Elevator is at floor 2
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+;Elevator is level
+0s I 0s N LEVEL_SENSOR_[UP]_CAN_ID Leveling UP = true
+0s I 0s N LEVEL_SENSOR_[DOWN]_CAN_ID Leveling DOWN = true
+
+;#arc '3B/1a'
+; Passenger enters elevator
+
+;#arc '3B/2a'
+; mLevel becomes false
+1s I 0s N LEVEL_SENSOR_[DOWN]_CAN_ID Leveling DOWN = false
+
+;#arc '3B/3a'
+; check that drive is commanded to level down
+1.5s A F Drive : speed == LEVEL
+1.5s A F Drive : direction == DOWN
+
+;#arc '3B/3b'
+; check that mDrive is commanded to level down
+1.5s A N DRIVE_CAN_ID Drive : getCommandSpeed == LEVEL
+1.5s A N DRIVE_CAN_ID Drive : getCommandDirection == DOWN
+
+;#arc '3B/3c'
+; set level back equal to true
+2s I 0s N LEVEL_SENSOR_[DOWN]_CAN_ID Leveling DOWN = true
+
+;#arc '3B/3d'
+; check that drive is commanded to stop
+2.5s A F Drive : speed == STOP
+
+;#arc '3B/3e'
+; check that mDrive is commanded to stop
+2.5s A N DRIVE_CAN_ID Drive : getCommandSpeed == STOP
+2.5s A N DRIVE_CAN_ID Drive : getCommandDirection == STOP

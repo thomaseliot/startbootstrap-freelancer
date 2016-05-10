@@ -1,0 +1,55 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 2B Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+; Initialize DoorControl and CarButtonControl
+
+; mAtFloor[2][BACK] = true
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+
+; mDoorClosed = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; Set CarButtonControl to floor selected state
+
+; CarCall = true
+0s I 0s F CarCall 2 BACK = true
+
+; CarCall = false
+0.21s I 0s F CarCall 2 BACK = false
+
+; ------------------
+; Start Sequence
+; ------------------
+
+;#arc '2B/1a'
+; mDoorClosedLeft = false
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+; mDoorClosedRight = false
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+;#arc '2B/1b'
+1.5s A F CarLight 2 BACK : lighted == false
+
+;#arc '2B/1c'
+1.5s A N CAR_CALL_[2][BACK]_CAN_ID CarCall 2 BACK : getValue == false
+
+;#arc '2B/2a'
+; Passenger attempts to exit

@@ -1,0 +1,16 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 1C integration test
+
+; NOTE: Dispatcher exists in sequence diagram but only serves to
+; capture an mHallCall to meet traceability. Therefore, there is
+; no need to instantiate it in the integration test
+
+HallButtonControl 1 FRONT UP 100ms true;

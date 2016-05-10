@@ -1,0 +1,93 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 7B integration test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+; mAtFloor[1][FRONT] = false
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = false
+; mDesiredFloor = 1, FRONT, UP
+0s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 1 NONE STOP
+; mDriveSpeed = 0, UP
+0s I 0s N DRIVE_CAN_ID Drive = 0 UP STOP STOP
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+; mDoorClosed = false
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = false
+; mDoorOpened = false
+0s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = false
+0s I 0s N DOOR_OPEN_SENSOR_[FRONT][RIGHT]_CAN_ID DoorOpened FRONT RIGHT = false
+; mDesiredDwell = 2s
+0s I 0s N DESIRED_DWELL_CAN_ID DesiredDwell = 2 2
+; mDoorReversal = false
+0s I 0s N DOOR_REVERSAL_SENSOR_[FRONT][LEFT]_CAN_ID DoorReversal FRONT LEFT = false
+0s I 0s N DOOR_REVERSAL_SENSOR_[FRONT][RIGHT]_CAN_ID DoorReversal FRONT RIGHT = false
+
+; Should be in CLOSE_DOOR state
+; Check that DoorMotor is commanded to CLOSE
+0.21s A F DoorMotor FRONT LEFT : command == CLOSE
+0.21s A F DoorMotor FRONT RIGHT : command == CLOSE
+; Check that mDoorMotor == DoorMotor
+0.21s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == CLOSE
+0.21s A N DOOR_MOTOR_COMMAND_[FRONT][RIGHT]_CAN_ID DoorMotor FRONT RIGHT : getCommand == CLOSE
+
+; Set conditions for 5.T.1
+; mDoorClosed == True
+0.4s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0.4s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+
+; Should be in DOOR_CLOSED state
+; Check that DoorMotor is commanded to STOP
+0.61s A F DoorMotor FRONT LEFT : command == STOP
+0.61s A F DoorMotor FRONT RIGHT : command == STOP
+; Check that mDoorMotor == DoorMotor
+0.61s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == STOP
+0.61s A N DOOR_MOTOR_COMMAND_[FRONT][RIGHT]_CAN_ID DoorMotor FRONT RIGHT : getCommand == STOP
+
+; Set conditions for 5.T.2
+; mAtFloor[f,b] == True
+0.8s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+; mDesiredFloor.f == f AND mDesiredFloor.b == b
+0.8s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 1 FRONT UP
+; mDriveSpeed == (0, STOP)
+0.8s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+
+; ------------------
+; Start Sequence
+; ------------------
+
+;#arc '7B/1a'
+; Passenger arrives
+
+;#arc '7B/2a'
+1.01s A F DoorMotor FRONT LEFT : command == OPEN
+1.01s A F DoorMotor FRONT RIGHT : command == OPEN
+
+; Inherit property
+1.1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+1.1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = false
+
+;#arc '7B/2b'
+; Countdown = Dwell
+
+;#arc '7B/2c'
+1.2s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+1.2s I 0s N DOOR_OPEN_SENSOR_[FRONT][RIGHT]_CAN_ID DoorOpened FRONT RIGHT = true
+
+;#arc '7B/2d'
+1.41s A F DoorMotor FRONT LEFT : command == STOP
+1.41s A F DoorMotor FRONT RIGHT : command == STOP
+
+;#arc '7B/3a'
+; Countdown -= 1

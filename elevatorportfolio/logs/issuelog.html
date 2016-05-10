@@ -1,0 +1,1619 @@
+<!--
+18649 Fall 2015
+Group 12
+Tom Eliot (tke)
+Shepard Emerson (semerson)
+Daniel Gorziglia (dgorzigl)
+Daniel Haddox (dhaddox)
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>18649 - Issue Log</title>
+</head>
+<body>
+<h1 style="text-align: center;">18649 - Issue Log<br>
+</h1>
+<hr style="width: 100%; height: 2px;">18649 Fall 2015<br>
+Group 12 - Tom Eliot (tke), Shepard Emerson (semerson), Daniel Gorziglia (dgorzigl), Daniel Haddox (dhaddox)<br>
+<hr style="width: 100%; height: 2px;">This table has an entry for each
+design issue during the semester.&nbsp; Add new entries to the bottom
+of the table (you may need to add new rows).&nbsp; Leave all the
+previous entries in place so that at the end of the project you have a
+complete list of the design changes that you have made throughout the
+project.&nbsp; The meaning of the table entries is as follows:<br>
+<ul>
+  <li>Issue number - unique identifier for each entry</li>
+  <li>Date found - the date the issue was found</li>
+  <li>Date fixed - the date the issue was fixed</li>
+  <li>Change made by - andrewID of the person or persons responsible
+for the change</li>
+  <li>Origin - the earliest artifact where the issue was present.&nbsp;
+For example, if the a bug in the code is ultimately the result of an
+incorrect sequence diagram, then the origin would be that particular
+sequence diargam</li>
+  <li>Description - brief description of the issue</li>
+  <li>Resolution - brief description of the changes made to resolve the
+issue.&nbsp; If the entry is not resolved, put a note like "Pending"
+here.<br>
+  </li>
+  <li>Artifact(s) chagned - a list of the artifacts that were modified
+to resolve the issue.&nbsp; This should be a specific list, such as
+"doorcontrol requirements", "SD 1.4A", "DriveControl statechart",
+"doorcontrol.java"<br>
+  </li>
+</ul>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">Issue #<br>
+      </td>
+      <td style="vertical-align: top;">Date Found<br>
+      </td>
+      <td style="vertical-align: top;">Date Fixed<br>
+      </td>
+      <td style="vertical-align: top;">Change Made By<br>
+      </td>
+      <td style="vertical-align: top;">Origin<br>
+      </td>
+      <td style="vertical-align: top;">Description<br>
+      </td>
+      <td style="vertical-align: top;">Resolution<br>
+      </td>
+      <td style="vertical-align: top;">Artifact(s) Changed<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">1<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl was triggered from mDesiredFloor, changed to mDoorClosed.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagram updated to agree with behavioral requirements.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">2<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl was triggered from mDesiredFloor, changed to mDoorClosed.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagram updated to agree with behavioral requirements.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">3<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2A<br>
+      </td>
+      <td style="vertical-align: top;">CarCallControl should have been called CarButtonControl<br>
+      </td>
+      <td style="vertical-align: top;">Changed label to CarButtonControl<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">4<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2B<br>
+      </td>
+      <td style="vertical-align: top;">CarCallControl should have been called CarButtonControl<br>
+      </td>
+      <td style="vertical-align: top;">Changed label to CarButtonControl<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2B<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">5<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+      <td style="vertical-align: top;">4c should have been 4b<br>
+      </td>
+      <td style="vertical-align: top;">Changed 4c label to 4b<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+      <td style="vertical-align: top;">CarLantern should be set to On, not just set<br>
+      </td>
+      <td style="vertical-align: top;">Set value to on<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">7<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">9/23/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagrams 1b,1c,2a,5a,5b,7c,8a,9a<br>
+      </td>
+      <td style="vertical-align: top;">DoorMotor close should not be used<br>
+      </td>
+      <td style="vertical-align: top;">set DoorMotor to nudge<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagrams 1b,1c,2a,5a,5b,7c,8a,9a<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">8<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9<br>
+      </td>
+      <td style="vertical-align: top;">mDesiredFloor should not have had brackets<br>
+      </td>
+      <td style="vertical-align: top;">Removed brackets from mDesiredFloor<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">9<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7C<br>
+      </td>
+      <td style="vertical-align: top;">CarLantern should be turned off when the door closes<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl turns the CarLantern off when a door closes<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">10<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9<br>
+      </td>
+      <td style="vertical-align: top;">DesiredFloor triggers on mdoorclosed=false<br>
+      </td>
+      <td style="vertical-align: top;">changed sequence diagram to include mdoorclosed=false<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 8A<br>
+      </td>
+      <td style="vertical-align: top;">Drive should be commanded slow by doorClosed not mDoorMotor<br>
+      </td>
+      <td style="vertical-align: top;">Made drive commanded slow by doorClosed<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 8A<br>
+      </td>
+     </tr>
+   </tr>
+   <tr>
+      <td style="vertical-align: top;">12<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 10<br>
+      </td>
+      <td style="vertical-align: top;">Needed to add a sequence to deal with overweight sensor<br>
+      </td>
+      <td style="vertical-align: top;">added use case for passenger entering overweight elevator<br>
+      </td>
+      <td style="vertical-align: top;">Use Case 10<br>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">13<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">9/24/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9A<br>
+      </td>
+      <td style="vertical-align: top;">Doors must be triggered by mDriveSpeed<br>
+      </td>
+      <td style="vertical-align: top;">Made doors triggered by mDriveSpeed and AtFloor<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">14<br>
+      </td>
+      <td style="vertical-align: top;">9/29/15<br>
+      </td>
+      <td style="vertical-align: top;">9/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Scenario & Sequence Diagram 4A<br>
+      </td>
+      <td style="vertical-align: top;">Scenario did not turn off the car button<br>
+      </td>
+      <td style="vertical-align: top;">Scenario + sequence diagram included to turn off car button <br>
+      </td>
+      <td style="vertical-align: top;">Scenario & Sequence Diagram 4A<br>
+      </td>
+    </tr>
+        <tr>
+      <td style="vertical-align: top;">15<br>
+      </td>
+      <td style="vertical-align: top;">9/29/15<br>
+      </td>
+      <td style="vertical-align: top;">9/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Scenario & Sequence Diagram 3A<br>
+      </td>
+      <td style="vertical-align: top;">Scenario did not turn off the hall light<br>
+      </td>
+      <td style="vertical-align: top;">Scenario + sequence diagram included to turn off hall light <br>
+      </td>
+      <td style="vertical-align: top;">Scenario & Sequence Diagram 3A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">16<br>
+      </td>
+      <td style="vertical-align: top;">10/6/15<br>
+      </td>
+      <td style="vertical-align: top;">10/6/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl Statechart<br>
+      </td>
+      <td style="vertical-align: top;">6.T.3 and 6.T.4 arcs labeled backwards<br>
+      </td>
+      <td style="vertical-align: top;">swapped arc labels <br>
+      </td>
+      <td style="vertical-align: top;">DriveControl Statechart<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">17<br>
+      </td>
+      <td style="vertical-align: top;">10/6/15<br>
+      </td>
+      <td style="vertical-align: top;">10/6/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">CarButtonControl Transition<br>
+      </td>
+      <td style="vertical-align: top;">9.T.2 is missing a condition<br>
+      </td>
+      <td style="vertical-align: top;">added condition (mAtFloor == TRUE)<br>
+      </td>
+      <td style="vertical-align: top;">CarButtonControl Transition<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">18<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Statechart<br>
+      </td>
+      <td style="vertical-align: top;">Both states should set mCarLantern<br>
+      </td>
+      <td style="vertical-align: top;">Added output for message in both states<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Statechart<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">19<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Transitions<br>
+      </td>
+      <td style="vertical-align: top;">7.T.1 should be != True<br>
+      </td>
+      <td style="vertical-align: top;">Changed 7.T.1 to mDoorClosed[*,*] != True<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Transitions<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">20<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Statechart<br>
+      </td>
+      <td style="vertical-align: top;">Door closed state should set hallway to none<br>
+      </td>
+      <td style="vertical-align: top;">fixed statechart<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher State Chart<br>
+      </td>
+    <tr>
+      <td style="vertical-align: top;">21<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">10/15/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher State Variables<br>
+      </td>
+      <td style="vertical-align: top;">STD and code assume a state variable that wasnt in req2<br>
+      </td>
+      <td style="vertical-align: top;">added currentHallway state variable to req2<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher State Variables<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">22<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9A<br>
+      </td>
+      <td style="vertical-align: top;">Needs CarLight for traceability, message passing and triggers incorrect<br>
+      </td>
+      <td style="vertical-align: top;">Added CarLight messages, fixed message passing issues<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">23<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2B<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram not suitable for integration tests<br>
+      </td>
+      <td style="vertical-align: top;">Simpliefied diagram + redid traceability for SD.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2B<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">24<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9A<br>
+      </td>
+      <td style="vertical-align: top;">Sequece Diagram needs to trace to 9.2.2<br>
+      </td>
+      <td style="vertical-align: top;">Pending fix.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 9A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">25<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Statechart<br>
+      </td>
+      <td style="vertical-align: top;">Transition 7.T.1 needs case for desireddirection to be the lantern's direction.<br>
+      </td>
+      <td style="vertical-align: top;">Added condition to 7.T.1<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Statechart<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">26<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">10/16/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 4A<br>
+      </td>
+      <td style="vertical-align: top;">Car light turned off after door opened<br>
+      </td>
+      <td style="vertical-align: top;">Arcs moved so car light turns off on doorclosed = false<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 4A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">27<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Integration Test Log<br>
+      </td>
+      <td style="vertical-align: top;">4A,11A missing from log<br>
+      </td>
+      <td style="vertical-align: top;">Added 4A, 11A to log<br>
+      </td>
+      <td style="vertical-align: top;">Integration Test Log<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">28<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl Transition Conditions<br>
+      </td>
+      <td style="vertical-align: top;">Transmission 7.T.1 should check DesiredDirection macro, not mDesiredFloor.d (direction)<br>
+      </td>
+      <td style="vertical-align: top;">fixed transition table in requirements 2<br>
+      </td>
+      <td style="vertical-align: top;">Requirements 2 LanternControl Transition condition<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">29<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 8A<br>
+      </td>
+      <td style="vertical-align: top;">CarPositionControl is in the sequence diagram when it doesn't need to be<br>
+      </td>
+      <td style="vertical-align: top;">removed CarPositionControl from SD8a and traceability spreadsheet<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 8A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">30<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">10/20/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 1B, 1C<br>
+      </td>
+      <td style="vertical-align: top;">Arc 3A incorrectly labeled as local object message<br>
+      </td>
+      <td style="vertical-align: top;">Changed arc label to reflect that passenger pressed button<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 1B, 1C<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">31<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2A<br>
+      </td>
+      <td style="vertical-align: top;">Post condition says both doors are closed, should be one<br>
+      </td>
+      <td style="vertical-align: top;">Changed postconditions to say one door (in precondition) is closed<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">32<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">HallButtonControl<br>
+      </td>
+      <td style="vertical-align: top;">Replication was incorrectly used for atFloor CAN mailbox<br>
+      </td>
+      <td style="vertical-align: top;">Changed replication computer usage for HallCuttonControl<br>
+      </td>
+      <td style="vertical-align: top;">HallButtonControl<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">33<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+      <td style="vertical-align: top;">Arc 3b read mHallLight when it should read HallLight<br>
+      </td>
+      <td style="vertical-align: top;">Changed to HallLight<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">34<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+      <td style="vertical-align: top;">SD needs Dispatcher<br>
+      </td>
+      <td style="vertical-align: top;">Added Dispatcher to sequnece iagram to properly trigger hallbuttoncontrol.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">35<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl State Transition Diagram<br>
+      </td>
+      <td style="vertical-align: top;">Transitions T3, T4 backwards<br>
+      </td>
+      <td style="vertical-align: top;">Switched T3 and T4<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl State Transition Diagram<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">36<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Code<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher transition from doors_closed to doors_not_closed condition wrong<br>
+      </td>
+      <td style="vertical-align: top;">Changed == 1 to != -1<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Code<br>
+    <tr>
+      <td style="vertical-align: top;">37<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Thomas Eliot<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl Requirements 2<br>
+      </td>
+      <td style="vertical-align: top;">Leveling needed to be added<br>
+      </td>
+      <td style="vertical-align: top;">Added states 4,5 transitions 5,6,7,8, leveling behavioral requirements, DriveControl leveling implementation, SD 3b<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl Requirements 2, DriveControl SD, DriveControl unit test, DriveControl implementation<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">38<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">DoorControl Transition 5.T.1<br>
+      </td>
+      <td style="vertical-align: top;">Weight check needs to check that there is a landing<br>
+      </td>
+      <td style="vertical-align: top;">Added landing check to weight check<br>
+      </td>
+      <td style="vertical-align: top;">DoorControl Transition 5.T.1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">38<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">10/21/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagram needs Dipatcher<br>
+      </td>
+      <td style="vertical-align: top;">Added Dispatcher to SD + changed ordering<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">39<br>
+      </td>
+      <td style="vertical-align: top;">10/25/15<br>
+      </td>
+      <td style="vertical-align: top;">10/25/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram had arcs going from Lantern to LanternControl<br>
+      </td>
+      <td style="vertical-align: top;">fixed arrow direction<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">40<br>
+      </td>
+      <td style="vertical-align: top;">10/25/15<br>
+      </td>
+      <td style="vertical-align: top;">10/25/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 3A<br>
+      </td>
+      <td style="vertical-align: top;">LanternControl and HallButtonControl needed to receive mDesiredFloor, but only had arc going HallButton<br>
+      </td>
+      <td style="vertical-align: top;">fixed sequence diagram, need to fix traceability before next handin<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7A, traceability<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">41<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher implementation, statechart<br>
+      </td>
+      <td style="vertical-align: top;">Acceptance test 3 does not pass because the elevator doesn't pick up passengers on the way down<br>
+      </td>
+      <td style="vertical-align: top;">Updated dispatcher to command elevator to stop at floors going down as well as up.<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher implementation, statechart<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">42<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl implementation, statechart<br>
+      </td>
+      <td style="vertical-align: top;">Sometimes the car tries to level when drive has not fully stopped (goes from down to level up, for example)<br>
+      </td>
+      <td style="vertical-align: top;">Added check in transitions 6.T.5, 6.T.7 for drive speed to be stopped<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl implementation, statechart<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">43<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 5A and 5B<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagrams needed to be updated to reflect new high level requirements for door reversal behavior.<br>
+      </td>
+      <td style="vertical-align: top;">Updated sequence diagrams to reflect new requirements.<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 5A and 5B<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">44<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">DoorControl Requirements<br>
+      </td>
+      <td style="vertical-align: top;">Time triggered requirements need to be updated to reflect new high-level requirements.<br>
+      </td>
+      <td style="vertical-align: top;">Updated DoorControl time triggered requirements to reflect new high level requirements.<br>
+      </td>
+      <td style="vertical-align: top;">DoorControl Requirements<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">45<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagrams 7B, 9A<br>
+      </td>
+      <td style="vertical-align: top;">SDs needs new pre condition to make DoorControl requirements relevant<br>
+      </td>
+      <td style="vertical-align: top;">Updated sequence diagrams to include new pre-conditions<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagrams 7B, 9A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">46<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher<br>
+      </td>
+      <td style="vertical-align: top;">Logic for sabath elevator is too slow. Dispatcher requirements are too simple for the design goal at this point in the project.<br>
+      </td>
+      <td style="vertical-align: top;">Updated dispatcher requirements to more appropriately set mDesiredFloor<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Behavioral Requirements<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">47<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Integration Test 9A<br>
+      </td>
+      <td style="vertical-align: top;">Integration test 9a needs to be udpated to reflect new dispatcher statechart<br>
+      </td>
+      <td style="vertical-align: top;">Integration test 9a updated<br>
+      </td>
+      <td style="vertical-align: top;">Integration Test 9A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">48<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">10/28/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Unit Test<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher unit test needs to be updated to reflect new statechart<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher unit test updated and passing<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Unit Test<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">49<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">SD7A<br>
+      </td>
+      <td style="vertical-align: top;">scenario and sequence diagram out of date due to new high level requirements and dispatcher / laterncontrol requirements<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagram preconditions updated to meet new high level requirements RT-8.1 and RT-8.2, also updated to match new dispatcher / lantern control requirements<br>
+      </td>
+      <td style="vertical-align: top;">Scenario 7A Preconditions, SD7A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">50<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">SD3A<br>
+      </td>
+      <td style="vertical-align: top;">scenario and sequence diagram out of date due to new high level requirements and dispatcher / laterncontrol requirements<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagram preconditions updated to meet new high level requirements RT-8.1 and RT-8.2, also updated to match new dispatcher / lantern control requirements<br>
+      </td>
+      <td style="vertical-align: top;">Scenario 7A Preconditions, SD7A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">51<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">R-T10<br>
+      </td>
+      <td style="vertical-align: top;">Doors can now close instead of nudge<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagrams updated to close instead of nudge<br>
+      </td>
+      <td style="vertical-align: top;">SD 1b, 1c, 2a, 2b, 5a, 5b, 7c, 8a<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">52<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">R-T9<br>
+      </td>
+      <td style="vertical-align: top;">Drive must now go fast<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagrams updated to cause drive to go fast<br>
+      </td>
+      <td style="vertical-align: top;">SD 8a<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">53<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">R-T9<br>
+      </td>
+      <td style="vertical-align: top;">CarPositionControl must calculate commit point<br>
+      </td>
+      <td style="vertical-align: top;">Sequence diagram updated to have mCarLevelIndictor<br>
+      </td>
+      <td style="vertical-align: top;">SD 6a<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">54<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">R-T9<br>
+      </td>
+      <td style="vertical-align: top;">CarPositionControl must calculate commit point<br>
+      </td>
+      <td style="vertical-align: top;">Requirements updated to calculate commit point and use for carpositionindicator<br>
+      </td>
+      <td style="vertical-align: top;">CarPositionControl requirements<br>
+      </td>
+    </tr>
+        <tr>
+      <td style="vertical-align: top;">55<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">R-T9<br>
+      </td>
+      <td style="vertical-align: top;">Drivecontrol must now go fast<br>
+      </td>
+      <td style="vertical-align: top;">Requirements updated to transition from slow to fast and back<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl requirements<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">56<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">10/29/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox<br>
+      </td>
+      <td style="vertical-align: top;">SD 3A<br>
+      </td>
+      <td style="vertical-align: top;">SD 3A mDesiredFloor message and CarLantern didnt match new tt reqs<br>
+      </td>
+      <td style="vertical-align: top;">SD3A updated to proper mDesireFloor message and CarLantern actions<br>
+      </td>
+      <td style="vertical-align: top;">SD3A<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">57<br>
+      </td>
+      <td style="vertical-align: top;">11/5/15<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Implementation<br>
+      </td>
+      <td style="vertical-align: top;">Error with registering HallCalls, fails on construction during unit test<br>
+      </td>
+      <td style="vertical-align: top;">Changed dispatcher constructor and helper functions to use utility.java<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher.java<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">58<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Implementation<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher state chart outputs not set correctly, helper functions compute incorrectly<br>
+      </td>
+      <td style="vertical-align: top;">Fixed bugs in statechart and helper functions<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher.java<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">59<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Unit Test<br>
+      </td>
+      <td style="vertical-align: top;">Test does not wait long enough for transition, test asserts wrong floor<br>
+      </td>
+      <td style="vertical-align: top;">Changed message timings and assertions<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher_test1.mc<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">60<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Unit Test<br>
+      </td>
+      <td style="vertical-align: top;">Test does not wait long enough for transition, test asserts wrong floor<br>
+      </td>
+      <td style="vertical-align: top;">Changed message timings and assertions<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher_test1.mf<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">60<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">11/11/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">Dispatcher Requirements<br>
+      </td>
+      <td style="vertical-align: top;">Transitions 11.T.5&amp;3, 11.T.8&amp;6, 11.T.6&amp;7, 11.T.3&amp;4 not mutually exclusive<br>
+      </td>
+      <td style="vertical-align: top;">changed 11.T 3, 5, 6, 8<br>
+      </td>
+      <td style="vertical-align: top;">requirements2.html<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">61<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">Tom Eliot<br>
+      </td>
+      <td style="vertical-align: top;">DoorControl Requirements<br>
+      </td>
+      <td style="vertical-align: top;">5.T.5 needs to open on mDF.b = BOTH<br>
+      </td>
+      <td style="vertical-align: top;">changed reqs2, implementation<br>
+      </td>
+      <td style="vertical-align: top;">requirements2.html, DoorControl.java<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">62<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15p<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl Implementation<br>
+      </td>
+      <td style="vertical-align: top;">timerExpired has magic nubmers and needs to be clearer with more comments<br>
+      </td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl.java<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">63<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">DriveControl Implementation<br>
+      </td>
+      <td style="vertical-align: top;">Bug with doors reopening at floors<br>
+      </td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+      <td style="vertical-align: top;">DoorControl.java<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">64<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">11/12/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">CarPositionControl Implementation <br>
+      </td>
+      <td style="vertical-align: top;">Magic numbers and poorly commented code<br>
+      </td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+      <td style="vertical-align: top;">CarPositionControl.java<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">65<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7C<br>
+      </td>
+      <td style="vertical-align: top;">Arc 3B is labeled incorrectly<br>
+      </td>
+      <td style="vertical-align: top;">Renamed arc 3B label<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 7C<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">66<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 1F<br>
+      </td>
+      <td style="vertical-align: top;">Arc 1b is labeled incorrectly<br>
+      </td>
+      <td style="vertical-align: top;">Renamed arc 1b label<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 1F<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">67<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2B<br>
+      </td>
+      <td style="vertical-align: top;">Arc 1b is labeled incorrectly<br>
+      </td>
+      <td style="vertical-align: top;">Renamed arc 1b label<br>
+      </td>
+      <td style="vertical-align: top;">Sequence Diagram 2B<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">68<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 1A
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 1A
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">69<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 1B
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 1B
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">70<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 1C
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 1C
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">71<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 2A
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 2A
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">72<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 2B
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 2B
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">73<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 5A
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 5A
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">74<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">Integration Test 5B
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 5B
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">75<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson
+      </td>
+      <td style="vertical-align: top;">Integration Test 7C
+      </td>
+      <td style="vertical-align: top;">Test updated to reflect new sequence diagram + network messages
+      <td style="vertical-align: top;">Updated test
+      </td>
+      <td style="vertical-align: top;">Integration Test 7C
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">76<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15<br>
+      </td>
+      <td style="vertical-align: top;">11/19/15
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson
+      </td>
+      <td style="vertical-align: top;">DriveControl, DoorControl, CarPositionControl, Dispatcher Unit Tests
+      </td>
+      <td style="vertical-align: top;">Message CAN IDs and translators incorrect after message update
+      <td style="vertical-align: top;">Updated all CAN IDs and translators in unit tests
+      </td>
+      <td style="vertical-align: top;">DriveControl, DoorControl, CarPositionControl, Dispatcher Unit Tests
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">77<br>
+      </td>
+      <td style="vertical-align: top;">12/4/15<br>
+      </td>
+      <td style="vertical-align: top;">12/4/15
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox
+      </td>
+      <td style="vertical-align: top;"> CarButtonControl StateChart
+      </td>
+      <td style="vertical-align: top;"> Removed servicing state
+      <td style="vertical-align: top;"> Updated code / documentation to remove servicing state
+      </td>
+      <td style="vertical-align: top;"> CarButtonControl Requirements, Statechart, Transitions, Requirements to Statechart Traceability, Code, Unit test
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">78<br>
+      </td>
+      <td style="vertical-align: top;">12/4/15<br>
+      </td>
+      <td style="vertical-align: top;">12/4/15
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox
+      </td>
+      <td style="vertical-align: top;"> HallButtonControl StateChart
+      </td>
+      <td style="vertical-align: top;"> Removed servicing state
+      <td style="vertical-align: top;"> Updated code / documentation to remove servicing state
+      </td>
+      <td style="vertical-align: top;"> HallButtonControl Requirements, Statechart, Transitions, Requirements to Statechart Traceability, Code, Unit test
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">79<br>
+      </td>
+      <td style="vertical-align: top;">12/4/15<br>
+      </td>
+      <td style="vertical-align: top;">12/4/15
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox
+      </td>
+      <td style="vertical-align: top;"> DoorControl Requirementss
+      </td>
+      <td style="vertical-align: top;"> requirements incorrectly state to check calls at floor
+      <td style="vertical-align: top;"> Updated documentation to remove check, removed duplicate reqs 5.7.1/2
+      </td>
+      <td style="vertical-align: top;"> DoorControl Requirements, requirements to statechart tracecability
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">80<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson
+      </td>
+      <td style="vertical-align: top;"> HallButtonControl Requirements, Statechart, Traceability
+      </td>
+      <td style="vertical-align: top;"> HallButtonControl needs Servicing state added back to avoid door cycling on floor 1
+      <td style="vertical-align: top;"> Added servicing state back to HallButtonControl, updated requirements and traceability to match
+      </td>
+      <td style="vertical-align: top;"> HallButtonControl Requirements, Statechart, Traceability
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">81<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson
+      </td>
+      <td style="vertical-align: top;"> Sequence Diagram 2A, Sequence Diagram 2B
+      </td>
+      <td style="vertical-align: top;"> Sequence diagram needs to be updated to reflect removal of Servicing state from CarButtonControl
+      <td style="vertical-align: top;"> Removed Servicing from sequence diagrams
+      </td>
+      <td style="vertical-align: top;"> Sequence Diagram 2A, Sequence Diagram 2B
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">82<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15
+      </td>
+      <td style="vertical-align: top;">Shepard Emerson
+      </td>
+      <td style="vertical-align: top;">LanternControl implementation, statechart, requirements, traceability, unit test
+      </td>
+      <td style="vertical-align: top;"> LanternControl needs a latching state due to timing changes of dispatcher
+      <td style="vertical-align: top;"> Added latching state to LanternControl
+      </td>
+      <td style="vertical-align: top;"> LanternControl implementation, statechart, requirements, traceability, unit test
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">83<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15
+      </td>
+      <td style="vertical-align: top;">Daniel Gorziglia
+      </td>
+      <td style="vertical-align: top;">DoorControl Implementation
+      </td>
+      <td style="vertical-align: top;"> Found a bug where doors will not open when in nudge state and overweight sensor trips
+      <td style="vertical-align: top;"> Added another transition to open doors if overweight occurs
+      </td>
+      <td style="vertical-align: top;"> DoorControl Implementation
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">84<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15
+      </td>
+      <td style="vertical-align: top;">Daniel Haddox
+      </td>
+      <td style="vertical-align: top;">SD3A
+      </td>
+      <td style="vertical-align: top;"> Did not trace to new dispatcher reqs
+      <td style="vertical-align: top;"> Updated to meet dispatcher req changes
+      </td>
+      <td style="vertical-align: top;"> SD3A
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">85<br>
+      </td>
+      <td style="vertical-align: top;">12/7/15<br>
+      </td>
+      <td style="vertical-align: top;">12/15/15
+      </td>
+      <td style="vertical-align: top;">Tom Eliot
+      </td>
+      <td style="vertical-align: top;">DriveControl Implementation
+      </td>
+      <td style="vertical-align: top;"> Does not check for DoorMotor equals open
+      <td style="vertical-align: top;"> Updated files to check for DoorMotor equals open, added utility functions to Utility.java
+      </td>
+      <td style="vertical-align: top;"> DriveControl Implementation, Unit Tests, Integration Tests, Transitions 
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</body>
+</html>

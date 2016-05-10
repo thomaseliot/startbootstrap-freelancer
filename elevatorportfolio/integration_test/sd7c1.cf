@@ -1,0 +1,16 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 7C Integration Test Configuration
+
+DoorControl BACK LEFT 10ms true
+DoorControl BACK RIGHT 10ms true
+LanternControl UP 200ms true
+LanternControl DOWN 200ms true
+HallButtonControl 1 BACK UP 100ms true;

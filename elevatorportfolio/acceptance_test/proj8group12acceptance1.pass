@@ -1,0 +1,57 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Project 8 Acceptance Test 1
+; 
+; Everyone is coming back from meetings on floor 4 and going back to the other floors.
+; 
+; Time	Start Floor	Start Hallway	End Floor	End Hallway
+
+60s		4 	FRONT	1 	BACK
+80s		4 	FRONT	1 	FRONT
+85s		4 	FRONT	1 	BACK
+90s		4 	FRONT	8 	FRONT
+100s	4 	FRONT	2 	BACK
+150s	4 	FRONT	1 	FRONT
+155s	4 	FRONT	1 	BACK
+165s	4 	FRONT	8 	FRONT
+170s	4 	FRONT	6 	FRONT
+200s	4 	FRONT	1 	FRONT
+220s	4 	FRONT	5 	FRONT
+300s	4 	FRONT	1 	FRONT
+310s	4 	FRONT	1 	BACK
+320s	4 	FRONT	1 	BACK
+330s	4 	FRONT	6 	FRONT
+340s	4 	FRONT	6 	FRONT
+350s	4 	FRONT	6 	FRONT
+360s	4 	FRONT	8 	FRONT
+370s	4 	FRONT	6 	FRONT
+380s	4 	FRONT	3 	FRONT
+390s	4 	FRONT	7 	FRONT
+400s	4 	FRONT	7 	FRONT
+500s	4 	FRONT	7 	BACK
+520s	4 	FRONT	7 	FRONT
+550s	4 	FRONT	7 	BACK
+595s	4 	FRONT	7 	FRONT
+600s	4 	FRONT	3 	FRONT
+615s	4 	FRONT	6 	FRONT
+620s	4 	FRONT	2 	BACK
+650s	4 	FRONT	6 	FRONT
+700s	4 	FRONT	2 	BACK
+720s	4 	FRONT	6 	FRONT
+740s	4 	FRONT	8 	FRONT
+760s	4 	FRONT	7 	BACK
+780s	4 	FRONT	2 	BACK
+800s	4 	FRONT	1 	BACK
+805s	4 	FRONT	8 	FRONT
+810s	4 	FRONT	8 	FRONT
+815s	4 	FRONT	8 	FRONT
+820s	4 	FRONT	8 	FRONT
+1020s	4 	FRONT	6 	FRONT
+1520s	4 	FRONT	7 	BACK

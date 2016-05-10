@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>IntelliDrive - 18549 Team 4</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <img src="images/logo-bw.png" width="200">
+                </li>
+                <li>
+                    <a href="#overview">Overview</a>
+                </li>
+                <li>
+                    <a href="#concept">Concept</a>
+                </li>
+                <li>
+                    <a href="#motivation">Motivation</a>
+                </li>
+                <li>
+                    <a href="#competition">Competitive Analysis</a>
+                </li>
+                <li>
+                    <a href="#reqs">Requirements</a>
+                </li>
+                <li>
+                    <a href="#techspecs">Technical Specifications</a>
+                </li>
+                <li>
+                    <a href="#architecture">Architecture</a>
+                </li>
+                <li>
+                    <a href="#progress">Progress Updates</a>
+                </li>
+                <li>
+                    <a href="#photos">Photos</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="top-menu">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div id="overview" class="container-fluid">
+                    <span id="overview" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Project Overview</h2>
+                            <p>Project by Tom Eliot (tke), Shepard Emerson (semerson), Daniel Gorziglia (dgorzigl), Daniel Haddox (dhaddox)</p>
+                            <div class="container-fluid">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/skFBnF02Ktg" frameborder="0" allowfullscreen></iframe>
+                            </div>                            
+                            <h4>Posters</h4>
+                            <a href="pdf/capstone-hardware.pdf"> Hardware Poster</a>
+                            <br><a href="pdf/capstone-software.pdf"> Software Poster</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="concept" class="container-fluid">
+                    <span id="concept" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Concept</h2>
+                            <p>This product allows a racecar driver to more efficiently and safely operate the vehicle. The project integrates an ARM with a color LCD display, buttons, and various safety-critical status LEDs in order to properly relay the vehicle state from the CAN bus system to the driver.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="motivation" class="container-fluid">
+                    <span id="motivation" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Motivation</h2>
+                            <p>With the current dashboard design the driver has little knowledge of the possibly life-threatening state of the vehicle. Using our prototype system the driver will be able to easily understand the state of the vehicle while driving the race car in a competitive environment. Furthermore, using our remote telemetry system and SD card logs the crew and engineers will be able to easily diagnose and tune the vehicle. </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <span id="competition" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Competitive Analysis</h2>
+
+                            <ul>
+                                <li><a href="http://www.aim-sportline.com/eng/products-car/mxl2/index.htm">AiM MXL2</a></li>
+                                <ul>
+                                    <li>The AiM MXL2 is a dashlogging system used in go-karts, custom race cars, and in some formula SAE cars.</li>
+                                    <li>Differentiators: ease of integration with rest of system, wireless telemetry system, user interface buttons/knobs, color screen</li>
+                                    <img src="images/mxl2.png" width=500>
+                                </ul>
+                                <li><a href="http://www.motec.com/c187/c187overview/">MoTeC C187</a></li>
+                                <ul>
+                                    <li>The MoTeC C187 is a dashboard and datalogging system used in automotive applications, with a large color display and display customization software.</li>
+                                    <li>Differentiators: ease of integration with rest of system, wireless telemetry system, user interface buttons/knobs, size</li>
+                                    <img src="images/c187.png" width=500>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <span id="reqs" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Requirements</h2>
+
+                            <p>The requirements for our project are divided amongst the two sub-systems: the driver interface and the telemetry module </p>
+
+                            <h4>Driver Interface Requirements</h4>
+                            <ol>
+                                <li>
+                                    The dashboard shall have an integrated display, 2.8” diagonal or larger.
+                                </li>
+                                <li>
+                                    The dashboard display shall always display:
+                                    <ol type="a">
+                                        <li>Battery state of charge (SOC)</li>
+                                        <li>Current vehicle state (GLV on, high voltage enable, ready to drive, or error).</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    The dashboard display shall display while driving:
+                                    <ol type="a">
+                                        <li>Battery pack maximum cell temperature, max motor controller temperature.</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    The dashboard shall be readable in all conditions, i.e. in bright sunlit environments and dark rainy environments.
+                                </li>
+                                <li>
+                                    The interface shall have the following interface controls on the steering wheel:
+                                    <ol type="a">
+                                        <li>A continuous clickable rotary encoder on the left side</li>
+                                        <li>Four momentary buttons on the right side</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    The dashboard shall have the following interface controls on the main panel:
+                                    <ol type="a">
+                                        <li>Mode advance momentary button</li>
+                                        <li>Mode regress momentary button</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    The dashboard shall have the following safety-critical LEDs:
+                                    <ol type="a">
+                                        <li>Indicator for BSPD (brake system plausibility device) error</li>
+                                        <li>Indicator for IMD (insulation monitoring device) error</li>
+                                        <li>Indicator software shutdown error (a physical relay that opens the shutdown circuit on the vehicle and de-energizes the tractive system)</li>
+                                        <li>Indicator for software error (error state in software with energized tractive system)</li>
+                                        <li>Prominent indicator for egress (in case something is very wrong and the driver needs to exit immediately)</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    The dashboard shall have the following additional LEDs:
+                                    <ol type="a">
+                                        <li>A configurable LED bar above the screen</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    The dashboard shall be sealed against rain.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <span id="techspecs" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Technical Specifications</h2>
+                            <h4>Hardware</h4>
+                                <ul>
+                                    <li>STM32F429ZIT6</li>
+                                    <li>IS42S16400J</li>
+                                    <li>TFT LCD</li>
+                                    <li>SN65HVD1050</li>
+                                    <li>RGB LED</li>
+                                </ul>
+                            <h4>Software</h4>
+                                <ul>
+                                    <li>Altium Designer (formula team sponsorship)</li>
+                                    <li>Atmel Studio 7</li>
+                                    <li>FreeRTOS</li>
+                                    <li>Altia Designer 11</li>
+                                </ul>
+                            <h4>Protocols</h4>
+                                <ul>
+                                    <li>CAN</li>
+                                    <li>SPI</li>
+                                    <li>RGB LCD interface</li>
+                                    <li>I2C</li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <span id="architecture" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Architecture</h2>
+                            <h4>Hardware system architecture</h4>
+                            <img src="images/hwarch.png" width = 800>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <span id="usecase" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Use Cases</h2>
+                            User turns car on
+                            <ul>
+                                <li>User presses state advance button</li>
+                                <li>User waits for display and LEDs to show new state</li>
+                                <li>User repeats until system is in GLV on</li>
+                            </ul>
+                            Car enters error state
+                            <ul>
+                                <li>Car has an error condition</li>
+                                <li>DI shows error on LEDs and display</li>
+                                <li>Team identifies and remediates error</li>
+                                <li>User presses state advance button to turn car back on</li>
+                            </ul>
+                            User reads BMC SoC
+                            <ul>
+                                <li>Dashboard reads state of charge from CANbus </li>
+                                <li>User reads SoC from display and LEDs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <div class="container-fluid">
+                    <span id="interaction" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Interaction Diagram</h2>
+                            <img src="images/DIM_sequences_state.png" width = 500>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <span id="progress" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Progress Updates</h2>
+                            <h4>April 5, 2016</h4>
+                            As we hit the 3 weeks to demo mark, things are heating up. Our group is firing on all cylinders. <a href="pdf/CMR_Driver_Interface_Module.PDF">Schematics</a> are finished, and PCB layout is near completion. We're taking shifts laying out and sleeping! The final review and OK2FAB will take place tomorrow, then we send out the board to Advanced Circuits for assembly. In parallel, software development and user interface design is taking place. We have a preliminary task schedule, and will be using FreeRTOS.
+
+
+                            <img src="images/main-apr5.png" width=800>
+                            <img src="images/layout-apr5.png" width= 800>
+                            <img src="images/model-apr5.png" width= 800>
+                            <img src="images/UI-apr5.png" width= 500>
+
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <span id="photos" class="nav-link"></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Photos</h2>
+                            <img src="images/di0.jpg" width=800>
+                            <img src="images/di1.jpg" width=800>
+                            <img src="images/di2.jpg" width=800>
+                            <img src="images/di3.jpg" width=800>
+                            <img src="images/di4.jpg" width=800>
+                            <img src="images/di5.jpg" width=800>
+                            <img src="images/di6.jpg" width=800>
+                            <img src="images/di10.jpg" width=800>
+                            <img src="images/di9.jpg" width=800>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>

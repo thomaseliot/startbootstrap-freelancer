@@ -1,0 +1,738 @@
+<!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1">
+  <meta name="Author" content="Nicholas H. Zamora">
+  <title>18-649 Requirements to Constraints Traceability</title>
+</head>
+<body>
+<center>
+<center>
+<h1> 18649 - Requirements to Constraints Traceability<br>
+</h1>
+</center>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: left;"> 18649 Fall 2015<br>
+Group 12 - Tom Eliot (tke), Shepard Emerson (semerson), Daniel Gorziglia (dgorzigl), Daniel Haddox (dhaddox)<br>
+</div>
+<hr style="width: 100%; height: 2px;"></center>
+<p>This table maintains traceability between the requirements
+behaviors and
+the constraints given for each module.<br>
+</p>
+<p><u> You must provide a row in this table for every behavioral
+requirement in the elevator control system, Sections 5 through 11. This
+will
+obviously involve adding rows to the table below.</u> You do not need
+to create
+table rows for the environmental objects, Sections 1 through 4.&nbsp;
+There constraints are already given in the columns.<br>
+</p>
+<p>If you modify the given behaviors for the DoorControl,
+CarPositionControl and
+Dispatcher, this traceability table
+should
+reflect what you hand in. So that might involve changing some of the
+given
+answers in the table. In other words, we want the table you hand in to
+reflect
+<i>your</i> project which will almost certainly involve you changing
+what we've
+given below. We've just seeded it with some answers that happen to
+match the
+examples we've provided in the assignment to get you going.<br>
+</p>
+Be sure to include the name of each team member who did the
+traceability for each object.<br>
+<br>
+<hr width="100%">&nbsp;&nbsp; <br>
+<table style="width: 1535px; height: 1624px;" border="1" cellpadding="3"
+ frame="border">
+  <tbody>
+    <tr>
+      <td><u><b>Behavioral Requirements/Constraints</b></u></td>
+      <td style="vertical-align: top;">5.1 Doors closed when not
+at floor<br>
+      </td>
+      <td style="vertical-align: top;">5.2 Door reversal -&gt; doors
+open<br>
+      </td>
+      <td style="vertical-align: top;">5.3 Doors keep moving<br>
+      </td>
+      <td style="vertical-align: top;">5.4 Identical commands<br>
+      </td>
+      <td>5.5 Overweight -&gt; doors open<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">DoorControl
+-
+Completed by (Shepard Emerson, semerson)</span><br>
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td>5.6.1 atFloor + stopped + desiredfloor --> open door
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td>~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        5.6.2 atFloor +  stopped + desiredfloor --> set countdown
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td>5.7.1 mDoorOpened is true -> command door to stop
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td>~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        5.7.2 mDoorOpened is true -> decrement countdown
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td>5.8 mDoorClosed is true --> stop door + set DoorHasReversed = false
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td> 5.9 countdown expired + doorReversed is false --> close door
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td>~
+      </td>
+    </tr>
+    <tr>
+      <td> 5.10 countdown expired + doorReversed is true --> nudge door
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td>~<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        5.11 mDoorReversal is true -> open door + set DoorHasReversed = true
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        5.12 Overweight --> open door
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">X
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        5.13 Dwell shall be set to appropiate value
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        5.14 mDoorMotor = DoorMotor
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"> <u><b>Behavioral
+Requirements/Constraints</b></u></td>
+      <td style="vertical-align: top;">6.1 Any door not shut -&gt; Stop<br>
+      </td>
+      <td style="vertical-align: top;">6.2 Any door motor open -&gt;
+Stop<br>
+      </td>
+      <td style="vertical-align: top;">6.3, 6.3.1&nbsp; Adjacent value<br>
+      </td>
+      <td style="vertical-align: top;">6.4 EmergencyBrake -&gt; Stop<br>
+      </td>
+      <td style="vertical-align: top;">6.5 Overweight -&gt; Stop<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">DriveControl</span><span
+ style="font-weight: bold;"> - Completed by (Daniel Haddox, dhaddox)</span> </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.6 mDriveSpeed = DriveSpeed
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.7 mDrive = Drive
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.8 mEmergencyBrake -> Stop
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.9 Leveling
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.10 level -> stop
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.11 slow -> level
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.12 fast -> slow
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.13 stop -> level
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6.14 level -> slow
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+    </tr>
+     <tr>
+      <td style="vertical-align: top;">6.15 slow -> fast
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><u><b>Behavioral
+Requirements/Constraints</b></u></td>
+      <td style="vertical-align: top;">7.1 Both lanterns not on at same
+time
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">LanternControl</span><span
+ style="font-weight: bold;"> - Completed by (Daniel Gorziglia, dgorzigl)</span> </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">7.2 mDoorClosed is true -> carLantern is off</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">mDoorClosed is false and DesiredDirection not stop -> carLantern is on</td>
+      <td style="vertical-align: top;">X
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><u><b>Behavioral
+Requirements/Constraints</b></u></td>
+      <td style="vertical-align: top;">10.1 One position at a time
+      </td>
+      <td style="vertical-align: top;">10.2 Any doors open -&gt;
+Display
+floor
+      </td>
+      <td style="vertical-align: top;">10.3 Reflect actual floor,
+direction
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">CarPositionControl</span><span
+ style="font-weight: bold;"> - Completed by (Daniel Gorziglia, dgorzigl)</span> </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">10.4 DriveSpeed > Level -> CPI = nextFloor</td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">10.5 DriveSpeed &lt;= Level -> CPI = mAtFloor</td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">10.6 mCPI = CPI</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><u><b>Behavioral
+Requirements/Constraints</b></u></td>
+      <td style="vertical-align: top;">11.1 Target valid
+      </td>
+      <td style="vertical-align: top;">11.2 Can't go up from MaxFloor
+      </td>
+      <td style="vertical-align: top;">11.3 Can't go Down from MinFloor
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Dispatcher</span><span
+ style="font-weight: bold;"> - Completed by (Tom Eliot, tke)</span> </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+      <td style="vertical-align: top;">
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.4 CurrentDirection none and calls in direction d -> CurrentDirection set to d</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.5 CurrentDirection d and no calls in direction d -> CurrentDirection set to none</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.6 Hallway none, CurrentDirection not none, call in CurrentDirection agreeing with CurrentDirection -> target set to nearest call in CurrentDirection</td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.7 Hallway none, CurrentDirection not none, call in CurrentDirection in opposite direction as CurrentDirection -> target set to furthest call in CurrentDirection</td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.8 CurrentDirection not none and call in CurrentDirection agreeing with CurrentDirection -> DesiredDirection set to CurrentDirection</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.9 CurrentDirection not none, no CarCalls in CurrentDirection and either HallCall for opposite of CurrentDirection in CurrentDirection or CarCall in opposite of CurrentDirection -> DesiredDirection set to opposite of CurrentDirection</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">x
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.10 Target equal to CurrentFloor and call at CurrentFloor agreeing with DesiredDirection -> set hallway to hallway(s) at which call is true</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.11 Hallway not equal to none -> CurrentDirection set to none</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.12 Any door open -> CountDown set to delaytime</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.13 All doors closed -> CountDown decremented</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.14 CountDown equal to zero -> CurrentDirection set to DesiredDirection</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.15 Set mDesiredDwell</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11.15 Set mDesiredFloor</td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+      <td style="vertical-align: top;">~
+      </td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

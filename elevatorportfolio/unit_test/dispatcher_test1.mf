@@ -1,0 +1,236 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Dispatcher Unit Test
+; 
+
+#INCLUDE defines.mf
+
+; ------------------
+; Init
+; ------------------
+0s I 0s N CAR_POSITION_CAN_ID Integer = 1
+0.0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+0.0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+0.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+
+
+; ------------------
+; State 1: Wait
+; ------------------
+;#state '11.S.1'
+0.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 1
+0.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == STOP
+0.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+0.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+0.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.1
+; ------------------
+;#transition '11.T.1'
+1.0s I 0s N CAR_CALL_[2][BACK]_CAN_ID CarCall 2 BACK = true
+
+; ------------------
+; State 2: Up
+; ------------------
+;#state '11.S.2'
+1.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+1.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+1.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+1.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+1.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.5
+; ------------------
+;#transition '11.T.5'
+2.0s I 0s N CAR_POSITION_CAN_ID Integer = 2
+
+; ------------------
+; State 4: Hallway Locked
+; ------------------
+;#state '11.S.4'
+2.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+2.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+2.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == BACK
+2.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+2.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.7
+; ------------------
+;#transition '11.T.7'
+3.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+3.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+
+; ------------------
+; State 5: Doors Open
+; ------------------
+;#state '11.S.5'
+3.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+3.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+3.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+3.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+3.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+;deactivate car call as would happen in elevator, to prevent later transition T5
+3.6s I 0s N CAR_CALL_[2][BACK]_CAN_ID CarCall 2 BACK = false
+
+; ------------------
+; Transition 11.T.8
+; ------------------
+;#transition '11.T.8'
+4.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+4.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+
+; ------------------
+; State 6: Doors Closed
+; ------------------
+;#state '11.S.6'
+4.1s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+4.1s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+4.1s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+4.1s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+4.1s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.9
+; ------------------
+;#transition '11.T.9'
+
+; ------------------
+; State 2: Up
+; ------------------
+;#state '11.S.2'
+4.15s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+4.15s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+4.15s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+4.15s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+4.15s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.2
+; ------------------
+;#transition '11.T.2'
+
+; ------------------
+; State 1: Wait
+; ------------------
+;#state '11.S.1'
+5.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+5.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == STOP
+5.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+5.0s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+5.0s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+
+
+
+
+; ------------------
+; Transition 11.T.3
+; ------------------
+;#transition '11.T.3'
+6.0s I 0s N CAR_CALL_[2][BACK]_CAN_ID CarCall 2 BACK = true
+6.0s I 0s N CAR_POSITION_CAN_ID Integer = 3
+
+; ------------------
+; State 3: Down
+; ------------------
+;#state '11.S.3'
+6.5s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+6.5s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == DOWN
+6.5s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+6.5s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+6.5s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.6
+; ------------------
+;#transition '11.T.6'
+7.0s I 0s N CAR_POSITION_CAN_ID Integer = 2
+
+; ------------------
+; State 4: Hallway Locked
+; ------------------
+;#state '11.S.4'
+7.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+7.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == DOWN
+7.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == BACK
+7.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+7.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.7
+; ------------------
+;#transition '11.T.7'
+8.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+8.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+
+; ------------------
+; State 5: Doors Open
+; ------------------
+;#state '11.S.5'
+8.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+8.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == DOWN
+8.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+8.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+8.2s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+;deactivate car call as would happen in elevator, to prevent later transition T5
+8.6s I 0s N CAR_CALL_[2][BACK]_CAN_ID CarCall 2 BACK = false
+
+; ------------------
+; Transition 11.T.8
+; ------------------
+;#transition '11.T.8'
+9.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+9.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+
+; ------------------
+; State 6: Doors Closed
+; ------------------
+;#state '11.S.6'
+9.1s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+9.1s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == DOWN
+9.1s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+9.1s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+9.1s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.10
+; ------------------
+;#transition '11.T.10'
+
+; ------------------
+; State 3: Down
+; ------------------
+;#state '11.S.3'
+9.15s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+9.15s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == DOWN
+9.15s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+9.15s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+9.15s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+
+; ------------------
+; Transition 11.T.4
+; ------------------
+;#transition '11.T.4'
+
+; ------------------
+; State 1: Wait
+; ------------------
+;#state '11.S.1'
+10.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+10.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == STOP
+10.0s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+10.0s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4
+10.0s A N DESIRED_DWELL_CAN_ID DesiredDwell : getDwellFront == 4

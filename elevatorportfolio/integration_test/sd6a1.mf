@@ -1,0 +1,28 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 6A integration test
+
+#INCLUDE defines.mf
+
+;Precondition car is moving in hoistway
+0.4s I 0s N DRIVE_CAN_ID Drive = 0.3 UP FAST UP
+
+;#arc '6a/1a'
+0.4s I 0s N CAR_LEVEL_POSITION_CAN_ID Integer = 05000
+
+
+;#arc '6A/2a'
+1.0s A F CarPositionIndicator : floor == 3
+; seq diagram is passed if the carpositionindicator is asserted as displaying the correct floor
+
+
+; Passenger reads direction
+;#arc '6A/3a' 
+

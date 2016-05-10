@@ -1,0 +1,29 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; sd3a1 Integration Test
+
+Simulator Parameters:
+Command line = -cf ../integration_test/sd3a1.cf -mf ../integration_test/sd3a1.mf
+RandomSeed = 1450220652092
+CanNetworkBitTime = 0 ns
+Effective Can Bitrate = Infinity
+Run Time = null
+Real time rate = null
+Message File = ../integration_test/sd3a1.mf
+Controller File = ../integration_test/sd3a1.cf
+
+Assertion Results:
+
+
+******************Summary******************
+Passed:  0
+Failed:  0
+Total :  0
+

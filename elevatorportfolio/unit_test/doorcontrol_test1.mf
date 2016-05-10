@@ -1,0 +1,211 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Door Control Unit Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+; mAtFloor[1][FRONT] = false
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = false
+; mDesiredFloor = 1, FRONT, UP
+0s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 1 NONE STOP
+; mDriveSpeed = 0, UP
+0s I 0s N DRIVE_CAN_ID Drive = 0 UP STOP STOP
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+; mDoorClosed = false
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+; mDoorOpened = false
+0s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = false
+; mDesiredDwell = 2s
+0s I 0s N DESIRED_DWELL_CAN_ID DesiredDwell = 2 2
+; mDoorReversal = false
+0s I 0s N DOOR_REVERSAL_SENSOR_[FRONT][LEFT]_CAN_ID DoorReversal FRONT LEFT = false
+
+; ------------------
+; State 4: Close Doors
+; ------------------
+; Should be in CLOSE_DOOR state
+;#state '5.S.4'
+; Check that DoorMotor is commanded to CLOSE
+0.21s A F DoorMotor FRONT LEFT : command == CLOSE
+; Check that mDoorMotor == DoorMotor
+0.21s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == CLOSE
+
+; ------------------
+; 5.T.1
+; ------------------
+
+; Set conditions for 5.T.1
+;#transition '5.T.1'
+; mDoorClosed == True
+0.4s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+
+; ------------------
+; State 1: Door Closed
+; ------------------
+; Should be in DOOR_CLOSED state
+;#state '5.S.1'
+; Check that DoorMotor is commanded to STOP
+0.61s A F DoorMotor FRONT LEFT : command == STOP
+; Check that mDoorMotor == DoorMotor
+0.61s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == STOP
+
+; ------------------
+; 5.T.2
+; ------------------
+
+; Set conditions for 5.T.2
+;#transition '5.T.2'
+; mAtFloor[f,b] == True
+0.8s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+; mDesiredFloor.f == f AND mDesiredFloor.b == b
+0.8s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 1 FRONT UP
+; mDriveSpeed == (0, STOP)
+0.8s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+
+; ------------------
+; State 2: Open Door
+; ------------------
+; Should be in OPEN_DOOR state
+;#state '5.S.2'
+; Check that DoorMotor is commanded to OPEN
+1.01s A F DoorMotor FRONT LEFT : command == OPEN
+; Check that mDoorMotor == DoorMotor
+1.01s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == OPEN
+
+; Inherit property
+1.1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+
+; ------------------
+; 5.T.3
+; ------------------
+
+; Set conditions for 5.T.3
+;#transition '5.T.3'
+; mDoorOpened == True
+1.2s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+
+; ------------------
+; State 3: Door open
+; ------------------
+; Should be in DOOR_OPEN state
+;#state '5.S.3'
+; Check that DoorMotor is commanded to STOP
+1.41s A F DoorMotor FRONT LEFT : command == STOP
+; Check that mDoorMotor == DoorMotor
+1.41s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == STOP
+
+; Inherit property
+; Hallway is cleared
+1.5s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 5 NONE UP
+
+; ------------------
+; 5.T.4
+; ------------------
+
+; Set conditions for 5.T.4
+;#transition '5.T.4'
+; Wait for countdown to expire
+
+; ------------------
+; State 4: Close door
+; ------------------
+; Should be in CLOSE_DOOR state
+;#state '5.S.4'
+; Check that DoorMotor is commanded to CLOSE
+3.5s A F DoorMotor FRONT LEFT : command == CLOSE
+; Check that mDoorMotor == DoorMotor
+3.5s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == CLOSE
+
+; Inherit property
+3.6s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = false
+
+; ------------------
+; 5.T.5
+; ------------------
+
+; Set conditions for 5.T.5
+; Only excute first gaurd
+; (overweight guard is checked in other unit test)
+;#transition '5.T.5'
+; mDoorReversal == True
+3.7s I 0s N DOOR_REVERSAL_SENSOR_[FRONT][LEFT]_CAN_ID DoorReversal FRONT LEFT = true
+
+; ------------------
+; State 5: Door Reversal
+; ------------------
+; Should be in DOOR_REVERSAL state
+;#state '5.S.5'
+; Check that DoorMotor is commanded to OPEN
+4s A F DoorMotor FRONT LEFT : command == OPEN
+; Check that mDoorMotor == DoorMotor
+4s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == OPEN
+
+; ------------------
+; 5.T.6
+; ------------------
+
+; Set conditions for 5.T.6
+;#transition '5.T.6'
+; mDoorOpened == True
+4.2s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+
+; ------------------
+; State 3: Door Open
+; ------------------
+; Should be in DOOR_OPEN state
+;#state '5.S.3'
+; Check that DoorMotor is commanded to STOP
+4.41s A F DoorMotor FRONT LEFT : command == STOP
+; Check that mDoorMotor == DoorMotor
+4.41s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == STOP
+
+; ------------------
+; 5.T.7
+; ------------------
+
+; Set conditions for 5.T.7
+;#transition '5.T.7'
+; Wait for countdown to expire
+
+; ------------------
+; State 6: Nudge
+; ------------------
+; Should be in NUDGE_DOOR state
+;#state '5.S.6'
+; Check that DoorMotor is commanded to NUDGE
+6.5s A F DoorMotor FRONT LEFT : command == NUDGE
+; Check that mDoorMotor == DoorMotor
+6.5s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == NUDGE
+
+; Inherit property
+6.6s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = false
+
+; ------------------
+; 5.T.8
+; ------------------
+
+; Set conditions for 5.T.8
+;#transition '5.T.8'
+; mDoorClosed == True
+6.8s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+
+; ------------------
+; State 1: Doors Closed
+; ------------------
+; Should be in Doors closed state
+;#state '5.S.1'
+; Check that DoorMotor is commanded to STOP
+7.01s A F DoorMotor FRONT LEFT : command == STOP
+; Check that mDoorMotor == DoorMotor
+7.01s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == STOP

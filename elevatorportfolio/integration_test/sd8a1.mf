@@ -1,0 +1,168 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 8A Integration Test
+
+#INCLUDE defines.mf
+
+;Preconditions
+
+
+;Doors are closed
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;Drive is stopped, elevator has just arrived
+0s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+
+;Elevator is at floor 2
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+;Car Call 3 is on
+0.0s I 0s N CAR_CALL_[3][FRONT]_CAN_ID CarCall 3 FRONT = true
+
+;Put elevator into precondition state
+
+;Hall Call 2 is pressed
+0.0s I 0s N HALL_CALL_[2][BACK][UP]_CAN_ID  HallCall 2 BACK UP = true
+0.4s I 0s N HALL_CALL_[2][BACK][UP]_CAN_ID  HallCall 2 BACK UP = false
+
+0.5s A F DoorMotor BACK LEFT : command == OPEN
+0.5s A F DoorMotor BACK RIGHT : command == OPEN
+
+
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+2.0s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = true
+2.0s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = true
+
+;begin arcs
+
+;#arc '8A/1a'
+7.0s A F DoorMotor BACK LEFT : command == CLOSE
+7.0s A F DoorMotor BACK RIGHT : command == CLOSE
+
+8.0s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = false
+8.0s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = false
+
+;#arc '8A/1b''
+9.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+9.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;#arc '8A/1c'
+10.0s A F DoorMotor BACK LEFT : command == STOP
+10.0s A F DoorMotor BACK RIGHT : command == STOP
+
+
+;#arc '8A/1d'
+;#arc '8A/2a'
+11.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+11.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;#arc '8A/2b'
+11.0s A F CarLantern UP : lighted == false
+
+;#arc '8A/3a'
+11.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+11.0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;#arc '8A/3b'
+12.0s A N CAR_POSITION_CAN_ID Integer : getValue == 2
+
+;#arc '8A/3c'
+12.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 3
+12.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+12.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == NONE
+
+;#arc '8A/4a'
+13.0s A F Drive : speed == LEVEL
+13.0s A F Drive : direction == UP
+
+13.4s I 0s N CAR_LEVEL_POSITION_CAN_ID Integer = 06000
+
+;#arc '8A/4b'
+14.0s I 0s F DriveSpeed = UP 0.05
+14.2s I 0s F DriveSpeed = UP 0.1
+
+14.3s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = false
+
+;#arc '8A/4c'
+14.4s A N DRIVE_CAN_ID Drive : getSensorDirection == UP
+14.4s A N DRIVE_CAN_ID Drive : getSensorSpeed == 0.1
+
+;#arc '8A/4d'
+15.0s A N CAR_POSITION_CAN_ID Integer : getValue == 3
+
+;#arc '8A/5a'
+15.4s A N DOOR_MOTOR_COMMAND_[BACK][LEFT]_CAN_ID DoorMotor BACK LEFT : getCommand == STOP
+15.4s A N DOOR_MOTOR_COMMAND_[BACK][RIGHT]_CAN_ID DoorMotor BACK RIGHT : getCommand == STOP
+
+;#arc '8A/5b'
+16.0s A F Drive : speed == SLOW
+16.0s A F Drive : direction == UP
+
+;#arc '8A/6a'
+16.2s I 0s F DriveSpeed = UP 0.250
+
+;#arc '8A/6b'
+17.0s A F Drive : speed == FAST
+17.0s A F Drive : direction == UP
+
+;#arc '8A/7a'
+20.0s I 0s F DriveSpeed = UP 1.0
+
+20.2s I 0s N CAR_LEVEL_POSITION_CAN_ID Integer = 9500
+
+;#arc '8A/8a'
+20.5s A F Drive : speed == SLOW
+20.5s A F Drive : direction == UP
+
+;#arc '8A/9a'
+20.7s I 0s N AT_FLOOR_[3][FRONT]_CAN_ID AtFloor 3 FRONT = true
+
+;#arc '8A/10a'
+30.0s I 0s F DriveSpeed = UP 0.250
+
+;#arc '8A/10b'
+31.0s A F Drive : speed == LEVEL
+31.0s A F Drive : direction == UP
+
+;#arc '8A/11a'
+32.0s I 0s F DriveSpeed = UP 0.04
+
+;#arc '8A/11b'
+33.0s A N DRIVE_CAN_ID Drive : getSensorDirection == UP
+33.0s A N DRIVE_CAN_ID Drive : getSensorSpeed == 0.04
+
+;#arc '8A/11c'
+34.0s I 0s N AT_FLOOR_[3][FRONT]_CAN_ID AtFloor 3 FRONT = true
+
+
+;#arc '8A/11d'
+35.0s A N CAR_POSITION_CAN_ID Integer : getValue == 3
+
+;#arc '8A/11e'
+36.0s I 0s N LEVEL_SENSOR_[UP]_CAN_ID Leveling UP = true
+36.0s I 0s N LEVEL_SENSOR_[DOWN]_CAN_ID Leveling DOWN = true
+
+;#arc '8A/12a'
+37.0s A F Drive : speed == STOP
+37.0s A F Drive : direction == STOP
+
+;#arc '8A/12b'
+38.0s I 0s F DriveSpeed = STOP 0.00
+
+
+
+
+
+

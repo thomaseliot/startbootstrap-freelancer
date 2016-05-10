@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>High Level Requirements Verification</title>
+</head>
+<body>
+<h1 style="text-align: center;">18649 - High Level Requirements
+Verification<br>
+</h1>
+<hr style="width: 100%; height: 2px;">18649 Fall 2015<br>
+Group 12 - Tom Eliot (tke), Shepard Emerson (semerson), Daniel Gorziglia (dgorzigl), Daniel Haddox (dhaddox)<br>
+<hr style="width: 100%; height: 2px;">
+<h2>Verification Framework Description<br>
+</h2>
+The high level requirements are checked constantly as the elevator runs. This is achieved through a runtime monitor. The runtime monitor consists of multiple event-based statecharts that transition to error states when requirements are violated. The statecharts contain only two states, one for nominal operation and one for violated requirement.
+<br><br>
+
+<b>R-T6: The Car shall only stop at Floors for which there are pending calls.</b><br><br>
+<a href="RT6.png"><img src="RT6.png" href="RT6.png"></a><br><br>
+The statechart transistions to the error state when the elevator stops and there is no hall call or call call for that floor. The statechart returns to the nominal operation state when the elevator begins moving (but not leveling) again.<br><br><br>
+
+
+<b>R-T7: The Car shall only open Doors at Hallways for which there are pending calls.</b><br><br>
+<a href="RT7.png"><img src="RT7.png" href="RT7.png"></a><br><br>
+This statechart is duplicated for each hallway. The sta.echart transitions to the error state when either door opens and there is no hall call or car call for that hallway. The statechart returns to the nominal operation state when all of the doors closed.<br><br><br>
+
+<b>R-T8.1: If any door is open at a hallway and there are any pending calls at any other floor(s), a Car Lantern shall turn on.</b><br><br>
+<a href="RT81.png"><img src="RT81.png" href="RT81.png"></a><br><br>
+This statechart normally tracks the state of the doors, with states for door closed and door fully open. It will transition to the error state from the door open state if there are any calls in the system and the lantern is off, and report a violation.<br><br><br>
+
+<b>R-T8.2: If one of the car lanterns is lit, the direction indicated shall not change while the doors are open.</b><br><br>
+<a href="RT82.png"><img src="RT82.png" href="RT82.png"></a><br><br>
+This statechart has three states: doors closed, up lantern on, and down lantern on. It transitions to the up/down lantern on states when the lanterns light and the doors are open. If a transition occurrs between the up/down lantern states, a violation will be reported.<br><br><br>
+
+<b>R-T8.3: If one of the car lanterns is lit, the car shall service any calls in that direction first.</b><br><br>
+<a href="RT83.png"><img src="RT83.png" href="RT83.png"></a><br><br>
+This statechart starts in the lantern off state. If either the up or down lanterns light, it transitions to those respective states. Once the lantern turns off, the statechart wil transition to the latch state, where it then waits for the drive to be commanded. If, before the drive is commanded, the car lantern turns back on, the statechart will reset to the lantern off state then go back to the proper lantern on state. From the latch state, if the drive is commanded to the same direction as the lantern, the statechart will transition to the going up/down state then immediately transition back to the lantern off state. If the drive is commanded to the opposite direction as the lantern, the monitor checks if there were calls in the same direction as the lantern, and reports a violation if there were. Then, the statechart transitions to the going up/down states then immediately back to the lantern off state.<br><br><br>
+
+<b>R-T9: The Drive shall be commanded to fast speed to the maximum degree practicable..</b><br><br>
+<a href="RT9.png"><img src="RT9.png" href="RT9.png"></a><br><br>
+This statechart initializes into the stopped state. When the elevator starts moving, it will transition in to the Slow state. If the drive is not commanded to Fast for more than MAX_SLOW_DUR seconds (representative of the worst-case time in the slow state), the requirement will have been considered violated. Normal operation from this state would be to either go back to stopped or go to fast speed. If the elevator transitions to Fast speed, the only thing that can happen next is for it to slow again, sending the statechart into the slowing state. Again, if the elevator remains in this state for more than MAX_SLOW_DUR seconds, the violation will have been considered violated. It will also have been considered violated if the elevator goes back into the fast state from the slowing state. Under normal operation, the elevator will then transition back to the stopped state when it has stopped.<br><br><br>
+
+<b>R-T10: For each stop at a floor, at least one door reversal shall have occured before the doors are commanded to nudge.</b><br><br>
+<a href="RT10.png"><img src="RT10.png" href="RT10.png"></a><br><br>
+The statechart keeps track of four conditions: doors closed, doors opening, doors closing, and doors nudging, and is replicated for each hallway. The statechart initializes into the closed state, and openings, the total number of openings per cycle, is set to zero. When the doors start opening, the statechart transitions to the opening state, incrementing the openings count. Then, when the doors start closing, the statechart will transition to the closing state. If a reversal occurs, the statechart will transition back to the opening state and increment the openings count again. If this happens, the doors will begin to nudge, and the statechart transitions to the nudging state. In this case, openings was greater than one (2), so no violation was reported. However, if the doors had transitioned to the nudge state without a reversal having happened before, the openings count would only be one, and a violation would be reported.<br><br><br>
+
+<h2>Verification Instructions</h2>
+To use the runtime monitor, run the elevator simulator with the command "-monitor RuntimeRequirementsMonitor". This will check all of the requirements as the elevator runs. Running the simulator with a variety of acceptance tests and seeds will give better test coverage.<br>
+<br>
+
+<h2>Verification Results</h2>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Acceptance
+Test Name<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Verification
+Status<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Link to
+Verification Results<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Notes<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">proj7acceptance1.pass<br>
+      </td>
+      <td style="vertical-align: top;">pass<br>
+      </td>
+      <td style="vertical-align: top;"><a href="proj7acceptance1.stats">proj7acceptance1.stats</a><br>
+      </td>
+      <td style="vertical-align: top;">No high-level requirement violations past startup transients.<br>
+      </td>
+    </tr>
+    <tr>
+    <tr>
+      <td style="vertical-align: top;">proj7acceptance2.pass<br>
+      </td>
+      <td style="vertical-align: top;">pass<br>
+      </td>
+      <td style="vertical-align: top;"><a href="proj7acceptance2.stats">proj7acceptance2.stats</a><br>
+      </td>
+      <td style="vertical-align: top;">No high-level requirement violations past startup transients.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">proj7acceptance3.pass<br>
+      </td>
+      <td style="vertical-align: top;">pass<br>
+      </td>
+      <td style="vertical-align: top;"><a href="proj7acceptance3.stats">proj7acceptance3.stats</a><br>
+      </td>
+      <td style="vertical-align: top;">No high-level requirement violations past startup transients.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">proj8group12acceptance1.pass<br>
+      </td>
+      <td style="vertical-align: top;">pass<br>
+      </td>
+      <td style="vertical-align: top;"><a href="proj8group12acceptance1.stats">proj8group12acceptance1.stats</a><br>
+      </td>
+      <td style="vertical-align: top;">No high-level requirement violations past startup transients.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</body>
+</html>

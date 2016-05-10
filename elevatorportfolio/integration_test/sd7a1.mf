@@ -1,0 +1,62 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 7A Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+; Preconditions
+
+;Doors are closed
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+;Drive is stopped, elevator has just arrived
+0s I 0s N DRIVE_CAN_ID Drive = 0 STOP STOP STOP
+
+;Elevator is at floor 2
+0s I 0s N CAR_POSITION_CAN_ID Integer = 2
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+;Hall Call 2 is true
+0.0s I 0s N HALL_CALL_[2][BACK][UP]_CAN_ID  HallCall 2 BACK UP = true
+
+;#arc '7A/1a'
+0.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getFloor == 2
+0.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getDirection == UP
+0.2s A N DESIRED_FLOOR_CAN_ID DesiredFloor : getHallway == BACK
+
+;aArc '7A/1b'
+0.2s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 2 BACK UP
+
+
+;#arc '7A/2a'
+0.5s A F DoorMotor BACK LEFT : command == OPEN
+0.5s A F DoorMotor BACK RIGHT : command == OPEN
+
+;#arc '7A/2b'
+0.6s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+0.6s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+;#arc '7A/3a'
+1.5s A F CarLantern UP : lighted == true
+
+;#arc'7A/4a'
+1.8s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = true
+1.8s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = true
+
+;#arc '7A/4b'
+2.0s A F DoorMotor BACK LEFT : command == STOP
+2.0s A F DoorMotor BACK RIGHT : command == STOP

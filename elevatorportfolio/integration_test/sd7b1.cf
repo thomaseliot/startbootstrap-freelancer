@@ -1,0 +1,14 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 7b integration test
+
+DoorControl FRONT LEFT 10ms true;
+DoorControl FRONT RIGHT 10ms true;
+

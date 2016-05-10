@@ -1,0 +1,122 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Landern Control Unit Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+; mAtFloor[2, BACK] = false
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = false
+; mDesiredFloor = 2 BACK UP
+0s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 2 BACK UP
+; mDoorClosedFrontLeft = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+; mDoorClosedFrontRight = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+; mDoorClosedBackLeft = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+; mDoorClosedBackRight = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; Should be in DOOR_CLOSED state, check that outputs are correct
+; Check that CarLantern is off
+;#state '7.S.1'
+0.61s A F CarLantern UP : lighted == false
+; Check that mCarLantern is off
+0.61s A N CAR_LANTERN_[UP]_CAN_ID CarLantern UP : lighted == false
+
+; ------------------
+; 7.T.1
+; ------------------
+; Set conditions for 7.T.1
+;#transition '7.T.1'
+; mAtFloor[2, BACK] = true
+1s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+; mDesiredFloor = 2 BACK UP (already)
+; mDoorClosedFrontLeft = true (already)
+; mDoorClosedFrontRight = true (already)
+; mDoorClosedBackLeft = false
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+; mDoorClosedBackRight = false
+1s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+; Should be in LANTERN_ON state, check that outputs are correct
+; Check that CarLantern is on
+;#state '7.S.2'
+1.61s A F CarLantern UP : lighted == true
+; Check that mCarLantern is on
+1.61s A N CAR_LANTERN_[UP]_CAN_ID CarLantern UP : lighted == true
+
+; ------------------
+; 7.T.4
+; ------------------
+; Set conditions for 7.T.4
+;#transition '7.T.4'
+; mAtFloor[2, BACK] = true (already)
+; mDesiredFloor = 2 BACK UP (already)
+; mDoorClosedFrontLeft = true (already)
+; mDoorClosedFrontRight = true (already)
+; mDoorClosedBackLeft = true
+2s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+; mDoorClosedBackRight = true
+2s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; Should be in DOOR_CLOSED state, check that outputs are correct
+; Check that CarLantern is off
+;#state '7.S.1'
+2.61s A F CarLantern UP : lighted == false
+; Check that mCarLantern is off
+2.61s A N CAR_LANTERN_[UP]_CAN_ID CarLantern UP : lighted == false
+
+; ------------------
+; 7.T.2
+; ------------------
+; Set conditions for 7.T.2
+;#transition '7.T.2'
+; mAtFloor[2, BACK] = true
+3s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+; mDesiredFloor = 2 BACK DOWN
+3s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 2 BACK DOWN
+; mDoorClosedFrontLeft = true (already)
+; mDoorClosedFrontRight = true (already)
+; mDoorClosedBackLeft = false
+3s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+; mDoorClosedBackRight = false
+3s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+; Should be in LANTERN_OFF state, check that outputs are correct
+; Check that CarLantern is off
+;#state '7.S.3'
+3.61s A F CarLantern UP : lighted == false
+; Check that mCarLantern is off
+3.61s A N CAR_LANTERN_[UP]_CAN_ID CarLantern UP : lighted == false
+
+; ------------------
+; 7.T.3
+; ------------------
+; Set conditions for 7.T.3
+;#transition '7.T.3'
+; mAtFloor[2, BACK] = true (already)
+; mDesiredFloor = 2 BACK DOWN (already)
+; mDoorClosedFrontLeft = true (already)
+; mDoorClosedFrontRight = true (already)
+; mDoorClosedBackLeft = true
+4s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+; mDoorClosedBackRight = true
+4s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; Should be in DOOR_CLOSED state, check that outputs are correct
+; Check that CarLantern is off
+;#state '7.S.1'
+4.61s A F CarLantern UP : lighted == false
+; Check that mCarLantern is off
+4.61s A N CAR_LANTERN_[UP]_CAN_ID CarLantern UP : lighted == false

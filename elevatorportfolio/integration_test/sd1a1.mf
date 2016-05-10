@@ -1,0 +1,34 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Sequence Diagram 1a integration test
+
+#INCLUDE defines.mf
+
+;#arc '1A/1a'
+; Passenger makes a hall call
+
+;#arc '1A/1b'
+;HallCall[1,FRONT,UP] = true
+1.0s I 0s F HallCall 1 FRONT UP = true
+
+;#arc '1A/1c'
+1.41s A N HALL_CALL_[1][FRONT][UP]_CAN_ID HallCall 1 FRONT UP : getValue == true
+
+;#arc '1A/1d'
+; Servicing is false (internal state variable)
+
+;#arc '1A/2a'
+1.41s A F HallLight 1 FRONT UP : lighted == true
+
+;#arc '1A/2b'
+; Passenger notices light is on
+
+;#arc '1A/3a'
+; Dispatcher sets it's CurrentDirection = Up

@@ -1,0 +1,59 @@
+  ; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 10A Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+; mAtFloor[1][FRONT] = false
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = false
+; mDesiredFloor = 1, FRONT, UP
+0s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 1 NONE STOP
+; mDriveSpeed = 0, UP
+0s I 0s N DRIVE_CAN_ID Drive = 0 UP STOP STOP
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+; mDoorClosed = false
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+; mDoorOpened = false
+0s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = false
+; mDesiredDwell = 2s
+0s I 0s N DESIRED_DWELL_CAN_ID DesiredDwell = 2 2
+; mDoorReversal = false
+0s I 0s N DOOR_REVERSAL_SENSOR_[FRONT][LEFT]_CAN_ID DoorReversal FRONT LEFT = false
+
+; Should be in CLOSE_DOOR state
+; Check that DoorMotor is commanded to CLOSE
+0.21s A F DoorMotor FRONT LEFT : command == CLOSE
+; Check that mDoorMotor == DoorMotor
+0.21s A N DOOR_MOTOR_COMMAND_[FRONT][LEFT]_CAN_ID DoorMotor FRONT LEFT : getCommand == CLOSE
+
+; ------------------
+; Start Sequence
+; ------------------
+
+;#arc '10A/1a'
+;#arc '10A/2a'
+; Whale enter elevator
+0.5s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 16000
+
+;#arc '10A/3a'
+; Check that DoorMotor is commanded to OPEN due to overweight
+0.71s A F DoorMotor FRONT LEFT : command == OPEN
+
+;#arc '10A/3b'
+3s I 0s N DOOR_OPEN_SENSOR_[FRONT][LEFT]_CAN_ID DoorOpened FRONT LEFT = true
+
+;#arc '10A/3c'
+; Check that DoorMotor is commanded to OPEN due to overweight
+3.21s A F DoorMotor FRONT LEFT : command == STOP

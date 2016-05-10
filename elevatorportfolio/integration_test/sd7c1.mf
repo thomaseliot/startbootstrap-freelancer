@@ -1,0 +1,79 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 7C Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+; Initialize DoorControl
+
+; mAtFloor[2][BACK] = true
+0s I 0s N AT_FLOOR_[2][BACK]_CAN_ID AtFloor 2 BACK = true
+
+; mCarWeight = 5
+0s I 0s N CAR_WEIGHT_CAN_ID CarWeight = 5
+
+; mDesiredDwell = 1s
+0s I 0s N DESIRED_DWELL_CAN_ID DesiredDwell = 1 1
+
+; close front doors
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+
+; mDoorClosed = false
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = false
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = false
+
+; mDoorOpened = false
+0s I 0s N DOOR_OPEN_SENSOR_[BACK][LEFT]_CAN_ID DoorOpened BACK LEFT = false
+0s I 0s N DOOR_OPEN_SENSOR_[BACK][RIGHT]_CAN_ID DoorOpened BACK RIGHT = false
+
+; Initialize LanternControl, UP lantern will transition to LANTERN_ON state
+0s I 0s N DESIRED_FLOOR_CAN_ID DesiredFloor = 1 BACK UP
+
+; Initialize HallButtonControl, press the up button on floor 2
+0s I 0s F HallCall 2 BACK UP = true
+
+; Unpress the button
+0.5s I 0s F HallCall 2 BACK UP = false
+
+; ------------------
+; Start Sequence
+; ------------------
+
+; Dwell timer expires (internal state variable of DoorControl)
+;#arc '7C/1a'
+
+; Check that DoorMotor is commanded to CLOSE
+;#arc '7C/2a'
+1.00s A F DoorMotor BACK LEFT : command == CLOSE
+
+; Set mDoorClosed to True
+;#arc '7C/2b'
+;#arc '7C/2d'
+;#arc '7C/2e'
+1.50s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+1.50s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; Check that DoorMotor is commanded to STOP
+;#arc '7C/2c'
+2.50s A F DoorMotor BACK LEFT : command == STOP
+
+; Check that all CarLanterns are off
+;#arc '7C/3a'
+3.00s A F CarLantern UP : lighted == false
+3.00s A F CarLantern DOWN : lighted == false
+
+; Check that HallLight[d] is off
+;#arc '7C/3b'
+3.00s A F HallLight 2 BACK UP : lighted == false

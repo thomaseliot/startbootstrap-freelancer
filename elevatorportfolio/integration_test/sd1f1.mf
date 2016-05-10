@@ -1,0 +1,71 @@
+; 18-649 Fall 2015
+;
+; Group 12
+; ---------------------------
+; Daniel Gorziglia - dgorzigl
+; Shepard Emerson - semerson
+; Tom Eliot - tke
+; Daniel Haddox - dhaddox
+;
+; Scenario 1F Integration Test
+
+#INCLUDE defines.mf
+
+; ------------------
+; Initialize
+; ------------------
+
+0s I 0s N AT_FLOOR_[1][FRONT]_CAN_ID AtFloor 1 FRONT = true
+
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][LEFT]_CAN_ID DoorClosed BACK LEFT = true
+0s I 0s N DOOR_CLOSED_SENSOR_[BACK][RIGHT]_CAN_ID DoorClosed BACK RIGHT = true
+
+; HallCall[1,FRONT,UP] pulse button to simulate a press
+0s I 0s F HallCall 1 FRONT UP = true
+0.2s I 0s F HallCall 1 FRONT UP = false
+
+; ------------------
+; Start Sequence
+; ------------------
+
+;#arc '1F/1a'
+; Dispatcher's CurrentFloor becomes equal to it's Target
+
+;#arc '1F/1b'
+; Dispatcher sets it's hallway to b
+
+;#arc '1F/2a'
+; Dispatcher sets it's CurrentDirection to None
+
+;#arc '1F/3a'
+1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = false
+1s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = false
+
+;#arc '1F/3b'
+1.5s A F HallLight 1 FRONT UP : lighted == true
+
+;#arc '1F/3c'
+1.5s A N HALL_CALL_[1][FRONT][UP]_CAN_ID HallCall 1 FRONT UP : getValue == false
+
+;#arc '1F/3d'
+; Servicing is true (internal state variable)
+
+;#arc '1F/4a'
+; Passeneger enters elevator
+
+;#arc '1F/5a'
+2s I 0s N DOOR_CLOSED_SENSOR_[FRONT][LEFT]_CAN_ID DoorClosed FRONT LEFT = true
+2s I 0s N DOOR_CLOSED_SENSOR_[FRONT][RIGHT]_CAN_ID DoorClosed FRONT RIGHT = true
+
+;#arc '1F/6a'
+2.5s A F HallLight 1 FRONT UP : lighted == false
+
+;#arc '1F/6b'
+2.5s A N HALL_CALL_[1][FRONT][UP]_CAN_ID HallCall 1 FRONT UP : getValue == false
+
+;#arc '1F/6c'
+; Servicing is false (internal state variable)
+
+;#arc '1F/7a'
+; Dispatcher sets it's CurrentDirection to None because there
+; are no calls in the system.
